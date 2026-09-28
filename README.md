@@ -19,7 +19,18 @@ Enable GitHub Pages (Settings → Pages → Deploy from branch → `main` / root
 
 ## Fonts
 
-Uses IBM Plex from Google Fonts. The licensed Schmalfette display face is not included, because its license limits self-hosting to FAI-owned properties.
+Uses IBM Plex from Google Fonts. The hero title is set in the licensed Schmalfette Grotesk, but this site ships it as vector outlines in `index.html`, not as a font file: the license limits self-hosting the font to FAI-owned properties, and the binaries stay out of Git. If you change `SITE.title`, regenerate the outlines with the FAI brand kit's `SchmalfetteGrotesk.otf`:
+
+```
+npm i --no-save opentype.js
+node tools/outline-display.mjs /path/to/SchmalfetteGrotesk.otf "A field guide" "to the tribes" "of Silicon Valley"
+```
+
+Each argument is one line of the title, 2–3 words per line.
+
+## Plates
+
+Each tribe has a Bauhaus emblem in `PLATES`, just after the content block, keyed by tribe `id`. Plates are drawn on a 120 × 120 grid with four fills: `a` orange, `k` Cod Gray, `p` white, `r` Timberwolf (`as`/`ks`/`ps`/`rs` for strokes). A new tribe without a plate simply renders without one.
 
 ## The wall (shared quiz results)
 
