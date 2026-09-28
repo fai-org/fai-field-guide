@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The FAI Field Guide to Silicon Valley's Ideological Tribes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   FAI brand tokens (from the FAI brand kit)
+   ============================================================ */
+:root{
+  --orange:#FF4F00; --cod:#121212; --smoke:#F3F3F3; --timber:#D9D9D6; --white:#FFFFFF;
+  --teal:#0E8C88; --crimson:#C8102E;
+  --bg:var(--smoke); --ink:var(--cod); --rule:var(--timber); --panel:var(--white); --muted:#4a4a4a;
+  --serif:"IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --sans:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){ --bg:#121212; --ink:#F3F3F3; --rule:#3a3a3a; --panel:#1c1c1c; --muted:#b5b5b5; }
+}
+:root[data-theme="dark"]{ --bg:#121212; --ink:#F3F3F3; --rule:#3a3a3a; --panel:#1c1c1c; --muted:#b5b5b5; }
+html{ scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+*,*::before,*::after{ box-sizing:border-box; }
+body{ margin:0; background:var(--bg); color:var(--ink); font-family:var(--serif); font-size:17px; line-height:1.6; font-synthesis:none; }
+img{ max-width:100%; }
+a{ color:inherit; text-decoration-thickness:1px; text-underline-offset:3px; }
+:focus-visible{ outline:3px solid var(--ink); outline-offset:3px; }
+.wrap{ max-width:1120px; margin:0 auto; padding:0 16px; }
+@media (min-width:672px){ .wrap{ padding:0 32px; } }
+
+/* Header */
+.top{ display:flex; align-items:center; justify-content:space-between; padding-top:24px; padding-bottom:24px; gap:16px; font-family:var(--sans); font-size:14px; }
+.logo{ width:170px; height:auto; display:block; }
+.logo-dark{ display:none; }
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .logo-light{display:none;} :root:not([data-theme="light"]) .logo-dark{display:block;} }
+:root[data-theme="dark"] .logo-light{display:none;} :root[data-theme="dark"] .logo-dark{display:block;}
+.nav{ display:flex; gap:20px; flex-wrap:wrap; }
+.nav a{ text-decoration:none; font-weight:500; }
+.nav a:hover{ text-decoration:underline; }
+
+/* Hero: the orange field */
+.hero{ background:var(--orange); color:var(--cod); }
+.hero .wrap{ padding-top:56px; padding-bottom:56px; display:grid; gap:32px; }
+@media (min-width:900px){ .hero .wrap{ grid-template-columns: 1.4fr 1fr; align-items:end; padding-top:88px; padding-bottom:80px; } }
+.hero h1{ font-family:var(--serif); font-weight:700; font-size:clamp(38px, 7vw, 76px); line-height:1.02; letter-spacing:-0.01em; margin:0; }
+.hero .dek{ font-size:19px; line-height:1.5; margin:0; max-width:34ch; }
+.hero .dek + .dek{ margin-top:12px; font-family:var(--sans); font-size:15px; }
+.btn{ display:inline-block; font-family:var(--sans); font-weight:500; font-size:16px; padding:12px 20px; border:2px solid var(--cod); border-radius:2px; text-decoration:none; cursor:pointer; background:transparent; color:inherit; }
+.btn.solid{ background:var(--cod); color:var(--smoke); }
+.hero .ctas{ display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
+
+section{ padding:64px 0; border-top:1px solid var(--rule); }
+section:first-of-type{ border-top:0; }
+h2{ font-size:clamp(28px, 4vw, 40px); line-height:1.15; margin:0 0 12px; font-weight:600; }
+.lead{ font-size:19px; max-width:62ch; margin:0 0 32px; color:var(--ink); }
+.small{ font-family:var(--sans); font-size:14px; color:var(--muted); }
+
+/* Habitat map */
+.map-grid{ display:grid; gap:32px; }
+@media (min-width:900px){ .map-grid{ grid-template-columns: 1.5fr 1fr; } }
+.map-box{ background:var(--panel); border:1px solid var(--rule); padding:12px; }
+#map{ width:100%; height:auto; display:block; font-family:var(--sans); }
+#map .axis{ stroke:var(--ink); stroke-width:1; }
+#map .quad{ stroke:var(--rule); stroke-dasharray:3 4; }
+#map text{ fill:var(--ink); }
+#map .axlabel{ font-size:17px; fill:var(--muted); }
+#map .dot{ fill:var(--orange); stroke:var(--cod); stroke-width:1.5; cursor:pointer; }
+#map .dot.ancestral{ fill:var(--bg); stroke:var(--ink); }
+#map g.pt:hover .dot, #map g.pt:focus .dot{ r:10; }
+#map g.pt:focus{ outline:none; }
+#map g.pt:focus-visible .dot{ stroke-width:3; }
+#map .lbl{ fill:var(--ink); font-size:20px; font-weight:500; pointer-events:none; }
+#map .you{ fill:var(--cod); stroke:var(--orange); stroke-width:3; }
+.map-side dl{ margin:0; }
+.map-side dt{ font-family:var(--sans); font-weight:600; font-size:15px; margin-top:16px; }
+.map-side dd{ margin:4px 0 0; }
+.legend{ display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; font-family:var(--sans); font-size:13px; color:var(--muted); }
+.legend span::before{ content:""; display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:6px; vertical-align:-1px; border:1.5px solid var(--cod); background:var(--orange); }
+.legend span.anc::before{ background:transparent; border-color:var(--ink); }
+
+/* Specimens */
+.filters{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; font-family:var(--sans); }
+.chip{ font-family:var(--sans); font-size:14px; font-weight:500; padding:8px 14px; border:1.5px solid var(--ink); background:transparent; color:var(--ink); border-radius:2px; cursor:pointer; }
+.chip[aria-pressed="true"]{ background:var(--ink); color:var(--bg); }
+.specimens{ display:grid; gap:0; }
+.spec{ display:grid; gap:16px 32px; padding:32px 0; border-top:1px solid var(--rule); scroll-margin-top:16px; }
+.spec:first-child{ border-top:2px solid var(--ink); }
+@media (min-width:900px){ .spec{ grid-template-columns: 280px 1fr; } }
+.spec .plate{ font-family:var(--sans); font-size:13px; font-weight:500; color:var(--muted); margin:0 0 8px; }
+.spec h3{ font-size:28px; line-height:1.15; margin:0; font-weight:700; }
+.spec .latin{ font-style:italic; margin:6px 0 12px; color:var(--muted); }
+.spec .status{ display:inline-block; font-family:var(--sans); font-size:13px; font-weight:500; padding:3px 8px; border:1.5px solid var(--ink); border-radius:2px; }
+.spec .status.hot{ background:var(--orange); color:var(--cod); border-color:var(--orange); }
+.spec .aka{ font-family:var(--sans); font-size:14px; color:var(--muted); margin-top:12px; }
+.spec .note{ font-size:19px; line-height:1.5; margin:0 0 16px; max-width:60ch; }
+.fields{ display:grid; gap:12px 32px; margin:0; }
+@media (min-width:672px){ .fields{ grid-template-columns: 1fr 1fr; } }
+.fields div{ border-top:1px solid var(--rule); padding-top:10px; }
+.fields dt{ font-family:var(--sans); font-size:13px; font-weight:600; margin:0 0 2px; }
+.fields dd{ margin:0; font-size:16px; line-height:1.5; }
+.spec[hidden]{ display:none; }
+
+.warning{ background:var(--cod); color:var(--smoke); padding:32px; margin-top:32px; border-left:8px solid var(--crimson); }
+.warning h3{ margin:0 0 8px; font-size:22px; }
+.warning p{ margin:0 0 8px; max-width:66ch; }
+.warning a{ color:var(--smoke); }
+
+/* Lineage timeline */
+.timeline{ list-style:none; margin:0; padding:0; border-left:2px solid var(--ink); }
+.timeline li{ position:relative; padding:0 0 20px 28px; max-width:70ch; }
+.timeline li::before{ content:""; position:absolute; left:-7px; top:9px; width:12px; height:12px; background:var(--orange); border:1.5px solid var(--cod); }
+.timeline .yr{ font-family:var(--sans); font-weight:600; margin-right:10px; }
+
+/* Quiz */
+.quiz{ background:var(--panel); border:1px solid var(--rule); padding:24px; max-width:760px; }
+@media (min-width:672px){ .quiz{ padding:40px; } }
+.progress{ height:6px; background:var(--rule); margin-bottom:24px; }
+.progress div{ height:100%; background:var(--orange); width:0; transition:width .25s; }
+@media (prefers-reduced-motion: reduce){ .progress div{ transition:none; } }
+.qcount{ font-family:var(--sans); font-size:14px; color:var(--muted); margin:0 0 8px; }
+.qtext{ font-size:24px; line-height:1.3; margin:0 0 20px; font-weight:600; }
+.answers{ display:grid; gap:10px; }
+.answer{ text-align:left; font-family:var(--serif); font-size:17px; line-height:1.4; padding:14px 16px; background:transparent; color:var(--ink); border:1.5px solid var(--ink); border-radius:2px; cursor:pointer; }
+.answer:hover{ background:var(--orange); color:var(--cod); border-color:var(--orange); }
+.result h3{ font-size:32px; margin:4px 0 4px; }
+.result .latin{ font-style:italic; color:var(--muted); margin:0 0 16px; }
+.result .runners{ font-family:var(--sans); font-size:15px; margin:16px 0; }
+.qactions{ display:flex; gap:12px; flex-wrap:wrap; margin-top:20px; }
+
+/* Phrasebook */
+.phrases{ display:grid; gap:0 32px; }
+@media (min-width:672px){ .phrases{ grid-template-columns: 1fr 1fr; } }
+.phrase{ border-top:1px solid var(--rule); padding:14px 0; }
+.phrase b{ font-size:18px; }
+.phrase .who{ font-family:var(--sans); font-size:13px; color:var(--muted); margin-left:8px; }
+.phrase p{ margin:4px 0 0; font-size:16px; }
+
+/* DC tips */
+.tips{ counter-reset:tip; display:grid; gap:24px; }
+@media (min-width:900px){ .tips{ grid-template-columns: repeat(3, 1fr); } }
+.tip{ border-top:4px solid var(--orange); padding-top:16px; }
+.tip h3{ margin:0 0 8px; font-size:20px; }
+.tip p{ margin:0; font-size:16px; }
+
+footer{ background:var(--cod); color:var(--smoke); padding:48px 0; font-family:var(--sans); font-size:14px; }
+footer p{ margin:0 0 8px; max-width:70ch; }
+footer a{ color:var(--smoke); }
+.toast{ position:fixed; left:50%; bottom:calc(24px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--cod); color:var(--smoke); font-family:var(--sans); padding:10px 16px; border-radius:2px; display:none; z-index:10; }
+</style>
+</head>
+<body>
+
+<div class="wrap top">
+  <img class="logo logo-light" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSI0MjUiIHZpZXdCb3g9IjAgMCAxOTIwIDQyNSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE4MC4xOTkgMEwzNTIuNzU5IDIxMS44OEwxODAuMTk5IDQyMy43NlYwWiIgZmlsbD0iIzAxMDEwMSIvPgo8cGF0aCBkPSJNMCAwTDE3Mi41NiAyMTEuODhMMCA0MjMuNzZWMFoiIGZpbGw9IiMwMTAxMDEiLz4KPHBhdGggZD0iTTQ0OS4xMzEgMTk1LjU0OFYxMDQuNjE4SDQ3Ny41ODFWODEuNjA4MUg0NDkuMTMxVjI4Ljc1ODFINDgxLjQxMVYzLjgyODEySDQxNy4xMjFWMTk1LjU0OEg0NDkuMTMxWiIgZmlsbD0iIzAxMDEwMSIvPgo8cGF0aCBkPSJNNTI5LjY4IDBDNTAzLjk2IDAgNDkyLjc1IDE0LjI0IDQ5Mi43NSAzMy42OVYxNjMuNzhDNDkyLjc1IDE4Ny42MSA1MDUuNjEgMTk5LjY2IDUyOS42OCAxOTkuNjZDNTUzLjc1IDE5OS42NiA1NjcuNDMgMTg3LjYxIDU2Ny40MyAxNjUuNDJWMzMuNjlDNTY3LjQzIDE1Ljg5IDU1NC4zIDAgNTI5LjY4IDBaTTUyOS45NSAyOS41OEM1MzQuMDUgMjkuNTggNTM2LjI0IDMxLjUgNTM2LjI0IDM2LjQzVjE2My43OUM1MzYuMjQgMTY5LjU0IDUzNC44NyAxNzIuMjggNTMwLjIyIDE3Mi4yOEM1MjUuODQgMTcyLjI4IDUyNC4yIDE2OS44MiA1MjQuMiAxNjMuNzlMNTIzLjkzIDM2LjQzQzUyMy45MyAzMS43NyA1MjYuMTIgMjkuNTggNTI5Ljk1IDI5LjU4WiIgZmlsbD0iIzAxMDEwMSIvPgo8cGF0aCBkPSJNNjIyLjA3IDMuODI4MTJWMTYzLjc3OEM2MjIuMDcgMTY5LjUyOCA2MjAuNyAxNzIuMjY4IDYxNi4wNSAxNzIuMjY4QzYxMS42NyAxNzIuMjY4IDYxMC4wMyAxNjkuODA4IDYxMC4wMyAxNjMuNzc4VjMuODI4MTJINTc4LjU3VjE2My43NzhDNTc4LjU3IDE4Ny42MDggNTkxLjQzIDE5OS42NTggNjE1LjUgMTk5LjY1OEM2MzkuNTcgMTk5LjY1OCA2NTMuMjUgMTg3LjYwOCA2NTMuMjUgMTY1LjQxOFYzLjgyODEySDYyMi4wNkg2MjIuMDdaIiBmaWxsPSIjMDEwMTAxIi8+CjxwYXRoIGQ9Ik02NjQuNTYxIDMuODI4MTJWMTk1LjU0OEg2OTIuNDYxVjgyLjk3ODFMNzE4LjQ1MSAxOTUuNTQ4SDc1MC43MzFWMy44MjgxMkg3MjMuMzcxVjEwMy4yNDhMNzAyLjAzMSAzLjgyODEySDY2NC41NTFINjY0LjU2MVoiIGZpbGw9IiMwMTAxMDEiLz4KPHBhdGggZD0iTTc2MS43OTkgMy44MjgxMlYxOTUuNTQ4SDgwNi4zODlDODI3LjE3OSAxOTUuNTQ4IDgzNi40NzkgMTg2LjUwOCA4MzYuNDc5IDE2Ny4zMzhWMzMuNjg4MUM4MzYuNDc5IDE1LjMzODEgODI3LjQ0OSAzLjgzODEyIDgwNi42NTkgMy44MzgxMkg3NjEuNzg5TDc2MS43OTkgMy44MjgxMlpNNzkyLjk4OSAxNzEuNDQ4VjI4LjQ3ODFINzk4LjQ1OUM4MDIuODM5IDI4LjQ3ODEgODA1LjI5OSAzMS4yMTgxIDgwNS4yOTkgMzYuNjk4MVYxNjUuNjk4QzgwNS4yOTkgMTY5LjUyOCA4MDMuMzg5IDE3MS40NDggNzk5LjgyOSAxNzEuNDQ4SDc5Mi45ODlaIiBmaWxsPSIjMDEwMTAxIi8+CjxwYXRoIGQ9Ik04NjEuNDE4IDMuODI4MTJMODQwLjg5OCAxOTUuNTQ4SDg2OS42MThMODc0LjgxOCAxNDIuOTU4SDg5My45NjhMODk4Ljg4OCAxOTUuNTQ4SDkyOC45NzhMOTA3LjkyOCAzLjgyODEySDg2MS40MThaTTg4NC42NjggNDEuODk4MUw4OTEuNzc4IDExOS4xMzhIODc3LjAwOEw4ODQuNjY4IDQxLjg5ODFaIiBmaWxsPSIjMDEwMTAxIi8+CjxwYXRoIGQ9Ik05OTUuODYyIDMuODI4MTJIOTE5LjI2MlYyOC40NzgxSDk0MS4xNTJWMTk1LjU0OEg5NzMuOTgyVjI4LjQ3ODFIOTk1Ljg3MlYzLjgyODEySDk5NS44NjJaIiBmaWxsPSIjMDEwMTAxIi8+CjxwYXRoIGQ9Ik0xMDAzLjgxIDMuNTYyNVYxOTUuNTUzSDEwMzYuNjRWMy41NjI1SDEwMDMuODFaIiBmaWxsPSIjMDEwMTAxIi8+CjxwYXRoIGQ9Ik0xMDg1LjEgMEMxMDU5LjM4IDAgMTA0OC4xNyAxNC4yNCAxMDQ4LjE3IDMzLjY5VjE2My43OEMxMDQ4LjE3IDE4Ny42MSAxMDYxLjAzIDE5OS42NiAxMDg1LjEgMTk5LjY2QzExMDkuMTcgMTk5LjY2IDExMjIuODUgMTg3LjYxIDExMjIuODUgMTY1LjQyVjMzLjY5QzExMjIuODUgMTUuODkgMTEwOS43MiAwIDEwODUuMSAwWk0xMDg1LjM4IDI5LjU4QzEwODkuNDggMjkuNTggMTA5MS42NyAzMS41IDEwOTEuNjcgMzYuNDNWMTYzLjc5QzEwOTEuNjcgMTY5LjU0IDEwOTAuMzEgMTcyLjI4IDEwODUuNjUgMTcyLjI4QzEwODEuMjggMTcyLjI4IDEwNzkuNjQgMTY5LjgyIDEwNzkuNjQgMTYzLjc5TDEwNzkuMzYgMzYuNDNDMTA3OS4zNiAzMS43NyAxMDgxLjU2IDI5LjU4IDEwODUuMzggMjkuNThaIiBmaWxsPSIjMDEwMTAxIi8+CjxwYXRoIGQ9Ik0xMTMzLjM2IDMuODI4MTJWMTk1LjU0OEgxMTYxLjI3VjgyLjk3ODFMMTE4Ny4yNSAxOTUuNTQ4SDEyMTkuNTNWMy44MjgxMkgxMTkyLjE3VjEwMy4yNDhMMTE3MC44NCAzLjgyODEySDExMzMuMzVIMTEzMy4zNloiIGZpbGw9IiMwMTAxMDEiLz4KPHBhdGggZD0iTTEzMDEuOTUgMTk1LjU0OFYxMDQuNjE4SDEzMzAuNFY4MS42MDgxSDEzMDEuOTVWMjguNzU4MUgxMzM0LjIzVjMuODI4MTJIMTI2OS45NFYxOTUuNTQ4SDEzMDEuOTVaIiBmaWxsPSIjMDEwMTAxIi8+CjxwYXRoIGQ9Ik0xMzc3LjAxIDBDMTM1MS4yOSAwIDEzNDAuMDggMTQuMjQgMTM0MC4wOCAzMy42OVYxNjMuNzhDMTM0MC4wOCAxODcuNjEgMTM1Mi45NCAxOTkuNjYgMTM3Ny4wMSAxOTkuNjZDMTQwMS4wOCAxOTkuNjYgMTQxNC43NiAxODcuNjEgMTQxNC43NiAxNjUuNDJWMzMuNjlDMTQxNC43NiAxNS44OSAxNDAxLjYzIDAgMTM3Ny4wMSAwWk0xMzc3LjI5IDI5LjU4QzEzODEuMzggMjkuNTggMTM4My41OCAzMS41IDEzODMuNTggMzYuNDNWMTYzLjc5QzEzODMuNTggMTY5LjU0IDEzODIuMjEgMTcyLjI4IDEzNzcuNTYgMTcyLjI4QzEzNzMuMTkgMTcyLjI4IDEzNzEuNTUgMTY5LjgyIDEzNzEuNTUgMTYzLjc5TDEzNzEuMjcgMzYuNDNDMTM3MS4yNyAzMS43NyAxMzczLjQ2IDI5LjU4IDEzNzcuMjkgMjkuNThaIiBmaWxsPSIjMDEwMTAxIi8+CjxwYXRoIGQ9Ik0xNDI1Ljg0IDMuODI4MTJWMTk1LjU0OEgxNDU1Ljk0VjEwMy41MjhIMTQ2MC44NkMxNDY1Ljc5IDEwMy41MjggMTQ2OS4zNSAxMDYuMjY4IDE0NjkuMzUgMTEzLjY1OFYxNzkuMzg4QzE0NjkuMzUgMTkwLjM0OCAxNDcxLjgxIDE5My4wNzggMTQ3NC4yOCAxOTUuNTQ4SDE1MDQuOTJDMTUwMi4xOCAxOTMuMzU4IDE0OTkuNzIgMTg4LjQyOCAxNDk5LjcyIDE4Mi4zOThWMTE2LjExOEMxNDk5LjcyIDEwMC4yMjggMTQ4OC41IDkyLjU2ODEgMTQ3Ni4xOSA5Mi4yODgxQzE0ODguNSA5MS4xODgxIDE1MDAuODIgODEuMDU4MSAxNTAwLjgyIDY0LjA3ODFWMzQuMjI4MUMxNTAwLjgyIDE3LjI0ODEgMTQ4OC43OCAzLjgyODEyIDE0NjkuMDggMy44MjgxMkgxNDI1Ljg2SDE0MjUuODRaTTE0NTUuOTQgMjguNzQ4MUgxNDYxLjk1QzE0NjUuMjMgMjguNzQ4MSAxNDY5LjM0IDMwLjExODEgMTQ2OS4zNCAzNy41MDgxVjczLjEwODFDMTQ2OS4zNCA3Ny4yMTgxIDE0NjYuODggODEuNTk4MSAxNDYxLjY3IDgxLjU5ODFIMTQ1NS45M1YyOC43NTgxTDE0NTUuOTQgMjguNzQ4MVoiIGZpbGw9IiMwMTAxMDEiLz4KPHBhdGggZD0iTTQxNi44MjEgMjI4LjMxMkwzOTYuMzAxIDQyMC4wMzNINDI1LjAyMUw0MzAuMjIxIDM2Ny40NDNINDQ5LjM3MUw0NTQuMjkxIDQyMC4wMzNINDg0LjM4MUw0NjMuMzIxIDIyOC4zMTJINDE2LjgxMUg0MTYuODIxWk00NDAuMDcxIDI2Ni4zODNMNDQ3LjE4MSAzNDMuNjEySDQzMi40MTFMNDQwLjA3MSAyNjYuMzgzWiIgZmlsbD0iIzAxMDEwMSIvPgo8cGF0aCBkPSJNNDk0LjYyMSAyMjguMzEyVjQyMC4wMzNINTIxLjk4MVYzMDIuMjYzTDU0My44NzEgNDIwLjAzM0g1NjYuMzAxTDU4Ni4wMDEgMzAyLjUzM1Y0MjAuMDMzSDYxMy4zNjFWMjI4LjMxMkg1NzEuNzgxTDU1NS45MTEgMzMyLjM5M0w1NDAuODYxIDIyOC4zMTJINDk0LjYzMUg0OTQuNjIxWiIgZmlsbD0iIzAxMDEwMSIvPgo8cGF0aCBkPSJNNjg5LjM0MiA0MjAuMDMzVjM5NS4xMTJINjU4LjQzMlYzMjkuMTAzSDY4Ni44ODJWMzA2LjA5Mkg2NTguNDMyVjI1My4yMzJINjkwLjcxMlYyMjguMzEySDYyNi40MjJWNDIwLjAzM0g2ODkuMzQyWiIgZmlsbD0iIzAxMDEwMSIvPgo8cGF0aCBkPSJNNzAzLjA0OSAyMjguMzA3VjQyMC4wMjdINzMzLjEzOVYzMjcuOTk3SDczOC4wNTlDNzQyLjk3OSAzMjcuOTk3IDc0Ni41MzkgMzMwLjczNyA3NDYuNTM5IDMzOC4xMjdWNDAzLjg1N0M3NDYuNTM5IDQxNC44MTcgNzQ4Ljk5OSA0MTcuNTQ3IDc1MS40NTkgNDIwLjAxN0g3ODIuMDk5Qzc3OS4zNjkgNDE3LjgyNyA3NzYuODk5IDQxMi44OTcgNzc2Ljg5OSA0MDYuODY3VjM0MC41ODdDNzc2Ljg5OSAzMjQuNzA3IDc2NS42NzkgMzE3LjAzNyA3NTMuMzY5IDMxNi43NTdDNzY1LjY3OSAzMTUuNjY3IDc3Ny45ODkgMzA1LjUyNyA3NzcuOTg5IDI4OC41NDdWMjU4LjY5N0M3NzcuOTg5IDI0MS43MTcgNzY1Ljk0OSAyMjguMjk3IDc0Ni4yNTkgMjI4LjI5N0g3MDMuMDM5TDcwMy4wNDkgMjI4LjMwN1pNNzMzLjEzOSAyNTMuMjI3SDczOS4xNTlDNzQyLjQzOSAyNTMuMjI3IDc0Ni41NDkgMjU0LjU5NyA3NDYuNTQ5IDI2MS45ODdWMjk3LjU5N0M3NDYuNTQ5IDMwMS43MDcgNzQ0LjA4OSAzMDYuMDg3IDczOC44ODkgMzA2LjA4N0g3MzMuMTQ5VjI1My4yMjdINzMzLjEzOVoiIGZpbGw9IiMwMTAxMDEiLz4KPHBhdGggZD0iTTc5MC4wMzEgMjI4LjAzOVY0MjAuMDI5SDgyMi44NjFWMjI4LjAzOUg3OTAuMDMxWiIgZmlsbD0iIzAxMDEwMSIvPgo8cGF0aCBkPSJNODc4LjA5MiAyOTQuMzE3SDkwNy45MTJWMjU1Ljk3N0M5MDcuOTEyIDIzOC4xNzcgODk2LjE1MiAyMjQuNDc3IDg3MS41MzIgMjI0LjQ3N0M4NDYuOTEyIDIyNC40NzcgODM0LjYwMiAyMzguNzE3IDgzNC42MDIgMjU4LjE2N1YzODguMjU3QzgzNC42MDIgNDEyLjA4NyA4NDcuNDYyIDQyNC4xMzcgODcxLjUzMiA0MjQuMTM3Qzg5NS42MDIgNDI0LjEzNyA5MDcuOTEyIDQxMi4wODcgOTA3LjkxMiAzODkuODk3VjM0My44ODdIODc4LjA5MlYzODguMjU3Qzg3OC4wOTIgMzk0LjAwNyA4NzYuNzIyIDM5Ni43NDcgODcyLjA3MiAzOTYuNzQ3Qzg2Ny42OTIgMzk2Ljc0NyA4NjYuMDUyIDM5NC4yODcgODY2LjA1MiAzODguMjU3TDg2NS43ODIgMjYwLjg5N0M4NjUuNzgyIDI1Ni4yMzcgODY3Ljk3MiAyNTQuMDQ3IDg3MS44MDIgMjU0LjA0N0M4NzUuOTAyIDI1NC4wNDcgODc4LjA5MiAyNTUuOTY3IDg3OC4wOTIgMjYwLjg5N1YyOTQuMzA3VjI5NC4zMTdaIiBmaWxsPSIjMDEwMTAxIi8+CjxwYXRoIGQ9Ik05MzMuMDIgMjI4LjMxMkw5MTIuNSA0MjAuMDMzSDk0MS4yMkw5NDYuNDIgMzY3LjQ0M0g5NjUuNTdMOTcwLjQ5IDQyMC4wMzNIMTAwMC41OEw5NzkuNTIgMjI4LjMxMkg5MzMuMDFIOTMzLjAyWk05NTYuMjcgMjY2LjM4M0w5NjMuMzggMzQzLjYxMkg5NDguNjFMOTU2LjI3IDI2Ni4zODNaIiBmaWxsPSIjMDEwMTAxIi8+CjxwYXRoIGQ9Ik0xMDA5LjIyIDIyOC4zMTJWNDIwLjAzM0gxMDM3LjEyVjMwNy40NjJMMTA2My4xMSA0MjAuMDMzSDEwOTUuMzlWMjI4LjMxMkgxMDY4LjAzVjMyNy43MzNMMTA0Ni42OSAyMjguMzEySDEwMDkuMjJaIiBmaWxsPSIjMDEwMTAxIi8+CjxwYXRoIGQ9Ik0xMTQ0LjczIDIyOC4wMzlWNDIwLjAyOUgxMTc3LjU2VjIyOC4wMzlIMTE0NC43M1oiIGZpbGw9IiMwMTAxMDEiLz4KPHBhdGggZD0iTTExODkuMjcgMjI4LjMxMlY0MjAuMDMzSDEyMTcuMTdWMzA3LjQ2MkwxMjQzLjE2IDQyMC4wMzNIMTI3NS40NFYyMjguMzEySDEyNDguMDhWMzI3LjczM0wxMjI2Ljc0IDIyOC4zMTJIMTE4OS4yN1oiIGZpbGw9IiMwMTAxMDEiLz4KPHBhdGggZD0iTTEyODcuMjYgMjI4LjMxMlY0MjAuMDMzSDEzMTUuMTZWMzA3LjQ2MkwxMzQxLjE1IDQyMC4wMzNIMTM3My40MlYyMjguMzEySDEzNDYuMDZWMzI3LjczM0wxMzI0LjczIDIyOC4zMTJIMTI4Ny4yNloiIGZpbGw9IiMwMTAxMDEiLz4KPHBhdGggZD0iTTE0MjEuNDMgMjI0LjQ3OUMxMzk1LjcxIDIyNC40NzkgMTM4NC41IDIzOC43MTkgMTM4NC41IDI1OC4xNjlWMzg4LjI1OUMxMzg0LjUgNDEyLjA4OSAxMzk3LjM2IDQyNC4xMzkgMTQyMS40MyA0MjQuMTM5QzE0NDUuNSA0MjQuMTM5IDE0NTkuMTggNDEyLjA4OSAxNDU5LjE4IDM4OS44OTlWMjU4LjE1OUMxNDU5LjE4IDI0MC4zNTkgMTQ0Ni4wNiAyMjQuNDY5IDE0MjEuNDMgMjI0LjQ2OVYyMjQuNDc5Wk0xNDIxLjcxIDI1NC4wNTlDMTQyNS44MSAyNTQuMDU5IDE0MjggMjU1Ljk3OSAxNDI4IDI2MC45MDlWMzg4LjI2OUMxNDI4IDM5NC4wMTkgMTQyNi42NCAzOTYuNzU5IDE0MjEuOTkgMzk2Ljc1OUMxNDE3LjYxIDM5Ni43NTkgMTQxNS45NyAzOTQuMjk5IDE0MTUuOTcgMzg4LjI2OUwxNDE1LjY5IDI2MC45MDlDMTQxNS42OSAyNTYuMjQ5IDE0MTcuODkgMjU0LjA1OSAxNDIxLjcxIDI1NC4wNTlaIiBmaWxsPSIjMDEwMTAxIi8+CjxwYXRoIGQ9Ik0xNDkzLjk5IDIyOC4zMTJIMTQ2My44OUwxNDg0Ljk2IDQyMC4wMzNIMTUzMS40NkwxNTUxLjk4IDIyOC4zMTJIMTUyMy4yNkwxNTA4LjQ4IDM4MC41OTJMMTQ5My45OCAyMjguMzEySDE0OTMuOTlaIiBmaWxsPSIjMDEwMTAxIi8+CjxwYXRoIGQ9Ik0xNTYzLjI3IDIyOC4zMTJMMTU0Mi43NSA0MjAuMDMzSDE1NzEuNDdMMTU3Ni42NyAzNjcuNDQzSDE1OTUuODJMMTYwMC43NSA0MjAuMDMzSDE2MzAuODVMMTYwOS43OCAyMjguMzEySDE1NjMuMjhIMTU2My4yN1pNMTU4Ni41MiAyNjYuMzgzTDE1OTMuNjMgMzQzLjYxMkgxNTc4Ljg1TDE1ODYuNTIgMjY2LjM4M1oiIGZpbGw9IiMwMTAxMDEiLz4KPHBhdGggZD0iTTE2OTguODEgMjI4LjMxMkgxNjIyLjIyVjI1Mi45NjNIMTY0NC4xMVY0MjAuMDMzSDE2NzYuOTRWMjUyLjk2M0gxNjk4LjgyVjIyOC4zMTJIMTY5OC44MVoiIGZpbGw9IiMwMTAxMDEiLz4KPHBhdGggZD0iTTE3MDYuNzUgMjI4LjAzOVY0MjAuMDI5SDE3MzkuNThWMjI4LjAzOUgxNzA2Ljc1WiIgZmlsbD0iIzAxMDEwMSIvPgo8cGF0aCBkPSJNMTc4NS44OCAyMjQuNDc5QzE3NjAuMTYgMjI0LjQ3OSAxNzQ4Ljk1IDIzOC43MTkgMTc0OC45NSAyNTguMTY5VjM4OC4yNTlDMTc0OC45NSA0MTIuMDg5IDE3NjEuODEgNDI0LjEzOSAxNzg1Ljg4IDQyNC4xMzlDMTgwOS45NSA0MjQuMTM5IDE4MjMuNjMgNDEyLjA4OSAxODIzLjYzIDM4OS44OTlWMjU4LjE1OUMxODIzLjYzIDI0MC4zNTkgMTgxMC41IDIyNC40NjkgMTc4NS44OCAyMjQuNDY5VjIyNC40NzlaTTE3ODYuMTYgMjU0LjA1OUMxNzkwLjI2IDI1NC4wNTkgMTc5Mi40NSAyNTUuOTc5IDE3OTIuNDUgMjYwLjkwOVYzODguMjY5QzE3OTIuNDUgMzk0LjAxOSAxNzkxLjA5IDM5Ni43NTkgMTc4Ni40MyAzOTYuNzU5QzE3ODIuMDYgMzk2Ljc1OSAxNzgwLjQyIDM5NC4yOTkgMTc4MC40MiAzODguMjY5TDE3ODAuMTQgMjYwLjkwOUMxNzgwLjE0IDI1Ni4yNDkgMTc4Mi4zNCAyNTQuMDU5IDE3ODYuMTYgMjU0LjA1OVoiIGZpbGw9IiMwMTAxMDEiLz4KPHBhdGggZD0iTTE4MzMuODIgMjI4LjMxMlY0MjAuMDMzSDE4NjEuNzNWMzA3LjQ2MkwxODg3LjcxIDQyMC4wMzNIMTkxOS45OVYyMjguMzEySDE4OTIuNjNWMzI3LjczM0wxODcxLjMgMjI4LjMxMkgxODMzLjgxSDE4MzMuODJaIiBmaWxsPSIjMDEwMTAxIi8+Cjwvc3ZnPgo=" alt="Foundation for American Innovation">
+  <img class="logo logo-dark" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkyMCIgaGVpZ2h0PSI0MjUiIHZpZXdCb3g9IjAgMCAxOTIwIDQyNSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE4MC4xOTkgMEwzNTIuNzU5IDIxMS44OEwxODAuMTk5IDQyMy43NlYwWiIgZmlsbD0iI0ZGRkZGRiIvPgo8cGF0aCBkPSJNMCAwTDE3Mi41NiAyMTEuODhMMCA0MjMuNzZWMFoiIGZpbGw9IiNGRkZGRkYiLz4KPHBhdGggZD0iTTQ0OS4xMzEgMTk1LjU0OFYxMDQuNjE4SDQ3Ny41ODFWODEuNjA4MUg0NDkuMTMxVjI4Ljc1ODFINDgxLjQxMVYzLjgyODEySDQxNy4xMjFWMTk1LjU0OEg0NDkuMTMxWiIgZmlsbD0iI0ZGRkZGRiIvPgo8cGF0aCBkPSJNNTI5LjY4IDBDNTAzLjk2IDAgNDkyLjc1IDE0LjI0IDQ5Mi43NSAzMy42OVYxNjMuNzhDNDkyLjc1IDE4Ny42MSA1MDUuNjEgMTk5LjY2IDUyOS42OCAxOTkuNjZDNTUzLjc1IDE5OS42NiA1NjcuNDMgMTg3LjYxIDU2Ny40MyAxNjUuNDJWMzMuNjlDNTY3LjQzIDE1Ljg5IDU1NC4zIDAgNTI5LjY4IDBaTTUyOS45NSAyOS41OEM1MzQuMDUgMjkuNTggNTM2LjI0IDMxLjUgNTM2LjI0IDM2LjQzVjE2My43OUM1MzYuMjQgMTY5LjU0IDUzNC44NyAxNzIuMjggNTMwLjIyIDE3Mi4yOEM1MjUuODQgMTcyLjI4IDUyNC4yIDE2OS44MiA1MjQuMiAxNjMuNzlMNTIzLjkzIDM2LjQzQzUyMy45MyAzMS43NyA1MjYuMTIgMjkuNTggNTI5Ljk1IDI5LjU4WiIgZmlsbD0iI0ZGRkZGRiIvPgo8cGF0aCBkPSJNNjIyLjA3IDMuODI4MTJWMTYzLjc3OEM2MjIuMDcgMTY5LjUyOCA2MjAuNyAxNzIuMjY4IDYxNi4wNSAxNzIuMjY4QzYxMS42NyAxNzIuMjY4IDYxMC4wMyAxNjkuODA4IDYxMC4wMyAxNjMuNzc4VjMuODI4MTJINTc4LjU3VjE2My43NzhDNTc4LjU3IDE4Ny42MDggNTkxLjQzIDE5OS42NTggNjE1LjUgMTk5LjY1OEM2MzkuNTcgMTk5LjY1OCA2NTMuMjUgMTg3LjYwOCA2NTMuMjUgMTY1LjQxOFYzLjgyODEySDYyMi4wNkg2MjIuMDdaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik02NjQuNTYxIDMuODI4MTJWMTk1LjU0OEg2OTIuNDYxVjgyLjk3ODFMNzE4LjQ1MSAxOTUuNTQ4SDc1MC43MzFWMy44MjgxMkg3MjMuMzcxVjEwMy4yNDhMNzAyLjAzMSAzLjgyODEySDY2NC41NTFINjY0LjU2MVoiIGZpbGw9IiNGRkZGRkYiLz4KPHBhdGggZD0iTTc2MS43OTkgMy44MjgxMlYxOTUuNTQ4SDgwNi4zODlDODI3LjE3OSAxOTUuNTQ4IDgzNi40NzkgMTg2LjUwOCA4MzYuNDc5IDE2Ny4zMzhWMzMuNjg4MUM4MzYuNDc5IDE1LjMzODEgODI3LjQ0OSAzLjgzODEyIDgwNi42NTkgMy44MzgxMkg3NjEuNzg5TDc2MS43OTkgMy44MjgxMlpNNzkyLjk4OSAxNzEuNDQ4VjI4LjQ3ODFINzk4LjQ1OUM4MDIuODM5IDI4LjQ3ODEgODA1LjI5OSAzMS4yMTgxIDgwNS4yOTkgMzYuNjk4MVYxNjUuNjk4QzgwNS4yOTkgMTY5LjUyOCA4MDMuMzg5IDE3MS40NDggNzk5LjgyOSAxNzEuNDQ4SDc5Mi45ODlaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik04NjEuNDE4IDMuODI4MTJMODQwLjg5OCAxOTUuNTQ4SDg2OS42MThMODc0LjgxOCAxNDIuOTU4SDg5My45NjhMODk4Ljg4OCAxOTUuNTQ4SDkyOC45NzhMOTA3LjkyOCAzLjgyODEySDg2MS40MThaTTg4NC42NjggNDEuODk4MUw4OTEuNzc4IDExOS4xMzhIODc3LjAwOEw4ODQuNjY4IDQxLjg5ODFaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik05OTUuODYyIDMuODI4MTJIOTE5LjI2MlYyOC40NzgxSDk0MS4xNTJWMTk1LjU0OEg5NzMuOTgyVjI4LjQ3ODFIOTk1Ljg3MlYzLjgyODEySDk5NS44NjJaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0xMDAzLjgxIDMuNTYyNVYxOTUuNTUzSDEwMzYuNjRWMy41NjI1SDEwMDMuODFaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0xMDg1LjEgMEMxMDU5LjM4IDAgMTA0OC4xNyAxNC4yNCAxMDQ4LjE3IDMzLjY5VjE2My43OEMxMDQ4LjE3IDE4Ny42MSAxMDYxLjAzIDE5OS42NiAxMDg1LjEgMTk5LjY2QzExMDkuMTcgMTk5LjY2IDExMjIuODUgMTg3LjYxIDExMjIuODUgMTY1LjQyVjMzLjY5QzExMjIuODUgMTUuODkgMTEwOS43MiAwIDEwODUuMSAwWk0xMDg1LjM4IDI5LjU4QzEwODkuNDggMjkuNTggMTA5MS42NyAzMS41IDEwOTEuNjcgMzYuNDNWMTYzLjc5QzEwOTEuNjcgMTY5LjU0IDEwOTAuMzEgMTcyLjI4IDEwODUuNjUgMTcyLjI4QzEwODEuMjggMTcyLjI4IDEwNzkuNjQgMTY5LjgyIDEwNzkuNjQgMTYzLjc5TDEwNzkuMzYgMzYuNDNDMTA3OS4zNiAzMS43NyAxMDgxLjU2IDI5LjU4IDEwODUuMzggMjkuNThaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0xMTMzLjM2IDMuODI4MTJWMTk1LjU0OEgxMTYxLjI3VjgyLjk3ODFMMTE4Ny4yNSAxOTUuNTQ4SDEyMTkuNTNWMy44MjgxMkgxMTkyLjE3VjEwMy4yNDhMMTE3MC44NCAzLjgyODEySDExMzMuMzVIMTEzMy4zNloiIGZpbGw9IiNGRkZGRkYiLz4KPHBhdGggZD0iTTEzMDEuOTUgMTk1LjU0OFYxMDQuNjE4SDEzMzAuNFY4MS42MDgxSDEzMDEuOTVWMjguNzU4MUgxMzM0LjIzVjMuODI4MTJIMTI2OS45NFYxOTUuNTQ4SDEzMDEuOTVaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0xMzc3LjAxIDBDMTM1MS4yOSAwIDEzNDAuMDggMTQuMjQgMTM0MC4wOCAzMy42OVYxNjMuNzhDMTM0MC4wOCAxODcuNjEgMTM1Mi45NCAxOTkuNjYgMTM3Ny4wMSAxOTkuNjZDMTQwMS4wOCAxOTkuNjYgMTQxNC43NiAxODcuNjEgMTQxNC43NiAxNjUuNDJWMzMuNjlDMTQxNC43NiAxNS44OSAxNDAxLjYzIDAgMTM3Ny4wMSAwWk0xMzc3LjI5IDI5LjU4QzEzODEuMzggMjkuNTggMTM4My41OCAzMS41IDEzODMuNTggMzYuNDNWMTYzLjc5QzEzODMuNTggMTY5LjU0IDEzODIuMjEgMTcyLjI4IDEzNzcuNTYgMTcyLjI4QzEzNzMuMTkgMTcyLjI4IDEzNzEuNTUgMTY5LjgyIDEzNzEuNTUgMTYzLjc5TDEzNzEuMjcgMzYuNDNDMTM3MS4yNyAzMS43NyAxMzczLjQ2IDI5LjU4IDEzNzcuMjkgMjkuNThaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0xNDI1Ljg0IDMuODI4MTJWMTk1LjU0OEgxNDU1Ljk0VjEwMy41MjhIMTQ2MC44NkMxNDY1Ljc5IDEwMy41MjggMTQ2OS4zNSAxMDYuMjY4IDE0NjkuMzUgMTEzLjY1OFYxNzkuMzg4QzE0NjkuMzUgMTkwLjM0OCAxNDcxLjgxIDE5My4wNzggMTQ3NC4yOCAxOTUuNTQ4SDE1MDQuOTJDMTUwMi4xOCAxOTMuMzU4IDE0OTkuNzIgMTg4LjQyOCAxNDk5LjcyIDE4Mi4zOThWMTE2LjExOEMxNDk5LjcyIDEwMC4yMjggMTQ4OC41IDkyLjU2ODEgMTQ3Ni4xOSA5Mi4yODgxQzE0ODguNSA5MS4xODgxIDE1MDAuODIgODEuMDU4MSAxNTAwLjgyIDY0LjA3ODFWMzQuMjI4MUMxNTAwLjgyIDE3LjI0ODEgMTQ4OC43OCAzLjgyODEyIDE0NjkuMDggMy44MjgxMkgxNDI1Ljg2SDE0MjUuODRaTTE0NTUuOTQgMjguNzQ4MUgxNDYxLjk1QzE0NjUuMjMgMjguNzQ4MSAxNDY5LjM0IDMwLjExODEgMTQ2OS4zNCAzNy41MDgxVjczLjEwODFDMTQ2OS4zNCA3Ny4yMTgxIDE0NjYuODggODEuNTk4MSAxNDYxLjY3IDgxLjU5ODFIMTQ1NS45M1YyOC43NTgxTDE0NTUuOTQgMjguNzQ4MVoiIGZpbGw9IiNGRkZGRkYiLz4KPHBhdGggZD0iTTQxNi44MjEgMjI4LjMxMkwzOTYuMzAxIDQyMC4wMzNINDI1LjAyMUw0MzAuMjIxIDM2Ny40NDNINDQ5LjM3MUw0NTQuMjkxIDQyMC4wMzNINDg0LjM4MUw0NjMuMzIxIDIyOC4zMTJINDE2LjgxMUg0MTYuODIxWk00NDAuMDcxIDI2Ni4zODNMNDQ3LjE4MSAzNDMuNjEySDQzMi40MTFMNDQwLjA3MSAyNjYuMzgzWiIgZmlsbD0iI0ZGRkZGRiIvPgo8cGF0aCBkPSJNNDk0LjYyMSAyMjguMzEyVjQyMC4wMzNINTIxLjk4MVYzMDIuMjYzTDU0My44NzEgNDIwLjAzM0g1NjYuMzAxTDU4Ni4wMDEgMzAyLjUzM1Y0MjAuMDMzSDYxMy4zNjFWMjI4LjMxMkg1NzEuNzgxTDU1NS45MTEgMzMyLjM5M0w1NDAuODYxIDIyOC4zMTJINDk0LjYzMUg0OTQuNjIxWiIgZmlsbD0iI0ZGRkZGRiIvPgo8cGF0aCBkPSJNNjg5LjM0MiA0MjAuMDMzVjM5NS4xMTJINjU4LjQzMlYzMjkuMTAzSDY4Ni44ODJWMzA2LjA5Mkg2NTguNDMyVjI1My4yMzJINjkwLjcxMlYyMjguMzEySDYyNi40MjJWNDIwLjAzM0g2ODkuMzQyWiIgZmlsbD0iI0ZGRkZGRiIvPgo8cGF0aCBkPSJNNzAzLjA0OSAyMjguMzA3VjQyMC4wMjdINzMzLjEzOVYzMjcuOTk3SDczOC4wNTlDNzQyLjk3OSAzMjcuOTk3IDc0Ni41MzkgMzMwLjczNyA3NDYuNTM5IDMzOC4xMjdWNDAzLjg1N0M3NDYuNTM5IDQxNC44MTcgNzQ4Ljk5OSA0MTcuNTQ3IDc1MS40NTkgNDIwLjAxN0g3ODIuMDk5Qzc3OS4zNjkgNDE3LjgyNyA3NzYuODk5IDQxMi44OTcgNzc2Ljg5OSA0MDYuODY3VjM0MC41ODdDNzc2Ljg5OSAzMjQuNzA3IDc2NS42NzkgMzE3LjAzNyA3NTMuMzY5IDMxNi43NTdDNzY1LjY3OSAzMTUuNjY3IDc3Ny45ODkgMzA1LjUyNyA3NzcuOTg5IDI4OC41NDdWMjU4LjY5N0M3NzcuOTg5IDI0MS43MTcgNzY1Ljk0OSAyMjguMjk3IDc0Ni4yNTkgMjI4LjI5N0g3MDMuMDM5TDcwMy4wNDkgMjI4LjMwN1pNNzMzLjEzOSAyNTMuMjI3SDczOS4xNTlDNzQyLjQzOSAyNTMuMjI3IDc0Ni41NDkgMjU0LjU5NyA3NDYuNTQ5IDI2MS45ODdWMjk3LjU5N0M3NDYuNTQ5IDMwMS43MDcgNzQ0LjA4OSAzMDYuMDg3IDczOC44ODkgMzA2LjA4N0g3MzMuMTQ5VjI1My4yMjdINzMzLjEzOVoiIGZpbGw9IiNGRkZGRkYiLz4KPHBhdGggZD0iTTc5MC4wMzEgMjI4LjAzOVY0MjAuMDI5SDgyMi44NjFWMjI4LjAzOUg3OTAuMDMxWiIgZmlsbD0iI0ZGRkZGRiIvPgo8cGF0aCBkPSJNODc4LjA5MiAyOTQuMzE3SDkwNy45MTJWMjU1Ljk3N0M5MDcuOTEyIDIzOC4xNzcgODk2LjE1MiAyMjQuNDc3IDg3MS41MzIgMjI0LjQ3N0M4NDYuOTEyIDIyNC40NzcgODM0LjYwMiAyMzguNzE3IDgzNC42MDIgMjU4LjE2N1YzODguMjU3QzgzNC42MDIgNDEyLjA4NyA4NDcuNDYyIDQyNC4xMzcgODcxLjUzMiA0MjQuMTM3Qzg5NS42MDIgNDI0LjEzNyA5MDcuOTEyIDQxMi4wODcgOTA3LjkxMiAzODkuODk3VjM0My44ODdIODc4LjA5MlYzODguMjU3Qzg3OC4wOTIgMzk0LjAwNyA4NzYuNzIyIDM5Ni43NDcgODcyLjA3MiAzOTYuNzQ3Qzg2Ny42OTIgMzk2Ljc0NyA4NjYuMDUyIDM5NC4yODcgODY2LjA1MiAzODguMjU3TDg2NS43ODIgMjYwLjg5N0M4NjUuNzgyIDI1Ni4yMzcgODY3Ljk3MiAyNTQuMDQ3IDg3MS44MDIgMjU0LjA0N0M4NzUuOTAyIDI1NC4wNDcgODc4LjA5MiAyNTUuOTY3IDg3OC4wOTIgMjYwLjg5N1YyOTQuMzA3VjI5NC4zMTdaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik05MzMuMDIgMjI4LjMxMkw5MTIuNSA0MjAuMDMzSDk0MS4yMkw5NDYuNDIgMzY3LjQ0M0g5NjUuNTdMOTcwLjQ5IDQyMC4wMzNIMTAwMC41OEw5NzkuNTIgMjI4LjMxMkg5MzMuMDFIOTMzLjAyWk05NTYuMjcgMjY2LjM4M0w5NjMuMzggMzQzLjYxMkg5NDguNjFMOTU2LjI3IDI2Ni4zODNaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0xMDA5LjIyIDIyOC4zMTJWNDIwLjAzM0gxMDM3LjEyVjMwNy40NjJMMTA2My4xMSA0MjAuMDMzSDEwOTUuMzlWMjI4LjMxMkgxMDY4LjAzVjMyNy43MzNMMTA0Ni42OSAyMjguMzEySDEwMDkuMjJaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0xMTQ0LjczIDIyOC4wMzlWNDIwLjAyOUgxMTc3LjU2VjIyOC4wMzlIMTE0NC43M1oiIGZpbGw9IiNGRkZGRkYiLz4KPHBhdGggZD0iTTExODkuMjcgMjI4LjMxMlY0MjAuMDMzSDEyMTcuMTdWMzA3LjQ2MkwxMjQzLjE2IDQyMC4wMzNIMTI3NS40NFYyMjguMzEySDEyNDguMDhWMzI3LjczM0wxMjI2Ljc0IDIyOC4zMTJIMTE4OS4yN1oiIGZpbGw9IiNGRkZGRkYiLz4KPHBhdGggZD0iTTEyODcuMjYgMjI4LjMxMlY0MjAuMDMzSDEzMTUuMTZWMzA3LjQ2MkwxMzQxLjE1IDQyMC4wMzNIMTM3My40MlYyMjguMzEySDEzNDYuMDZWMzI3LjczM0wxMzI0LjczIDIyOC4zMTJIMTI4Ny4yNloiIGZpbGw9IiNGRkZGRkYiLz4KPHBhdGggZD0iTTE0MjEuNDMgMjI0LjQ3OUMxMzk1LjcxIDIyNC40NzkgMTM4NC41IDIzOC43MTkgMTM4NC41IDI1OC4xNjlWMzg4LjI1OUMxMzg0LjUgNDEyLjA4OSAxMzk3LjM2IDQyNC4xMzkgMTQyMS40MyA0MjQuMTM5QzE0NDUuNSA0MjQuMTM5IDE0NTkuMTggNDEyLjA4OSAxNDU5LjE4IDM4OS44OTlWMjU4LjE1OUMxNDU5LjE4IDI0MC4zNTkgMTQ0Ni4wNiAyMjQuNDY5IDE0MjEuNDMgMjI0LjQ2OVYyMjQuNDc5Wk0xNDIxLjcxIDI1NC4wNTlDMTQyNS44MSAyNTQuMDU5IDE0MjggMjU1Ljk3OSAxNDI4IDI2MC45MDlWMzg4LjI2OUMxNDI4IDM5NC4wMTkgMTQyNi42NCAzOTYuNzU5IDE0MjEuOTkgMzk2Ljc1OUMxNDE3LjYxIDM5Ni43NTkgMTQxNS45NyAzOTQuMjk5IDE0MTUuOTcgMzg4LjI2OUwxNDE1LjY5IDI2MC45MDlDMTQxNS42OSAyNTYuMjQ5IDE0MTcuODkgMjU0LjA1OSAxNDIxLjcxIDI1NC4wNTlaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0xNDkzLjk5IDIyOC4zMTJIMTQ2My44OUwxNDg0Ljk2IDQyMC4wMzNIMTUzMS40NkwxNTUxLjk4IDIyOC4zMTJIMTUyMy4yNkwxNTA4LjQ4IDM4MC41OTJMMTQ5My45OCAyMjguMzEySDE0OTMuOTlaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0xNTYzLjI3IDIyOC4zMTJMMTU0Mi43NSA0MjAuMDMzSDE1NzEuNDdMMTU3Ni42NyAzNjcuNDQzSDE1OTUuODJMMTYwMC43NSA0MjAuMDMzSDE2MzAuODVMMTYwOS43OCAyMjguMzEySDE1NjMuMjhIMTU2My4yN1pNMTU4Ni41MiAyNjYuMzgzTDE1OTMuNjMgMzQzLjYxMkgxNTc4Ljg1TDE1ODYuNTIgMjY2LjM4M1oiIGZpbGw9IiNGRkZGRkYiLz4KPHBhdGggZD0iTTE2OTguODEgMjI4LjMxMkgxNjIyLjIyVjI1Mi45NjNIMTY0NC4xMVY0MjAuMDMzSDE2NzYuOTRWMjUyLjk2M0gxNjk4LjgyVjIyOC4zMTJIMTY5OC44MVoiIGZpbGw9IiNGRkZGRkYiLz4KPHBhdGggZD0iTTE3MDYuNzUgMjI4LjAzOVY0MjAuMDI5SDE3MzkuNThWMjI4LjAzOUgxNzA2Ljc1WiIgZmlsbD0iI0ZGRkZGRiIvPgo8cGF0aCBkPSJNMTc4NS44OCAyMjQuNDc5QzE3NjAuMTYgMjI0LjQ3OSAxNzQ4Ljk1IDIzOC43MTkgMTc0OC45NSAyNTguMTY5VjM4OC4yNTlDMTc0OC45NSA0MTIuMDg5IDE3NjEuODEgNDI0LjEzOSAxNzg1Ljg4IDQyNC4xMzlDMTgwOS45NSA0MjQuMTM5IDE4MjMuNjMgNDEyLjA4OSAxODIzLjYzIDM4OS44OTlWMjU4LjE1OUMxODIzLjYzIDI0MC4zNTkgMTgxMC41IDIyNC40NjkgMTc4NS44OCAyMjQuNDY5VjIyNC40NzlaTTE3ODYuMTYgMjU0LjA1OUMxNzkwLjI2IDI1NC4wNTkgMTc5Mi40NSAyNTUuOTc5IDE3OTIuNDUgMjYwLjkwOVYzODguMjY5QzE3OTIuNDUgMzk0LjAxOSAxNzkxLjA5IDM5Ni43NTkgMTc4Ni40MyAzOTYuNzU5QzE3ODIuMDYgMzk2Ljc1OSAxNzgwLjQyIDM5NC4yOTkgMTc4MC40MiAzODguMjY5TDE3ODAuMTQgMjYwLjkwOUMxNzgwLjE0IDI1Ni4yNDkgMTc4Mi4zNCAyNTQuMDU5IDE3ODYuMTYgMjU0LjA1OVoiIGZpbGw9IiNGRkZGRkYiLz4KPHBhdGggZD0iTTE4MzMuODIgMjI4LjMxMlY0MjAuMDMzSDE4NjEuNzNWMzA3LjQ2MkwxODg3LjcxIDQyMC4wMzNIMTkxOS45OVYyMjguMzEySDE4OTIuNjNWMzI3LjczM0wxODcxLjMgMjI4LjMxMkgxODMzLjgxSDE4MzMuODJaIiBmaWxsPSIjRkZGRkZGIi8+Cjwvc3ZnPgo=" alt="Foundation for American Innovation">
+  <nav class="nav" aria-label="Sections">
+    <a href="#map-sec">Map</a><a href="#species">Species</a><a href="#quiz">Quiz</a><a href="#lineage">Lineage</a><a href="#phrasebook">Phrasebook</a>
+  </nav>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <h1 id="title"></h1>
+    <div>
+      <p class="dek" id="dek"></p>
+      <p class="dek" id="dek2"></p>
+      <div class="ctas">
+        <a class="btn solid" href="#quiz">Take the sorting quiz</a>
+        <a class="btn" href="#species">Browse the species</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+<section id="map-sec">
+  <div class="wrap">
+    <h2>The habitat map</h2>
+    <p class="lead">Two questions sort almost everyone: how fast should AI go, and who should be in charge of it? Tap a dot to read its entry.</p>
+    <div class="map-grid">
+      <div class="map-box">
+        <svg id="map" viewBox="0 0 600 560" role="img" aria-label="Map of tribes by speed and by who should steer"></svg>
+        <div class="legend"><span>Active tribe</span><span class="anc">Ancestral tribe</span></div>
+      </div>
+      <div class="map-side">
+        <dl>
+          <dt>Left to right: speed</dt>
+          <dd>From "stop building frontier AI by treaty" to "slowing down is a moral harm."</dd>
+          <dt>Bottom to top: who steers</dt>
+          <dd>From "individuals and markets, government keep out" to "a strong state or new institutions."</dd>
+          <dt>What the map leaves out</dt>
+          <dd>A third question splits allies: should technology serve people roughly as they are, or help us become something else? Accelerationists and some safety people both answer "something else." Everyone else gets nervous.</dd>
+        </dl>
+        <p class="small">Positions are approximate and describe the tribe's center of gravity, not every member.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="species">
+  <div class="wrap">
+    <h2>The species</h2>
+    <p class="lead">Thirteen tribes, from the semiconductor pioneers to last year's group chats. Most people belong to two or three and deny belonging to any.</p>
+    <div class="filters" role="group" aria-label="Filter species">
+      <button class="chip" data-filter="all" aria-pressed="true">All</button>
+      <button class="chip" data-filter="safety" aria-pressed="false">Worried</button>
+      <button class="chip" data-filter="speed" aria-pressed="false">Fast</button>
+      <button class="chip" data-filter="build" aria-pressed="false">Builders</button>
+      <button class="chip" data-filter="ancestral" aria-pressed="false">Ancestral</button>
+    </div>
+    <div class="specimens" id="specimens"></div>
+    <div class="warning" id="warning"></div>
+  </div>
+</section>
+
+<section id="quiz">
+  <div class="wrap">
+    <h2>Which tribe are you?</h2>
+    <p class="lead">Nine questions. Answer honestly; no one from Berkeley is watching. Probably.</p>
+    <div class="quiz" id="quizbox" aria-live="polite"></div>
+  </div>
+</section>
+
+<section id="lineage">
+  <div class="wrap">
+    <h2>The family tree</h2>
+    <p class="lead">Nearly every tribe traces back to a mailing list, a garage, or a commune. Here is the order they arrived in.</p>
+    <ol class="timeline" id="timeline"></ol>
+  </div>
+</section>
+
+<section id="phrasebook">
+  <div class="wrap">
+    <h2>The phrasebook</h2>
+    <p class="lead">Vocabulary is the fastest way to identify a tribe. If a witness says one of these, you know where they went to intellectual school.</p>
+    <div class="phrases" id="phrases"></div>
+  </div>
+</section>
+
+<section id="dc">
+  <div class="wrap">
+    <h2>Field notes for Washington</h2>
+    <p class="lead">Three questions that sort any witness, coalition letter, or funder in under a minute.</p>
+    <div class="tips" id="tips"></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p id="foot"></p>
+    <p>Foundation for American Innovation, Washington, DC. <a href="https://thefai.org">thefai.org</a>, @joinfai</p>
+  </div>
+</footer>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ==================================================================
+   CONTENT — edit everything below this line to change the site.
+   Each tribe is one object. "x" (0 = halt, 100 = accelerate) and
+   "y" (0 = markets/individuals, 100 = strong state/institutions)
+   place it on the habitat map. "group" drives the filter buttons:
+   safety | speed | build | ancestral | culture
+   ================================================================== */
+const SITE = {
+  title: "A field guide to the tribes of Silicon Valley",
+  dek: "For Washington visitors trying to tell a rationalist from a post-rationalist, and an accelerationist from an American Dynamist.",
+  dek2: "Prepared by the Foundation for American Innovation. Specimens observed from a safe distance.",
+  foot: "Sources and a serious version of this guide, written as a memo for policymakers, are available from FAI. Labels are contested; most people named here would object to being filed anywhere. That is also a tribal marker."
+};
+
+const TRIBES = [
+  { id:"rat", name:"Rationalists", latin:"Homo bayesianus", status:"Established", hot:false, group:"safety", x:10, y:80,
+    aka:"Rats, LessWrongers, the Bay Area rationalist community",
+    note:"They believe clear thinking can be learned, and that clear thinking leads to one conclusion: superintelligent AI may kill everyone. They will tell you their probability of that, to two significant figures.",
+    habitat:"Berkeley group houses; the Lighthaven campus; LessWrong; Scott Alexander's comment section",
+    call:"\"What's your p(doom)?\" \"I'm updating on that.\" \"Short timelines.\"",
+    diet:"The Sequences; Harry Potter and the Methods of Rationality; If Anyone Builds It, Everyone Dies (2025)",
+    wants:"The Machine Intelligence Research Institute wing wants an international treaty halting frontier AI. Most others would settle for compute monitoring and lab transparency.",
+    dc:"Congressional briefings on catastrophic risk, usually with a slide on exponential curves",
+    relations:"Parent of effective altruism's AI wing and grandparent of the post-rationalists. Regards e/acc as a coping mechanism." },
+
+  { id:"ea", name:"Effective altruists", latin:"Philanthropus quantificans", status:"Rebranding", hot:true, group:"safety", x:28, y:70,
+    aka:"EAs, longtermists, \"people in the AI safety space\"",
+    note:"Began by ranking malaria charities by lives saved per dollar and ended up funding much of the AI safety field. Increasingly prefer not to be called EAs, which is how you can tell.",
+    habitat:"Oxford, Berkeley, and a surprising number of DC think tanks; 80,000 Hours career calls",
+    call:"\"Cost-effectiveness.\" \"Catastrophic risk.\" \"Counterfactual impact.\" \"Neglected, tractable, important.\"",
+    diet:"Peter Singer; Toby Ord's The Precipice; Nick Bostrom's Superintelligence; GiveWell spreadsheets",
+    wants:"Transparency and incident reporting for frontier labs, third-party model evaluations, chip export controls, biosecurity funding.",
+    dc:"Staffing AI governance nonprofits and fellowships; testifying on evaluations",
+    relations:"Main funder is Coefficient Giving (renamed from Open Philanthropy in 2025). Fights e/acc on everything except high-skilled immigration and nuclear power." },
+
+  { id:"tpot", name:"Post-rationalists", latin:"Postrationalis vibrans", status:"Abundant online", hot:false, group:"culture", x:48, y:34,
+    aka:"TPOT (\"This Part of Twitter\"), postrats, the Grey Tribe's spiritual wing",
+    note:"Former rationalists who decided the spreadsheet had left something out, and went looking for it in meditation, therapy, and psychedelics. Unusually nice to each other online.",
+    habitat:"X (formerly Twitter), group chats, weekend camps with names ending in \"-camp\"",
+    call:"\"Vibes.\" \"Embodiment.\" \"I hit the jhanas.\" Earnest posts that may or may not be jokes",
+    diet:"David Chapman's Meaningness; Buddhist texts; Iain McGilchrist; their mutuals' Substacks",
+    wants:"Very little from Washington. Their influence is on the tone and friendships of founders and investors, not on bills.",
+    dc:"Rarely. When sighted, they are at a dinner party explaining why both sides of the AI debate need therapy",
+    relations:"Friendly with everyone, suspicious of maximalists in both directions." },
+
+  { id:"eacc", name:"Effective accelerationists", latin:"Accelerans thermodynamicus", status:"Small but loud", hot:true, group:"speed", x:95, y:8,
+    aka:"e/acc, accelerationists",
+    note:"Founded by pseudonymous posters in 2022 as a rebuttal to AI safety. Holds that growth in intelligence and energy is the will of the universe and that slowing it is immoral. The universe has not commented.",
+    habitat:"X, hackathons, San Francisco warehouse parties",
+    call:"\"Decel.\" \"Doomer.\" \"Accelerate.\" \"The techno-capital machine.\"",
+    diet:"Beff Jezos's newsletter; Nick Land (selectively); thermodynamics textbooks, loosely interpreted",
+    wants:"No pauses, no licensing, open-source models, and as much energy as physics allows.",
+    dc:"Mostly as an insult hurled by the other side. The investors who adopted the label do the actual lobbying",
+    relations:"Cousins with the tech right, who have better suits and a super PAC. Mortal enemies of the rationalists, who knew them before they were famous." },
+
+  { id:"techright", name:"The tech right", latin:"Dynamismus americanus", status:"Well funded", hot:true, group:"speed", x:82, y:42,
+    aka:"Techno-optimists, American Dynamism, the Valley's new Republicans",
+    note:"Venture capitalists who concluded around 2020 that the regulatory state, not the Soviet Union, was the main threat to American greatness. Now have a super PAC network that has raised over $140 million.",
+    habitat:"Menlo Park, Austin, Mar-a-Lago, podcasts over two hours long",
+    call:"\"Build.\" \"American dynamism.\" \"Regulatory capture.\" \"A patchwork of fifty state laws.\"",
+    diet:"The Techno-Optimist Manifesto (2023); The Sovereign Individual; defense-procurement white papers",
+    wants:"One federal AI framework that preempts the states, defense procurement reform, permitting reform, and more high-skilled visas.",
+    dc:"Everywhere. Funding Leading the Future, advising the White House, and hosting founders on the Hill",
+    relations:"Allied with e/acc on vibes and with abundance on permitting. Fights the populist right over H-1B visas." },
+
+  { id:"nrx", name:"Neoreactionaries", latin:"Monarchus moldbugii", status:"Seldom seen in daylight", hot:false, group:"speed", x:62, y:93,
+    aka:"NRx, the Dark Enlightenment, readers of Curtis Yarvin",
+    note:"Believe democracy has failed and the country should be run like a company, with a chief executive. How much they influence the administration is disputed, including by their founder.",
+    habitat:"Substack, very online staff offices, the comment sections of other people's Substacks",
+    call:"\"The Cathedral.\" \"Formalism.\" \"RAGE: retire all government employees.\"",
+    diet:"Unqualified Reservations (budget several weeks); Carlyle; Burnham's The Managerial Revolution",
+    wants:"A stronger executive and a smaller civil service. Little specific interest in AI rules.",
+    dc:"In civil-service and executive-power debates, usually through staffers rather than in person",
+    relations:"Patronized by some tech-right investors; dismissed by most conservative intellectuals; ignored by the post-rationalists, who find it bad for the vibes." },
+
+  { id:"abundance", name:"Abundance and the YIMBYs", latin:"Aedificator permittens", status:"Spreading east", hot:true, group:"build", x:70, y:70,
+    aka:"YIMBYs (\"yes in my backyard\"), progress studies, the abundance movement",
+    note:"Started as San Francisco renters furious about zoning, and became a bipartisan movement arguing America's real problem is that it can't build anything. The tribe Washington finds easiest to understand, because it wants legislation.",
+    habitat:"City council meetings, think tanks on both sides, Ezra Klein's podcast",
+    call:"\"State capacity.\" \"Vetocracy.\" \"Permitting.\" \"Just build more housing.\"",
+    diet:"Abundance by Ezra Klein and Derek Thompson (2025); Works in Progress; Jane Jacobs, argued with",
+    wants:"Zoning and permitting reform, NEPA reform, faster science funding, more high-skilled immigration, cheap energy.",
+    dc:"The bipartisan House YIMBY Caucus; permitting reform markups; every think tank panel on housing",
+    relations:"Gets money from EA-adjacent and tech-right donors alike. Critics on the left call it a vehicle for tech donors in local politics." },
+
+  { id:"hawk", name:"The Manhattan Project crowd", latin:"Imperator computans", status:"Growing", hot:false, group:"speed", x:80, y:88,
+    aka:"Situational Awareness readers, AI national-security hawks",
+    note:"Think artificial general intelligence is coming within years and that the only question is whether America or China builds it first. Want the government deeply involved, mainly so it can win.",
+    habitat:"Defense tech startups, national-security think tanks, the SCIF-adjacent parts of frontier labs",
+    call:"\"The free world must prevail.\" \"Compute is the new oil.\" \"The project.\"",
+    diet:"Leopold Aschenbrenner's Situational Awareness (2024); Richard Rhodes's The Making of the Atomic Bomb",
+    wants:"Tight chip export controls, lab security against espionage, huge energy buildout, government-lab partnerships.",
+    dc:"Armed Services and Intelligence committees; the export-control debates",
+    relations:"Agrees with the EAs on export controls and with e/acc on speed. Neither is entirely comfortable with this." },
+
+  { id:"cypher", name:"Cypherpunks", latin:"Cryptographus anarchicus", status:"Evolved into the crypto industry", hot:false, group:"ancestral", x:74, y:5,
+    aka:"Crypto-anarchists, and their descendants in Bitcoin and crypto",
+    note:"A 1990s mailing list that saw strong encryption as a way to put individuals beyond the reach of the state. Their descendants now have a super PAC and a congressional caucus, which the founders would find either hilarious or tragic.",
+    habitat:"Formerly the cypherpunks mailing list; now Bitcoin conferences and Wyoming",
+    call:"\"Cypherpunks write code.\" \"Not your keys, not your coins.\" \"Privacy is necessary for an open society.\"",
+    diet:"Tim May's Crypto Anarchist Manifesto (1988); Eric Hughes's A Cypherpunk's Manifesto (1993); the Bitcoin white paper",
+    wants:"Legal strong encryption, clear crypto rules, no backdoors, no central bank digital currency.",
+    dc:"Crypto market-structure bills and encryption fights",
+    relations:"Share an ancestor with the rationalists: the Extropian mailing list, where cypherpunk Hal Finney also posted." },
+
+  { id:"hacker", name:"Hackers and cyber-libertarians", latin:"Informatio liberata", status:"Still active at EFF", hot:false, group:"ancestral", x:58, y:14,
+    aka:"Old-school hackers, left-libertarians, the Electronic Frontier Foundation crowd",
+    note:"Believed information wants to be free and that governments had no business on the internet. In 1996, John Perry Barlow told the governments of the world they had no sovereignty in cyberspace. The governments disagreed.",
+    habitat:"MIT, the Homebrew Computer Club, DEF CON, the EFF offices",
+    call:"\"Information wants to be free.\" \"Mistrust authority.\" \"Hands-on imperative.\"",
+    diet:"Steven Levy's Hackers (1984); Barlow's Declaration of the Independence of Cyberspace; the GNU Manifesto",
+    wants:"Open-source software and models, strong privacy, no expansion of surveillance or computer-crime laws.",
+    dc:"Section 230, encryption, and surveillance fights; now also defending open-weight AI models",
+    relations:"Agree with e/acc about open source and with the progressive left about surveillance. Agree with no one about everything." },
+
+  { id:"extropian", name:"Extropians", latin:"Immortalis optimisticus", status:"Living fossil", hot:false, group:"ancestral", x:88, y:20,
+    aka:"Transhumanists, cryonicists",
+    note:"Launched a magazine in 1988 to fight entropy, death, and pessimism, in roughly that order. Their mailing list was the common ancestor of the rationalists, the cypherpunks, and e/acc, and included Nick Bostrom, Eliezer Yudkowsky, and Robin Hanson.",
+    habitat:"The Extropians mailing list (1990s); cryonics facilities in Arizona",
+    call:"\"Upward and outward!\" \"Cryocrastination\" (putting off signing up for cryonics)",
+    diet:"Extropy magazine; Eric Drexler's Engines of Creation; Max More's Principles of Extropy",
+    wants:"Freedom to modify your own body and mind, life-extension research, few limits on biotechnology.",
+    dc:"Occasionally at FDA and bioethics hearings",
+    relations:"Everyone's grandparent. The rationalists kept their ambition and added dread; e/acc kept their optimism and dropped the attachment to humans." },
+
+  { id:"hippie", name:"The Whole Earth crowd", latin:"Catalogus terrae totius", status:"Ancestral", hot:false, group:"ancestral", x:38, y:22,
+    aka:"Hippies, back-to-the-landers, the counterculture",
+    note:"Communards who decided personal computers were the new tools for personal liberation. Stewart Brand's Whole Earth Catalog (1968) is the reason your founder friend talks about \"tools\" and has opinions about Burning Man.",
+    habitat:"Communes, the Whole Earth Catalog, Burning Man, the WELL online forum",
+    call:"\"Access to tools.\" \"Stay hungry, stay foolish\" (the Catalog's farewell, borrowed by Steve Jobs)",
+    diet:"Whole Earth Catalog; Buckminster Fuller; Fred Turner's From Counterculture to Cyberculture (2006) as the history",
+    wants:"Individual empowerment through technology; suspicion of large institutions, including the state.",
+    dc:"Historically nowhere, on principle. Their descendants run companies",
+    relations:"Spiritual ancestors of the post-rationalists. Critics called the hippie-meets-free-market blend \"the Californian Ideology\" (1995)." },
+
+  { id:"protestant", name:"The Protestant engineers", latin:"Ingeniator congregationalis", status:"Ancestral", hot:false, group:"ancestral", x:56, y:56,
+    aka:"The semiconductor founders, the Fairchild and Intel generation",
+    note:"Midwestern engineers who built the chip industry with flat offices, no reserved parking, and a great deal of work. Intel's Robert Noyce was a Congregationalist minister's son from Grinnell, Iowa; Tom Wolfe argued in 1983 that this is where the Valley's culture came from.",
+    habitat:"Fairchild Semiconductor (1957), Intel (1968), church on Sunday",
+    call:"Very little. They were busy",
+    diet:"Engineering journals; defense contracts; the Bible",
+    wants:"Government as a good customer: defense procurement, stable rules, and the chance to compete.",
+    dc:"Pentagon procurement offices, then and now",
+    relations:"The ancestor the tech right claims when it talks about defense and manufacturing. Would not recognize a group house." }
+];
+
+const WARNING = {
+  title: "Not a species: the Zizians",
+  body: [
+    "A small, violent group that split from the rationalist community, organized around radical veganism and idiosyncratic beliefs about AI. Its members have been tied to six deaths since 2022, including a U.S. Border Patrol agent killed in Vermont in January 2025. Seven members are jailed awaiting trial in three states.",
+    "It has no policy agenda, rationalist organizations broke with its leader before the killings, and it should not be used to describe AI safety advocates generally. It is a law enforcement matter, which is why it is not on the map or in the quiz."
+  ],
+  source: { label:"WHYY / AP, Feb. 2026", url:"https://whyy.org/articles/border-agent-killing-zizian-criminal-charges-california-pennsylvania-vermont/" }
+};
+
+const TIMELINE = [
+  ["1957","Eight engineers leave Shockley Semiconductor to found Fairchild. The Protestant engineers set the culture."],
+  ["1968","Stewart Brand publishes the first Whole Earth Catalog. Noyce and Moore found Intel the same year."],
+  ["1975","The Homebrew Computer Club first meets in Menlo Park. Hackers get a garage."],
+  ["1988","Max More and Tom Morrow launch Extropy magazine. Tim May writes the Crypto Anarchist Manifesto."],
+  ["1992","The cypherpunks mailing list begins."],
+  ["1996","John Perry Barlow publishes the Declaration of the Independence of Cyberspace."],
+  ["2009","Eliezer Yudkowsky launches LessWrong. The rationalists have a home."],
+  ["2011","The name \"effective altruism\" is adopted, and the movement begins to organize."],
+  ["2014","Scott Alexander names the \"Grey Tribe\": neither red nor blue, mostly in tech."],
+  ["2019","Patrick Collison and Tyler Cowen call for a new science of progress studies."],
+  ["2020","Stuck at home, ex-rationalists on Twitter coalesce into TPOT."],
+  ["2022","Effective accelerationism appears on Twitter and Substack."],
+  ["2023","Marc Andreessen publishes the Techno-Optimist Manifesto. \"Beff Jezos\" is unmasked."],
+  ["2024","Leopold Aschenbrenner publishes Situational Awareness."],
+  ["2025","Abundance and If Anyone Builds It, Everyone Dies are both bestsellers. Leading the Future launches. Open Philanthropy becomes Coefficient Giving."],
+  ["2026","AI super PACs spend heavily in the midterms. RAISE Act author Alex Bores loses his House primary after about $8 million in opposition spending."]
+];
+
+const PHRASES = [
+  ["p(doom)","Rationalists, EAs","Your probability that AI causes human extinction or something comparable. Asking someone for theirs is a greeting."],
+  ["Timelines","Rationalists, EAs, hawks","How soon you expect artificial general intelligence. \"Short timelines\" means within a few years."],
+  ["Alignment","Safety camp","Getting an AI system to reliably do what its builders intend. The central unsolved problem, in their view."],
+  ["Moloch","Rationalists","Scott Alexander's name for races to the bottom that no one wants but no one can stop."],
+  ["Decel","e/acc, tech right","Decelerationist. Anyone who wants to slow down, used as an insult."],
+  ["Doomer","e/acc, tech right","Someone who thinks AI is likely to be catastrophic. The safety camp considers it a slur and uses it anyway."],
+  ["Techno-capital","e/acc","The combined machine of markets and technology, which e/acc believes should be sped up."],
+  ["The Cathedral","NRx","Curtis Yarvin's term for the universities and press, which he argues act as an unelected ruling class."],
+  ["Vetocracy","Abundance","A system where too many parties can block a project, so nothing gets built."],
+  ["State capacity","Abundance, hawks","The government's ability to actually do things, quickly and competently."],
+  ["Grey Tribe","Everyone, eventually","Scott Alexander's 2014 name for the libertarian-leaning, tech-centered tribe that is neither red nor blue."],
+  ["Jhana","Post-rationalists","A state of deep meditative absorption. Having reached one is a status marker."],
+  ["Shape rotator","TPOT","Someone good at math and spatial reasoning, as opposed to a \"wordcel,\" who is good with words. Used half-jokingly."],
+  ["Longtermism","EAs","The view that positively influencing the long-term future is a key moral priority."],
+  ["Open weights","Hackers, e/acc","Releasing a trained AI model's parameters so anyone can run and modify it."],
+  ["Preemption","Tech right, Washington","Federal law overriding state AI laws. The biggest AI policy fight of 2026."]
+];
+
+const TIPS = [
+  ["Ask for their number","\"What is your estimate that advanced AI causes a catastrophe, and by when?\" Rationalists and EAs give a number. Accelerationists reject the question. Abundance people change the subject to permitting."],
+  ["Ask who enforces","\"Should states, a federal agency, the courts, or markets enforce this?\" Nothing separates the preemption camp from the state-law camp faster."],
+  ["Ask who pays","Coefficient Giving and allied donors fund most of the safety field. Andreessen Horowitz, 8VC, OpenAI leadership and allies fund most of the light-touch campaign. Neither fact refutes an argument, but both predict it."]
+];
+
+/* ------------------------------------------------------------------
+   QUIZ — each answer adds points to one or more tribes (by id).
+   Add, remove, or reword questions freely.
+   ------------------------------------------------------------------ */
+const QUIZ = [
+  { q:"Someone at a party asks for your p(doom). You:",
+    a:[ ["Give a number, with error bars", {rat:2, ea:1}],
+        ["Ask what they mean by doom, then suggest a breathwork session", {tpot:2}],
+        ["Call them a decel and walk away", {eacc:2, techright:1}],
+        ["Ask whether doom requires an environmental impact statement", {abundance:2}] ]},
+  { q:"The ideal weekend:",
+    a:[ ["A desert festival you insist on calling a \"gathering\"", {hippie:2, tpot:1}],
+        ["Reading a 40,000-word blog post arguing for monarchy", {nrx:2}],
+        ["Running your own Bitcoin node", {cypher:2}],
+        ["Speaking in favor of a fourplex at a zoning hearing", {abundance:2}] ]},
+  { q:"On AI, Washington should:",
+    a:[ ["Negotiate an international treaty to stop frontier development", {rat:2}],
+        ["Require transparency and fund independent safety testing", {ea:2}],
+        ["Preempt the states and get out of the way", {techright:2, eacc:1}],
+        ["Treat it like the Manhattan Project and beat China", {hawk:2}] ]},
+  { q:"Pick a book for the flight:",
+    a:[ ["The Whole Earth Catalog", {hippie:2}],
+        ["The Sovereign Individual", {cypher:1, nrx:1, techright:1}],
+        ["Superintelligence by Nick Bostrom", {ea:2, rat:1}],
+        ["Situational Awareness, printed and annotated", {hawk:2}] ]},
+  { q:"Death is:",
+    a:[ ["An engineering problem we have not solved yet", {extropian:3}],
+        ["Part of life, man", {hippie:1, tpot:1}],
+        ["Something to discuss after we finalize the chip export rule", {hawk:1, protestant:1}],
+        ["Less bad than an unaligned superintelligence", {rat:2}] ]},
+  { q:"Progress comes from:",
+    a:[ ["Markets and the techno-capital machine", {eacc:2, techright:1}],
+        ["Hard work, humility, and good engineering", {protestant:3}],
+        ["Doing the most good per dollar, measured carefully", {ea:2}],
+        ["A competent sovereign with clear lines of authority", {nrx:2}] ]},
+  { q:"Your relationship with the government:",
+    a:[ ["Information wants to be free, and so do I", {hacker:2}],
+        ["I want a government that can actually build things", {abundance:1, hawk:1}],
+        ["I'd replace it with a CEO", {nrx:2}],
+        ["I'd like it on the same side as my portfolio companies", {techright:2}] ]},
+  { q:"At a house party in Berkeley, you:",
+    a:[ ["Start a debate about decision theory", {rat:2}],
+        ["Lead a meditation in the backyard", {tpot:2}],
+        ["Explain public-key cryptography to the host", {cypher:1, hacker:1}],
+        ["Are the only one in a collared shirt, and leave by nine", {protestant:2}] ]},
+  { q:"Would you upload your mind to the cloud?",
+    a:[ ["Yes, today", {extropian:2, eacc:1}],
+        ["Only if the code is open source", {hacker:2}],
+        ["Only if it's provably aligned", {ea:1, rat:1}],
+        ["No thanks. I'll be at church, or on the farm", {protestant:1, hippie:1}] ]}
+];
+/* ======================= END OF CONTENT ========================= */
+
+const $ = s => document.querySelector(s);
+const byId = Object.fromEntries(TRIBES.map(t => [t.id, t]));
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+
+$("#title").textContent = SITE.title;
+$("#dek").textContent = SITE.dek;
+$("#dek2").textContent = SITE.dek2;
+$("#foot").textContent = SITE.foot;
+
+/* Specimens */
+function renderSpecimens(){
+  $("#specimens").innerHTML = TRIBES.map((t,i) => `
+    <article class="spec" id="sp-${t.id}" data-group="${t.group}">
+      <div>
+        <p class="plate">Plate ${i+1}</p>
+        <h3>${esc(t.name)}</h3>
+        <p class="latin">${esc(t.latin)}</p>
+        <span class="status${t.hot ? " hot" : ""}">${esc(t.status)}</span>
+        <p class="aka">Also called: ${esc(t.aka)}</p>
+      </div>
+      <div>
+        <p class="note">${esc(t.note)}</p>
+        <dl class="fields">
+          <div><dt>Habitat</dt><dd>${esc(t.habitat)}</dd></div>
+          <div><dt>Call</dt><dd>${esc(t.call)}</dd></div>
+          <div><dt>Diet</dt><dd>${esc(t.diet)}</dd></div>
+          <div><dt>Wants from Washington</dt><dd>${esc(t.wants)}</dd></div>
+          <div><dt>Where to spot them in DC</dt><dd>${esc(t.dc)}</dd></div>
+          <div><dt>Relations with other tribes</dt><dd>${esc(t.relations)}</dd></div>
+        </dl>
+      </div>
+    </article>`).join("");
+}
+renderSpecimens();
+
+document.querySelectorAll(".chip").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".chip").forEach(c => c.setAttribute("aria-pressed", c === b));
+  const f = b.dataset.filter;
+  document.querySelectorAll(".spec").forEach(s => {
+    const g = s.dataset.group;
+    s.hidden = !(f === "all" || g === f);
+  });
+}));
+
+$("#warning").innerHTML = `<h3>${esc(WARNING.title)}</h3>` + WARNING.body.map(p => `<p>${esc(p)}</p>`).join("") +
+  `<p class="small" style="color:#bbb">Source: <a href="${WARNING.source.url}" target="_blank" rel="noopener">${esc(WARNING.source.label)}</a></p>`;
+
+/* Timeline, phrasebook, tips */
+$("#timeline").innerHTML = TIMELINE.map(([y,t]) => `<li><span class="yr">${esc(y)}</span>${esc(t)}</li>`).join("");
+$("#phrases").innerHTML = PHRASES.map(([w,who,m]) => `<div class="phrase"><b>${esc(w)}</b><span class="who">${esc(who)}</span><p>${esc(m)}</p></div>`).join("");
+$("#tips").innerHTML = TIPS.map(([h,p]) => `<div class="tip"><h3>${esc(h)}</h3><p>${esc(p)}</p></div>`).join("");
+
+/* Habitat map */
+const W=600,H=560,P={l:60,r:16,t:24,b:64};
+const sx = x => P.l + x/100*(W-P.l-P.r);
+const sy = y => H-P.b - y/100*(H-P.t-P.b);
+function drawMap(you){
+  const ns="http://www.w3.org/2000/svg";
+  let s = `<line class="quad" x1="${sx(50)}" y1="${sy(0)}" x2="${sx(50)}" y2="${sy(100)}"/>
+    <line class="quad" x1="${sx(0)}" y1="${sy(50)}" x2="${sx(100)}" y2="${sy(50)}"/>
+    <line class="axis" x1="${sx(0)}" y1="${sy(0)}" x2="${sx(100)}" y2="${sy(0)}"/>
+    <line class="axis" x1="${sx(0)}" y1="${sy(0)}" x2="${sx(0)}" y2="${sy(100)}"/>
+    <text class="axlabel" x="${sx(0)}" y="${H-P.b+22}">Halt by treaty</text>
+    <text class="axlabel" x="${sx(100)}" y="${H-P.b+22}" text-anchor="end">Accelerate</text>
+    <text class="axlabel" x="${sx(50)}" y="${H-P.b+48}" text-anchor="middle">Speed</text>
+    <text class="axlabel" transform="translate(${P.l-14},${sy(0)}) rotate(-90)">Markets</text>
+    <text class="axlabel" transform="translate(${P.l-14},${sy(100)}) rotate(-90)" text-anchor="end">Strong state</text>
+    <text class="axlabel" transform="translate(${P.l-38},${sy(50)}) rotate(-90)" text-anchor="middle">Who steers</text>`;
+  TRIBES.forEach(t => {
+    const x=sx(t.x), y=sy(t.y);
+    const right = t.x > 72;
+    s += `<g class="pt" tabindex="0" role="link" aria-label="${esc(t.name)}" data-id="${t.id}">
+      <circle class="dot${t.group==="ancestral"?" ancestral":""}" cx="${x}" cy="${y}" r="11"/>
+      <text class="lbl" x="${right ? x-16 : x+16}" y="${y+6}" text-anchor="${right?"end":"start"}">${esc(t.short || t.name.replace(/^The /,""))}</text></g>`;
+  });
+  if(you){
+    s += `<circle class="you" cx="${sx(you.x)}" cy="${sy(you.y)}" r="11"/>
+      <text class="lbl" x="${sx(you.x)}" y="${sy(you.y)-18}" text-anchor="middle" style="font-weight:700">You</text>`;
+  }
+  $("#map").innerHTML = s;
+  document.querySelectorAll("#map g.pt").forEach(g => {
+    const go = () => { const el = document.getElementById("sp-"+g.dataset.id); document.querySelectorAll(".spec").forEach(sp=>sp.hidden=false); document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed", c.dataset.filter==="all")); el.scrollIntoView(); };
+    g.addEventListener("click", go);
+    g.addEventListener("keydown", e => { if(e.key==="Enter"||e.key===" "){ e.preventDefault(); go(); }});
+  });
+}
+/* Shorter labels for the map, so dots don't collide on phones */
+Object.assign(byId.rat,{short:"Rationalists"}); Object.assign(byId.ea,{short:"EAs"}); Object.assign(byId.tpot,{short:"Post-rats"});
+Object.assign(byId.eacc,{short:"e/acc"}); Object.assign(byId.techright,{short:"Tech right"}); Object.assign(byId.nrx,{short:"NRx"});
+Object.assign(byId.abundance,{short:"Abundance"}); Object.assign(byId.hawk,{short:"Manhattan Proj."}); Object.assign(byId.cypher,{short:"Cypherpunks"});
+Object.assign(byId.hacker,{short:"Hackers"}); Object.assign(byId.extropian,{short:"Extropians"}); Object.assign(byId.hippie,{short:"Whole Earth"});
+Object.assign(byId.protestant,{short:"Protestant eng."});
+drawMap(null);
+
+/* Quiz */
+let qi=0, scores={};
+function renderQ(){
+  const box=$("#quizbox"); const item=QUIZ[qi];
+  box.innerHTML = `<div class="progress"><div style="width:${qi/QUIZ.length*100}%"></div></div>
+    <p class="qcount">Question ${qi+1} of ${QUIZ.length}</p>
+    <p class="qtext">${esc(item.q)}</p>
+    <div class="answers">${item.a.map((a,i)=>`<button class="answer" data-i="${i}">${esc(a[0])}</button>`).join("")}</div>`;
+  box.querySelectorAll(".answer").forEach(b => b.addEventListener("click", () => {
+    const pts = item.a[+b.dataset.i][1];
+    for(const k in pts) scores[k]=(scores[k]||0)+pts[k];
+    qi++; qi<QUIZ.length ? renderQ() : renderResult();
+    box.querySelector("button")?.focus({preventScroll:true});
+  }));
+}
+function renderResult(){
+  const ranked = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  const top = byId[ranked[0][0]];
+  const total = ranked.reduce((s,[,v])=>s+v,0);
+  // your position = score-weighted average of tribe positions
+  const you = ranked.reduce((acc,[k,v])=>({x:acc.x+byId[k].x*v/total, y:acc.y+byId[k].y*v/total}),{x:0,y:0});
+  const runners = ranked.slice(1,3).map(([k])=>byId[k].name.replace(/^The /,"the "));
+  try{ localStorage.setItem("fai-tribe", top.id); }catch(e){}
+  $("#quizbox").innerHTML = `<div class="progress"><div style="width:100%"></div></div>
+    <div class="result">
+      <p class="qcount">Your tribe</p>
+      <h3>${esc(top.name)}</h3>
+      <p class="latin">${esc(top.latin)}</p>
+      <p>${esc(top.note)}</p>
+      ${runners.length?`<p class="runners">With strong traces of: ${esc(runners.join(" and "))}.</p>`:""}
+      <p class="small">Your dot is now on the habitat map, placed by a weighted blend of your answers.</p>
+      <div class="qactions">
+        <a class="btn solid" href="#sp-${top.id}">Read your full entry</a>
+        <a class="btn" href="#map-sec">See yourself on the map</a>
+        <button class="btn" id="share">Copy my result</button>
+        <button class="btn" id="again">Retake</button>
+      </div>
+    </div>`;
+  drawMap(you);
+  $("#again").onclick = () => { qi=0; scores={}; drawMap(null); renderQ(); };
+  $("#share").onclick = async () => {
+    const txt = `The FAI field guide says I'm one of the ${top.name} (${top.latin}). Which Silicon Valley tribe are you?`;
+    try{ await navigator.clipboard.writeText(txt); toast("Result copied"); }catch(e){ toast("Copy failed. Select the text manually."); }
+  };
+}
+function toast(m){ const t=$("#toast"); t.textContent=m; t.style.display="block"; clearTimeout(t._h); t._h=setTimeout(()=>t.style.display="none",2200); }
+renderQ();
+</script>
+</body>
+</html>
