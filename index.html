@@ -5,17 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>A Field Guide to the Tribes of Silicon Valley | FAI</title>
 <meta name="description" content="Forty-four ideological tribes of Silicon Valley, mapped on three axes, with a sorting quiz. From the Foundation for American Innovation.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    FAI brand tokens (from the FAI brand kit)
    ============================================================ */
 :root{
-  --orange:#FF4F00; --cod:#121212; --smoke:#F3F3F3; --timber:#D9D9D6; --white:#FFFFFF;
-  --teal:#0E8C88; --crimson:#C8102E;
-  --bg:var(--smoke); --ink:var(--cod); --rule:var(--timber); --panel:var(--white); --muted:#4a4a4a;
+  --orange:#FF4F00; --cod:#121212; --smoke:#F3F3F3; --timber:#D9D9D6;
+  --bg:var(--smoke); --ink:var(--cod); --rule:var(--timber); --panel:var(--smoke); --muted:rgb(18 18 18 / .72);
   --serif:"IBM Plex Serif", Georgia, "Times New Roman", serif;
   --sans:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
   box-sizing:border-box;
@@ -23,9 +25,9 @@
   padding-bottom:env(safe-area-inset-bottom,0px);
 }
 @media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){ --bg:#121212; --ink:#F3F3F3; --rule:#3a3a3a; --panel:#1c1c1c; --muted:#b5b5b5; }
+  :root:not([data-theme="light"]){ --bg:var(--cod); --ink:var(--smoke); --rule:rgb(243 243 243 / .22); --panel:var(--cod); --muted:rgb(243 243 243 / .72); }
 }
-:root[data-theme="dark"]{ --bg:#121212; --ink:#F3F3F3; --rule:#3a3a3a; --panel:#1c1c1c; --muted:#b5b5b5; }
+:root[data-theme="dark"]{ --bg:var(--cod); --ink:var(--smoke); --rule:rgb(243 243 243 / .22); --panel:var(--cod); --muted:rgb(243 243 243 / .72); }
 html{ scroll-padding-top:env(safe-area-inset-top,0px); scroll-behavior:smooth; }
 @media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
 *,*::before,*::after{ box-sizing:border-box; }
@@ -42,33 +44,44 @@ a{ color:inherit; text-decoration-thickness:1px; text-underline-offset:3px; }
 .logo-dark{ display:none; }
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .logo-light{display:none;} :root:not([data-theme="light"]) .logo-dark{display:block;} }
 :root[data-theme="dark"] .logo-light{display:none;} :root[data-theme="dark"] .logo-dark{display:block;}
-.nav{ display:flex; gap:20px; flex-wrap:wrap; }
+.nav{ display:flex; gap:24px; flex-wrap:wrap; }
 .nav a{ text-decoration:none; font-weight:500; }
 .nav a:hover{ text-decoration:underline; }
 
 /* Hero: the orange field */
 .hero{ background:var(--orange); color:var(--cod); }
-.hero .wrap{ padding-top:56px; padding-bottom:56px; display:grid; gap:32px; }
-@media (min-width:900px){ .hero .wrap{ grid-template-columns: 1.4fr 1fr; align-items:end; padding-top:88px; padding-bottom:80px; } }
+.hero .wrap{ padding-top:64px; padding-bottom:64px; display:grid; gap:32px; }
+@media (min-width:1056px){ .hero .wrap{ align-items:end; padding-top:96px; padding-bottom:80px; } .hero .wrap > h1{ grid-column:span 9; } .hero .wrap > div{ grid-column:span 7; } }
 .hero h1{ margin:0; }
 /* Schmalfette display title, shipped as outlines (see tools/outline-display.mjs) */
 .hero h1 .display{ display:block; width:100%; max-width:560px; height:auto; }
 .vh{ position:absolute; width:1px; height:1px; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
 .hero .dek{ font-size:19px; line-height:1.5; margin:0; max-width:34ch; }
 .hero .dek + .dek{ margin-top:12px; font-family:var(--sans); font-size:15px; }
-.btn{ display:inline-block; font-family:var(--sans); font-weight:500; font-size:16px; padding:12px 20px; border:2px solid var(--cod); border-radius:2px; text-decoration:none; cursor:pointer; background:transparent; color:inherit; }
+.btn{ display:inline-block; font-family:var(--sans); font-weight:500; font-size:16px; padding:12px 24px; border:2px solid var(--cod); border-radius:2px; text-decoration:none; cursor:pointer; background:transparent; color:inherit; }
 .btn.solid{ background:var(--cod); color:var(--smoke); }
 .hero .ctas{ display:flex; gap:12px; flex-wrap:wrap; margin-top:24px; }
 
 section{ padding:64px 0; border-top:1px solid var(--rule); }
 section:first-of-type{ border-top:0; }
-h2{ font-size:clamp(28px, 4vw, 40px); line-height:1.15; margin:0 0 12px; font-weight:600; }
+h1, h2, h3, b, strong{ font-weight:600; }
+h2{ font-size:clamp(28px, 4vw, 40px); line-height:1.15; margin:0 0 12px; }
 .lead{ font-size:19px; max-width:62ch; margin:0 0 32px; color:var(--ink); }
 .small{ font-family:var(--sans); font-size:14px; color:var(--muted); }
 
+/* IBM 2x grid: 16 columns, 32px gutters from 1056px */
+@media (min-width:1056px){
+  .g16.g16{ display:grid; grid-template-columns:repeat(16, minmax(0,1fr)); column-gap:32px; }
+  .map-grid > :first-child{ grid-column:span 10; } .map-grid > :last-child{ grid-column:span 6; }
+  .wall-grid > *{ grid-column:span 8; }
+  .phrases > *{ grid-column:span 8; }
+  .tips > *{ grid-column:span 4; }
+  .quiz-grid > .qintro{ grid-column:span 5; } .quiz-grid > .quiz{ grid-column:span 11; }
+}
+
 /* Habitat map */
 .map-grid{ display:grid; gap:32px; }
-@media (min-width:900px){ .map-grid{ grid-template-columns: 1.5fr 1fr; } }
+
 .map-box{ background:var(--panel); border:1px solid var(--rule); padding:12px; }
 #map{ width:100%; height:auto; display:block; font-family:var(--sans); }
 #map .axis{ stroke:var(--ink); stroke-width:1; }
@@ -85,59 +98,72 @@ h2{ font-size:clamp(28px, 4vw, 40px); line-height:1.15; margin:0 0 12px; font-we
 .map-side dl{ margin:0; }
 .map-side dt{ font-family:var(--sans); font-weight:600; font-size:15px; margin-top:16px; }
 .map-side dd{ margin:4px 0 0; }
-.legend{ display:flex; gap:20px; flex-wrap:wrap; margin-top:12px; font-family:var(--sans); font-size:13px; color:var(--muted); }
+.legend{ display:flex; gap:24px; flex-wrap:wrap; margin-top:12px; font-family:var(--sans); font-size:13px; color:var(--muted); }
 .legend span::before{ content:""; display:inline-block; width:12px; height:12px; border-radius:50%; margin-right:6px; vertical-align:-1px; border:1.5px solid var(--cod); background:var(--orange); }
 .legend span.anc::before{ background:transparent; border-color:var(--ink); }
 
 /* Specimens */
 .filters{ display:flex; gap:8px; flex-wrap:wrap; margin-bottom:24px; font-family:var(--sans); }
-.chip{ font-family:var(--sans); font-size:14px; font-weight:500; padding:8px 14px; border:1.5px solid var(--ink); background:transparent; color:var(--ink); border-radius:2px; cursor:pointer; }
+.chip{ font-family:var(--sans); font-size:14px; font-weight:500; padding:8px 16px; border:1.5px solid var(--ink); background:transparent; color:var(--ink); border-radius:2px; cursor:pointer; }
 .chip[aria-pressed="true"]{ background:var(--ink); color:var(--bg); }
-.specimens{ display:grid; gap:0; }
-.spec{ display:grid; gap:16px 32px; padding:32px 0; border-top:1px solid var(--rule); scroll-margin-top:16px; }
-.spec:first-child{ border-top:2px solid var(--ink); }
-@media (min-width:900px){ .spec{ grid-template-columns: 280px 1fr; } }
-.art{ display:block; width:100%; max-width:200px; height:auto; aspect-ratio:1; border:1.5px solid var(--ink); margin:0 0 16px; }
-@media (min-width:900px){ .spec .art{ max-width:240px; } }
-.art .a{ fill:var(--orange); } .art .k{ fill:var(--cod); } .art .p{ fill:var(--white); } .art .r{ fill:var(--timber); }
+/* Tribes: a grid of plates; each opens in place into its full entry */
+.specimens{ display:grid; grid-template-columns:repeat(4, minmax(0,1fr)); gap:32px; align-items:start; }
+@media (min-width:672px){ .specimens{ grid-template-columns:repeat(8, minmax(0,1fr)); } }
+@media (min-width:1056px){ .specimens{ grid-template-columns:repeat(16, minmax(0,1fr)); } }
+.specimens > .famhead, .specimens > .empty{ grid-column:1/-1; }
+.spec{ grid-column:span 2; scroll-margin-top:16px; }
+@media (min-width:672px){ .spec{ grid-column:span 2; } }
+@media (min-width:1056px){ .spec{ grid-column:span 4; } }
+.spec summary{ display:block; cursor:pointer; list-style:none; }
+.spec summary::-webkit-details-marker{ display:none; }
+@media (hover:hover){ .spec:not([open]) summary:hover .name{ text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:3px; } }
+.spec .plate{ display:block; font-family:var(--sans); font-size:13px; font-weight:500; color:var(--muted); margin:0 0 4px; }
+.spec .name{ display:block; font-size:20px; line-height:1.2; margin:0; }
+.spec .latin{ display:block; font-style:italic; font-size:15px; margin:4px 0 0; color:var(--muted); }
+.spec .tog{ display:none; }
+.spec[open]{ grid-column:1/-1; border-top:2px solid var(--ink); border-bottom:2px solid var(--ink); padding:24px 0 32px; }
+.spec[open] summary{ display:flex; gap:24px; align-items:flex-end; }
+.spec[open] summary .art{ width:120px; flex:none; margin:0; }
+.spec[open] .name{ font-size:28px; line-height:1.15; }
+.spec[open] .tog{ display:inline-block; margin-left:auto; font-family:var(--sans); font-size:14px; font-weight:500; text-decoration:underline; text-underline-offset:3px; }
+.entry{ display:grid; gap:16px 32px; margin-top:24px; }
+@media (min-width:1056px){ .entry{ grid-template-columns:repeat(16, minmax(0,1fr)); } .entry > .meta{ grid-column:span 4; } .entry > .body{ grid-column:span 12; } }
+.art{ display:block; width:100%; height:auto; aspect-ratio:1; border:1.5px solid var(--ink); margin:0 0 12px; }
+.art .a{ fill:var(--orange); } .art .k{ fill:var(--cod); } .art .p{ fill:var(--smoke); } .art .r{ fill:var(--timber); }
 .art .as, .art .ks, .art .ps, .art .rs{ fill:none; }
-.art .as{ stroke:var(--orange); } .art .ks{ stroke:var(--cod); } .art .ps{ stroke:var(--white); } .art .rs{ stroke:var(--timber); }
-.result .art{ max-width:140px; }
-.spec .plate{ font-family:var(--sans); font-size:13px; font-weight:500; color:var(--muted); margin:0 0 8px; }
-.spec h3{ font-size:28px; line-height:1.15; margin:0; font-weight:700; }
-.spec .latin{ font-style:italic; margin:6px 0 12px; color:var(--muted); }
-.spec .status{ display:inline-block; font-family:var(--sans); font-size:13px; font-weight:500; padding:3px 8px; border:1.5px solid var(--ink); border-radius:2px; }
-.spec .status.hot{ background:var(--orange); color:var(--cod); border-color:var(--orange); }
-.spec .aka{ font-family:var(--sans); font-size:14px; color:var(--muted); margin-top:12px; }
+.art .as{ stroke:var(--orange); } .art .ks{ stroke:var(--cod); } .art .ps{ stroke:var(--smoke); } .art .rs{ stroke:var(--timber); }
+.result .art{ max-width:140px; margin-bottom:16px; }
+.spec .status{ display:inline-block; font-family:var(--sans); font-size:13px; font-weight:500; padding:4px 8px; border:1.5px solid var(--ink); border-radius:2px; }
+.spec .aka{ font-family:var(--sans); font-size:14px; color:var(--muted); margin:12px 0 0; }
 .spec .note{ font-size:19px; line-height:1.5; margin:0 0 16px; max-width:60ch; }
 .fields{ display:grid; gap:12px 32px; margin:0; }
 @media (min-width:672px){ .fields{ grid-template-columns: 1fr 1fr; } }
-.fields div{ border-top:1px solid var(--rule); padding-top:10px; }
+.fields div{ border-top:1px solid var(--rule); padding-top:8px; }
 .fields dt{ font-family:var(--sans); font-size:13px; font-weight:600; margin:0 0 2px; }
 .fields dd{ margin:0; font-size:16px; line-height:1.5; }
-.spec[hidden]{ display:none; }
 
-.warning{ background:var(--cod); color:var(--smoke); padding:32px; margin-top:32px; border-left:8px solid var(--crimson); }
+.warning{ background:var(--cod); color:var(--smoke); padding:32px; margin-top:32px; border-left:8px solid var(--orange); }
 .warning h3{ margin:0 0 8px; font-size:22px; }
 .warning p{ margin:0 0 8px; max-width:66ch; }
 .warning a{ color:var(--smoke); }
 
 /* Lineage timeline */
 .timeline{ list-style:none; margin:0; padding:0; border-left:2px solid var(--ink); }
-.timeline li{ position:relative; padding:0 0 20px 28px; max-width:70ch; }
+.timeline li{ position:relative; padding:0 0 24px 24px; max-width:70ch; }
 .timeline li::before{ content:""; position:absolute; left:-7px; top:9px; width:12px; height:12px; background:var(--orange); border:1.5px solid var(--cod); }
-.timeline .yr{ font-family:var(--sans); font-weight:600; margin-right:10px; }
+.timeline .yr{ font-family:var(--sans); font-weight:600; margin-right:8px; }
 
 /* Quiz */
 .quiz{ background:var(--panel); border:1px solid var(--rule); padding:24px; max-width:760px; }
+@media (min-width:1056px){ .quiz-grid .quiz{ max-width:none; } .quiz-grid .lead{ margin-bottom:0; } }
 @media (min-width:672px){ .quiz{ padding:40px; } }
 .progress{ height:6px; background:var(--rule); margin-bottom:24px; }
 .progress div{ height:100%; background:var(--orange); width:0; transition:width .25s; }
 @media (prefers-reduced-motion: reduce){ .progress div{ transition:none; } }
 .qcount{ font-family:var(--sans); font-size:14px; color:var(--muted); margin:0 0 8px; }
 .qtext{ font-size:24px; line-height:1.3; margin:0 0 20px; font-weight:600; }
-.answers{ display:grid; gap:10px; }
-.answer{ text-align:left; font-family:var(--serif); font-size:17px; line-height:1.4; padding:14px 16px; background:transparent; color:var(--ink); border:1.5px solid var(--ink); border-radius:2px; cursor:pointer; }
+.answers{ display:grid; gap:8px; }
+.answer{ text-align:left; font-family:var(--serif); font-size:17px; line-height:1.4; padding:12px 16px; background:transparent; color:var(--ink); border:1.5px solid var(--ink); border-radius:2px; cursor:pointer; }
 .answer:hover{ background:var(--orange); color:var(--cod); border-color:var(--orange); }
 .result h3{ font-size:32px; margin:4px 0 4px; }
 .result .latin{ font-style:italic; color:var(--muted); margin:0 0 16px; }
@@ -147,14 +173,14 @@ h2{ font-size:clamp(28px, 4vw, 40px); line-height:1.15; margin:0 0 12px; font-we
 /* Phrasebook */
 .phrases{ display:grid; gap:0 32px; }
 @media (min-width:672px){ .phrases{ grid-template-columns: 1fr 1fr; } }
-.phrase{ border-top:1px solid var(--rule); padding:14px 0; }
+.phrase{ border-top:1px solid var(--rule); padding:16px 0; }
 .phrase b{ font-size:18px; }
 .phrase .who{ font-family:var(--sans); font-size:13px; color:var(--muted); margin-left:8px; }
 .phrase p{ margin:4px 0 0; font-size:16px; }
 
 /* DC tips */
 .tips{ counter-reset:tip; display:grid; gap:24px; }
-@media (min-width:900px){ .tips{ grid-template-columns: repeat(3, 1fr); } }
+
 .tip{ border-top:4px solid var(--orange); padding-top:16px; }
 .tip h3{ margin:0 0 8px; font-size:20px; }
 .tip p{ margin:0; font-size:16px; }
@@ -162,7 +188,7 @@ h2{ font-size:clamp(28px, 4vw, 40px); line-height:1.15; margin:0 0 12px; font-we
 footer{ background:var(--cod); color:var(--smoke); padding:48px 0; font-family:var(--sans); font-size:14px; }
 footer p{ margin:0 0 8px; max-width:70ch; }
 footer a{ color:var(--smoke); }
-.toast{ position:fixed; left:50%; bottom:calc(24px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--cod); color:var(--smoke); font-family:var(--sans); padding:10px 16px; border-radius:2px; display:none; z-index:10; }
+.toast{ position:fixed; left:50%; bottom:calc(24px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--cod); color:var(--smoke); font-family:var(--sans); padding:12px 16px; border-radius:2px; display:none; z-index:10; }
 </style>
 
 <style>
@@ -178,19 +204,19 @@ footer a{ color:var(--smoke); }
 .pick h3{ margin:0 0 4px; font-size:22px; }
 .pick p{ margin:0 0 8px; font-size:16px; }
 .pick .coords{ font-family:var(--sans); font-size:13px; color:var(--muted); }
-.search{ font-family:var(--sans); font-size:16px; padding:10px 12px; border:1.5px solid var(--ink); border-radius:2px; background:var(--panel); color:var(--ink); width:100%; max-width:360px; margin-bottom:16px; }
-.famhead{ font-family:var(--sans); font-size:14px; font-weight:600; margin:40px 0 0; padding-bottom:8px; }
+.search{ font-family:var(--sans); font-size:16px; padding:8px 12px; border:1.5px solid var(--ink); border-radius:2px; background:var(--panel); color:var(--ink); width:100%; max-width:360px; margin-bottom:16px; }
+.famhead{ font-family:var(--sans); font-size:14px; font-weight:600; margin:16px 0 0; padding-bottom:8px; border-bottom:1px solid var(--rule); }
 .famhead:first-child{ margin-top:0; }
-.spec .axes{ font-family:var(--sans); font-size:13px; color:var(--muted); margin-top:12px; line-height:1.7; }
+.spec .axes{ font-family:var(--sans); font-size:13px; color:var(--muted); margin:12px 0 0; line-height:1.7; }
 .empty{ font-family:var(--sans); padding:24px 0; }
 /* quiz */
-.likert{ display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
-.likert .answer{ text-align:center; font-family:var(--sans); font-size:14px; padding:14px 6px; }
-@media (max-width:560px){ .likert{ grid-template-columns:1fr; } .likert .answer{ text-align:left; font-size:16px; } }
+.likert{ display:grid; grid-template-columns:repeat(5,1fr); gap:8px; }
+.likert .answer{ text-align:center; font-family:var(--sans); font-size:14px; padding:12px 8px; }
+@media (max-width:671px){ .likert{ grid-template-columns:1fr; } .likert .answer{ text-align:left; font-size:16px; } }
 .qnav{ display:flex; justify-content:space-between; margin-top:16px; font-family:var(--sans); font-size:14px; }
 .linkbtn{ background:none; border:0; padding:4px 0; color:var(--ink); text-decoration:underline; text-underline-offset:3px; cursor:pointer; font:inherit; }
 .linkbtn[disabled]{ opacity:.35; cursor:default; }
-.match{ font-family:var(--sans); font-weight:600; font-size:15px; background:var(--orange); color:var(--cod); display:inline-block; padding:3px 8px; border-radius:2px; }
+.match{ font-family:var(--sans); font-weight:600; font-size:15px; background:var(--orange); color:var(--cod); display:inline-block; padding:4px 8px; border-radius:2px; }
 .bars{ margin:20px 0; display:grid; gap:14px; }
 .bar .lab{ display:flex; justify-content:space-between; font-family:var(--sans); font-size:13px; color:var(--muted); }
 .bar .lab b{ color:var(--ink); font-weight:600; }
@@ -201,16 +227,16 @@ footer a{ color:var(--smoke); }
 .kin a{ font-weight:500; }
 /* wall */
 .wall-grid{ display:grid; gap:32px; }
-@media (min-width:900px){ .wall-grid{ grid-template-columns: 1fr 1fr; } }
-.bignum{ font-family:var(--serif); font-weight:700; font-size:clamp(48px,8vw,88px); line-height:1; margin:0; }
-.census{ display:grid; gap:10px; margin-top:16px; }
-.cen{ display:grid; grid-template-columns: minmax(0,1.6fr) 1fr 28px; gap:10px; align-items:center; font-family:var(--sans); font-size:14px; }
+
+.bignum{ font-family:var(--serif); font-weight:600; font-size:clamp(48px,8vw,88px); line-height:1; margin:0; }
+.census{ display:grid; gap:12px; margin-top:16px; }
+.cen{ display:grid; grid-template-columns: minmax(0,1.6fr) 1fr 32px; gap:12px; align-items:center; font-family:var(--sans); font-size:14px; }
 .cen .t{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 .cen .b{ height:12px; background:var(--rule); }
 .cen .b span{ display:block; height:100%; background:var(--orange); }
 .cen .n{ text-align:right; font-weight:600; }
 .feed{ list-style:none; margin:0; padding:0; }
-.feed li{ border-top:1px solid var(--rule); padding:10px 0; font-size:16px; }
+.feed li{ border-top:1px solid var(--rule); padding:12px 0; font-size:16px; }
 .feed .ago{ font-family:var(--sans); font-size:13px; color:var(--muted); margin-left:6px; }
 .feed a{ font-weight:600; }
 .signup{ border-top:2px solid var(--ink); margin-top:24px; padding-top:16px; }
@@ -233,7 +259,7 @@ footer a{ color:var(--smoke); }
 </div>
 
 <header class="hero">
-  <div class="wrap">
+  <div class="wrap g16">
     <h1><span class="vh" id="title"></span><!-- display:start --><svg class="display" viewBox="0 0 454.2 250.4" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 70.4L10.3 70.4L12.3 51.2L19.7 51.2L21.6 70.4L33.4 70.4L25.1 0L8.3 0M13.2 42.4L15.8 16.9L16.2 16.9L18.8 42.4M48.3 70.4L60 70.4L60 36.4L70.3 36.4L70.3 28.4L60 28.4L60 8.8L71.1 8.8L71.1 0L48.3 0M75.1 70.4L87.2 70.4L87.2 0L75.1 0M91.4 70.4L114.6 70.4L114.6 61.4L103.1 61.4L103.1 36.4L113.4 36.4L113.4 28.4L103.1 28.4L103.1 8.8L114.2 8.8L114.2 0L91.4 0M118.6 70.4L141.1 70.4L141.1 61.4L130.7 61.4L130.7 0L118.6 0M145.1 70.4L159.1 70.4C167.7 70.4 173.1 65.2 173.1 56.9L173.1 13.5C173.1 5.2 167.7 0 159.1 0L145.1 0M156.8 61.4L156.8 8.5L158.4 8.5C160.5 8.5 161.6 9.6 161.6 11.7L161.6 58.2C161.6 60.2 160.5 61.4 158.4 61.4M206.1 58C206.1 60.1 205.1 61.4 203.5 61.4C201.9 61.4 200.9 60.1 200.9 58L200.9 11.6C200.9 9.7 201.8 8.5 203.3 8.5C204.8 8.5 205.7 9.7 205.7 11.6L205.7 25.4L216.2 25.4L216.2 11.5C216.2 3.9 211.2 -1 203 -1C194.7 -1 189.2 4.1 189.2 11.5L189.2 59.9C189.2 67.2 193.2 71.4 199.8 71.4C204.3 71.4 207.4 69.4 209.3 65.1L209.5 65.1L211.6 70.4L216.7 70.4L216.7 36L203.4 36L203.4 46.2L206.1 46.2M234.8 71.4C243.8 71.4 248.7 66.4 248.7 57.2L248.7 0L237.2 0L237.2 58.6C237.2 60.3 236.2 61.4 234.8 61.4C233.4 61.4 232.4 60.3 232.4 58.6L232.4 0L220.9 0L220.9 57.2C220.9 66.4 225.8 71.4 234.8 71.4M252.9 70.4L265 70.4L265 0L252.9 0M269.2 70.4L283.2 70.4C291.8 70.4 297.2 65.2 297.2 56.9L297.2 13.5C297.2 5.2 291.8 0 283.2 0L269.2 0M280.9 61.4L280.9 8.5L282.5 8.5C284.6 8.5 285.7 9.6 285.7 11.7L285.7 58.2C285.7 60.2 284.6 61.4 282.5 61.4M301.4 70.4L324.6 70.4L324.6 61.4L313.1 61.4L313.1 36.4L323.4 36.4L323.4 28.4L313.1 28.4L313.1 8.8L324.2 8.8L324.2 0L301.4 0M8.3 160.4L20.4 160.4L20.4 98.8L28.2 98.8L28.2 90L0.5 90L0.5 98.8L8.3 98.8M31.7 102.7L31.7 147.7C31.7 156.6 36.5 161.4 45.6 161.4C54.7 161.4 59.5 156.6 59.5 147.7L59.5 102.7C59.5 93.8 54.7 89 45.6 89C36.5 89 31.7 93.8 31.7 102.7M43.2 148.3L43.2 101.6C43.2 99.7 44.1 98.5 45.6 98.5C47.1 98.5 48 99.7 48 101.6L48 148.3C48 150.2 47.1 151.4 45.6 151.4C44.1 151.4 43.2 150.2 43.2 148.3M82.7 160.4L94.8 160.4L94.8 98.8L102.6 98.8L102.6 90L74.9 90L74.9 98.8L82.7 98.8M106.1 160.4L117.6 160.4L117.6 126.2L122.6 126.2L122.6 160.4L134.1 160.4L134.1 90L122.6 90L122.6 118.2L117.6 118.2L117.6 90L106.1 90M138.3 160.4L161.5 160.4L161.5 151.4L150 151.4L150 126.4L160.3 126.4L160.3 118.4L150 118.4L150 98.8L161.1 98.8L161.1 90L138.3 90M184.5 160.4L196.6 160.4L196.6 98.8L204.4 98.8L204.4 90L176.7 90L176.7 98.8L184.5 98.8M207.9 160.4L219.6 160.4L219.6 126.4L221.4 126.4C223.3 126.4 224.6 127.8 224.6 130L224.6 149.9C224.6 155.7 225 158.4 226.2 160.4L237.9 160.4L237.9 160.3C236.6 157.8 236.1 155.4 236.1 149.4L236.1 131.4C236.1 125.9 233.1 122.5 227.3 122.2L227.3 121.9C233.2 120.8 236 117.6 236 111.5L236 102.5C236 94.7 230.7 90 222.1 90L207.9 90M219.6 118.4L219.6 98.5L221.5 98.5C223.3 98.5 224.6 99.8 224.6 101.7L224.6 115.2C224.6 117.1 223.3 118.4 221.5 118.4M240.4 160.4L252.5 160.4L252.5 90L240.4 90M256.7 160.4L271.7 160.4C279.9 160.4 284.2 155.8 284.2 147.1L284.2 132.7C284.2 127.2 280.9 123.4 275.4 122.8L275.4 122.5C281.1 121.3 283.6 117.9 283.6 111.2L283.6 102.5C283.6 94.8 278.7 90 270.6 90L256.7 90M268.2 151.4L268.2 126.6L269.8 126.6C271.9 126.6 273 127.7 273 129.8L273 148.2C273 150.2 271.9 151.4 269.8 151.4M268.2 118.6L268.2 98.5L269.8 98.5C271.9 98.5 273 99.6 273 101.7L273 115.4C273 117.4 271.9 118.6 269.8 118.6M288.4 160.4L311.6 160.4L311.6 151.4L300.1 151.4L300.1 126.4L310.4 126.4L310.4 118.4L300.1 118.4L300.1 98.8L311.2 98.8L311.2 90L288.4 90M331.5 140.6L331.5 147.9C331.5 150 330.4 151.4 328.8 151.4C327.2 151.4 326.1 150 326.1 147.9L326.1 131.9L315.4 131.9L315.4 148.6C315.4 156.2 320.8 161.4 328.9 161.4C337.5 161.4 343.3 155.5 343.3 146.8L343.3 139.3C343.3 132.7 341.8 129.2 336.8 123.1L332.1 117.4C327.8 112.1 327.1 110.5 327.1 106.2L327.1 101.7C327.1 99.7 328.1 98.5 329.6 98.5C331.1 98.5 332.1 99.7 332.1 101.7L332.1 113.9L342.8 113.9L342.8 102.7C342.8 93.8 338 89 329.1 89C320.2 89 315.4 93.8 315.4 102.7L315.4 107.9C315.4 113.3 316.7 117.2 320.2 121.4L327.5 130.1C330.9 134.2 331.5 135.8 331.5 140.6M1.2 192.7L1.2 237.7C1.2 246.6 6 251.4 15.1 251.4C24.2 251.4 29 246.6 29 237.7L29 192.7C29 183.8 24.2 179 15.1 179C6 179 1.2 183.8 1.2 192.7M12.7 238.3L12.7 191.6C12.7 189.7 13.6 188.5 15.1 188.5C16.6 188.5 17.5 189.7 17.5 191.6L17.5 238.3C17.5 240.2 16.6 241.4 15.1 241.4C13.6 241.4 12.7 240.2 12.7 238.3M33.2 250.4L44.9 250.4L44.9 216.4L55.2 216.4L55.2 208.4L44.9 208.4L44.9 188.8L56 188.8L56 180L33.2 180M87.8 230.6L87.8 237.9C87.8 240 86.7 241.4 85.1 241.4C83.5 241.4 82.4 240 82.4 237.9L82.4 221.9L71.7 221.9L71.7 238.6C71.7 246.2 77.1 251.4 85.2 251.4C93.8 251.4 99.6 245.5 99.6 236.8L99.6 229.3C99.6 222.7 98.1 219.2 93.1 213.1L88.4 207.4C84.1 202.1 83.4 200.5 83.4 196.2L83.4 191.7C83.4 189.7 84.4 188.5 85.9 188.5C87.4 188.5 88.4 189.7 88.4 191.7L88.4 203.9L99.1 203.9L99.1 192.7C99.1 183.8 94.3 179 85.4 179C76.5 179 71.7 183.8 71.7 192.7L71.7 197.9C71.7 203.3 73 207.2 76.5 211.4L83.8 220.1C87.2 224.2 87.8 225.8 87.8 230.6M103.6 250.4L115.7 250.4L115.7 180L103.6 180M119.9 250.4L142.4 250.4L142.4 241.4L132 241.4L132 180L119.9 180M146.4 250.4L158.5 250.4L158.5 180L146.4 180M174.4 238.3L174.4 191.6C174.4 189.7 175.3 188.5 176.8 188.5C178.3 188.5 179.2 189.7 179.2 191.6L179.2 205.4L189.7 205.4L189.7 191.1C189.7 183.5 184.7 179 176.5 179C168.1 179 162.7 183.7 162.7 191.1L162.7 239.6C162.7 246.7 168.2 251.4 176.5 251.4C184.7 251.4 189.7 246.9 189.7 239.3L189.7 221.9L179.2 221.9L179.2 238.3C179.2 240.2 178.3 241.4 176.8 241.4C175.3 241.4 174.4 240.2 174.4 238.3M193.9 192.7L193.9 237.7C193.9 246.6 198.7 251.4 207.8 251.4C216.9 251.4 221.7 246.6 221.7 237.7L221.7 192.7C221.7 183.8 216.9 179 207.8 179C198.7 179 193.9 183.8 193.9 192.7M205.4 238.3L205.4 191.6C205.4 189.7 206.3 188.5 207.8 188.5C209.3 188.5 210.2 189.7 210.2 191.6L210.2 238.3C210.2 240.2 209.3 241.4 207.8 241.4C206.3 241.4 205.4 240.2 205.4 238.3M225.9 250.4L235.3 250.4L235.3 208.8L235.6 208.8L244.9 250.4L256.5 250.4L256.5 180L247.1 180L247.1 214.5L246.8 214.5L239.4 180L225.9 180M279.8 250.4L296 250.4L304.1 180L293.6 180L288.5 225.2L288.2 225.2L283 180L271.4 180M305.9 250.4L316.2 250.4L318.2 231.2L325.6 231.2L327.5 250.4L339.3 250.4L331 180L314.2 180M319.1 222.4L321.7 196.9L322.1 196.9L324.7 222.4M342.3 250.4L364.8 250.4L364.8 241.4L354.4 241.4L354.4 180L342.3 180M368.8 250.4L391.3 250.4L391.3 241.4L380.9 241.4L380.9 180L368.8 180M395.3 250.4L418.5 250.4L418.5 241.4L407 241.4L407 216.4L417.3 216.4L417.3 208.4L407 208.4L407 188.8L418.1 188.8L418.1 180L395.3 180M432.1 250.4L444.2 250.4L444.2 223.6L454.5 180L443.4 180L438.3 206L438 206L433.1 180L421 180L432.1 223.6"/></svg><!-- display:end --></h1>
     <div>
       <p class="dek" id="dek"></p>
@@ -254,9 +280,13 @@ footer a{ color:var(--smoke); }
 
 <section id="quiz">
   <div class="wrap">
+    <div class="quiz-grid g16">
+    <div class="qintro">
     <h2>Which tribe are you?</h2>
     <p class="lead">Twenty-one questions, about three minutes. The quiz scores you on three axes, then finds the tribe that lives nearest you. Answer honestly; no one from Berkeley is watching. Probably.</p>
+    </div>
     <div class="quiz" id="quizbox" aria-live="polite"></div>
+    </div>
   </div>
 </section>
 
@@ -264,7 +294,7 @@ footer a{ color:var(--smoke); }
   <div class="wrap">
     <h2>The wall</h2>
     <p class="lead">Everyone who has taken the quiz and signed their result. Faint dots on the habitat map show where they landed.</p>
-    <div class="wall-grid">
+    <div class="wall-grid g16">
       <div>
         <p class="bignum" id="wallcount">0</p>
         <p class="small" id="wallcountlbl">people sorted so far</p>
@@ -282,7 +312,7 @@ footer a{ color:var(--smoke); }
   <div class="wrap">
     <h2>The habitat map</h2>
     <p class="lead">Two questions sort almost everyone: how fast should AI go, and who should be in charge of it? Tap a dot to identify the tribe. A third question, whether we should stay human, shows up in each tribe’s entry and in your quiz result.</p>
-    <div class="map-grid">
+    <div class="map-grid g16">
       <div class="map-box">
         <div class="map-tools filters" id="mapfilters" role="group" aria-label="Highlight a family"></div>
         <svg id="map" viewBox="0 0 600 560" role="img" aria-label="Map of tribes by speed and by who should steer"></svg>
@@ -325,7 +355,7 @@ footer a{ color:var(--smoke); }
   <div class="wrap">
     <h2>The phrasebook</h2>
     <p class="lead">Vocabulary is the fastest way to identify a tribe. If a witness says one of these, you know where they went to intellectual school.</p>
-    <div class="phrases" id="phrases"></div>
+    <div class="phrases g16" id="phrases"></div>
   </div>
 </section>
 
@@ -333,7 +363,7 @@ footer a{ color:var(--smoke); }
   <div class="wrap">
     <h2>Field notes for Washington</h2>
     <p class="lead">Three questions that sort any witness, coalition letter, or funder in under a minute.</p>
-    <div class="tips" id="tips"></div>
+    <div class="tips g16" id="tips"></div>
   </div>
 </section>
 </main>
@@ -870,7 +900,7 @@ $("#foot").innerHTML = rich(SITE.foot);
 
 /* ---------- Plates: one Bauhaus emblem per tribe ----------
    120 x 120 grid, fixed artwork in both themes:
-   a = International Orange, k = Cod Gray, p = white, r = Timberwolf.
+   a = International Orange, k = Cod Gray, p = Smoke White, r = Timberwolf.
    Stroke-only shapes use as / ks / ps / rs.
    The first class after "plate" on the <svg> sets the ground. */
 const PLATES = {
@@ -919,36 +949,41 @@ telecom:`p|<path class="ks" stroke-width="5" stroke-linejoin="miter" d="M60 32 L
 aiecon:`a|<path class="ks" stroke-width="6" stroke-linecap="square" d="M20 16 V100 H106"/><path class="ps" stroke-width="7" d="M26 92 C62 90 80 82 90 24"/><circle class="k" cx="91" cy="18" r="9"/><circle class="p" cx="104" cy="40" r="5"/><circle class="p" cx="100" cy="58" r="4"/>`,
 linkedin:`p|<path class="k" d="M28 48 L78 26 V94 L28 72Z"/><rect class="k" x="14" y="48" width="14" height="24"/><rect class="k" x="34" y="72" width="10" height="24"/><path class="as" stroke-width="6" d="M88 42 L106 32 M90 60 H110 M88 78 L106 88"/><circle class="a" cx="78" cy="60" r="6"/>`,
 };
-function plate(t, n){
+function plate(t, n, decorative){
   const src = PLATES[t.id]; if (!src) return "";
   const [g, body] = [src.slice(0, 1), src.slice(2)];
-  return `<svg class="art" viewBox="0 0 120 120" role="img" aria-label="Plate ${n}: ${esc(t.name)}"><rect class="${g}" width="120" height="120"/>${body}</svg>`;
+  return `<svg class="art" viewBox="0 0 120 120" ${decorative ? 'aria-hidden="true"' : `role="img" aria-label="Plate ${n}: ${esc(t.name)}"`}><rect class="${g}" width="120" height="120"/>${body}</svg>`;
 }
 
 /* ---------- Tribes list ---------- */
 let famFilter = "all", query = "";
 function tribeHTML(t, n){
-  return `<article class="spec" id="sp-${t.id}" data-fam="${t.fam}">
-    <div>
-      <p class="plate">Plate ${n} &middot; ${esc(FAMILIES[t.fam])}</p>
-      ${plate(t, n)}
-      <h3>${esc(t.name)}</h3>
-      <p class="latin">${esc(t.latin)}</p>
-      <span class="status${t.fam!=="ancestors"&&t.x>70?" hot":""}">${esc(t.status)}</span>
-      <p class="aka">Also called: ${rich(t.aka)}</p>
-      <p class="axes">Speed ${t.x} &middot; Steering ${t.y} &middot; Destination ${t.d}</p>
+  return `<details class="spec" id="sp-${t.id}" data-fam="${t.fam}">
+    <summary>
+      ${plate(t, n, true)}
+      <span><span class="plate">Plate ${n}</span>
+      <h3 class="name">${esc(t.name)}</h3>
+      <span class="latin">${esc(t.latin)}</span></span>
+      <span class="tog" aria-hidden="true">Close</span>
+    </summary>
+    <div class="entry">
+      <div class="meta">
+        <span class="status">${esc(t.status)}</span>
+        <p class="aka">Also called: ${rich(t.aka)}</p>
+        <p class="axes">Speed ${t.x} &middot; Steering ${t.y} &middot; Destination ${t.d}</p>
+      </div>
+      <div class="body">
+        <p class="note">${rich(t.note).replace(/\n/g,"<br>")}</p>
+        <dl class="fields">
+          <div><dt>Habitat</dt><dd>${rich(t.habitat)}</dd></div>
+          <div><dt>Call</dt><dd>${rich(t.call)}</dd></div>
+          <div><dt>Reading list</dt><dd>${rich(t.reading)}</dd></div>
+          <div><dt>Wants from Washington</dt><dd>${rich(t.wants)}</dd></div>
+          <div style="grid-column:1/-1"><dt>Friends and enemies</dt><dd>${rich(t.frenemies)}</dd></div>
+        </dl>
+      </div>
     </div>
-    <div>
-      <p class="note">${rich(t.note).replace(/\n/g,"<br>")}</p>
-      <dl class="fields">
-        <div><dt>Habitat</dt><dd>${rich(t.habitat)}</dd></div>
-        <div><dt>Call</dt><dd>${rich(t.call)}</dd></div>
-        <div><dt>Reading list</dt><dd>${rich(t.reading)}</dd></div>
-        <div><dt>Wants from Washington</dt><dd>${rich(t.wants)}</dd></div>
-        <div style="grid-column:1/-1"><dt>Friends and enemies</dt><dd>${rich(t.frenemies)}</dd></div>
-      </dl>
-    </div>
-  </article>`;
+  </details>`;
 }
 const flat = s => plain(s).toLowerCase().replace(/[‘’]/g, "'").replace(/[“”]/g, '"');
 function renderTribes(){
@@ -975,11 +1010,13 @@ function showTribe(id){
   famFilter = "all"; query = ""; $("#search").value = "";
   $$("#famfilters .chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.f==="all"));
   renderTribes();
-  document.getElementById("sp-"+id).scrollIntoView();
+  const el = document.getElementById("sp-"+id);
+  el.open = true; el.scrollIntoView();
 }
+if (location.hash.startsWith("#sp-") && document.getElementById(location.hash.slice(1))) setTimeout(() => showTribe(location.hash.slice(4)));
 
 $("#warning").innerHTML = `<h3>${esc(WARNING.title)}</h3>` + WARNING.body.map(p => `<p>${rich(p)}</p>`).join("") +
-  `<p class="small" style="color:#bbb">Source: <a href="${WARNING.source.url}" target="_blank" rel="noopener">${esc(WARNING.source.label)}</a></p>`;
+  `<p class="small" style="color:rgb(243 243 243 / .72)">Source: <a href="${WARNING.source.url}" target="_blank" rel="noopener">${esc(WARNING.source.label)}</a></p>`;
 $("#timeline").innerHTML = TIMELINE.map(([y,t]) => `<li><span class="yr">${esc(y)}</span>${rich(t)}</li>`).join("");
 $("#phrases").innerHTML = PHRASES.map(([w,who,m]) => `<div class="phrase"><b>${esc(w)}</b><span class="who">${esc(who)}</span><p>${rich(m)}</p></div>`).join("");
 $("#tips").innerHTML = TIPS.map(([h,p]) => `<div class="tip"><h3>${esc(h)}</h3><p>${rich(p)}</p></div>`).join("");

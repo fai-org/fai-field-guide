@@ -30,7 +30,7 @@ Each argument is one line of the title, 2–3 words per line.
 
 ## Plates
 
-Each tribe has a Bauhaus emblem in `PLATES`, just after the content block, keyed by tribe `id`. Plates are drawn on a 120 × 120 grid with four fills: `a` orange, `k` Cod Gray, `p` white, `r` Timberwolf (`as`/`ks`/`ps`/`rs` for strokes). A new tribe without a plate simply renders without one.
+Each tribe has a Bauhaus emblem in `PLATES`, just after the content block, keyed by tribe `id`. Plates are drawn on a 120 × 120 grid with four fills: `a` International Orange, `k` Cod Gray, `p` Smoke White, `r` Timberwolf (`as`/`ks`/`ps`/`rs` for strokes). A new tribe without a plate simply renders without one.
 
 ## The wall (shared quiz results)
 
