@@ -30,7 +30,7 @@ const WALL = {
 
 const SITE = {
   title: "A field guide to the tribes of Silicon Valley",
-  dek: "Forty-four tribes, three axes, one very long group chat. For Washington visitors who need to tell a rationalist from a post-rationalist before the hearing starts.",
+  dek: "Forty-four tribes, three axes, one very long group chat. For anyone in Washington who needs to tell a rationalist from a post-rationalist before the hearing starts.",
   byline: "Prepared by the Foundation for American Innovation. Specimens observed from a safe distance.",
   intro: "In 2014 Scott Alexander named the “Grey Tribe”: neither red nor blue, mostly in tech. It has since split into dozens of smaller tribes that share office space, group houses, and funders, and disagree about whether we are all about to die. Most people belong to two or three and deny belonging to any. That is also a tribal marker.",
   foot: "A serious version of this guide, written as a memo for policymakers, is available from FAI. Positions are approximate and describe each tribe’s center of gravity, not every member. Taxonomy inspired in part by Séb Krier’s field notes, and by the people who argued with us about it."
@@ -85,8 +85,8 @@ const TRIBES = [
 
 /* ---------- THE WORRIED ---------- */
 { id:"miri", fam:"worried", name:"Old-school doomers", latin:"Apocalypticus berkeleyensis", status:"Vindicated, in their view", x:5, y:86, d:55,
-  aka:"MIRI, the Future of Life Institute, the “shut it down” wing",
-  note:"Have been warning for twenty years that superintelligence will kill everyone, and are tired of your follow-up questions. The Machine Intelligence Research Institute now wants an international treaty to halt frontier AI; anything less, in Yudkowsky’s telling, is a consolation prize on the way to death. Their 2025 book was a bestseller, which they found only mildly reassuring.",
+  aka:"MIRI, Yudkowsky’s readers, the “shut it down” wing",
+  note:"Have been warning for more than twenty years that superintelligence will kill everyone, and are tired of your follow-up questions. The Machine Intelligence Research Institute now wants an international treaty to halt frontier AI; anything less, in Yudkowsky’s telling, is a consolation prize on the way to death. Their 2025 book was a bestseller, which they found only mildly reassuring.",
   habitat:"Berkeley, LessWrong, open letters with many signatures", call:"“p(doom).” “Shut it down.” “Everyone dies.”",
   reading:"The Sequences, *If Anyone Builds It, Everyone Dies*", wants:"A treaty, compute caps, and for you to stop saying “but China”",
   frenemies:"Consider lab safety teams collaborators, in both senses of the word." },
@@ -100,7 +100,7 @@ const TRIBES = [
 
 { id:"ea", fam:"worried", name:"Effective altruists", latin:"Philanthropus quantificans", status:"Rebranding", x:25, y:70, d:45,
   aka:"EAs, longtermists, “people in the AI safety space”",
-  note:"Started out ranking malaria charities by cost per life saved and ended up bankrolling most of AI safety. Comes in regional flavors: Oxford (philosophy), Berkeley (AI), DC (fellowships), London (policy, better sandwiches). Has not fully recovered from 2022, and increasingly prefers not to be called EA, which is how you can tell.",
+  note:"Started out ranking malaria charities by cost per life saved and ended up bankrolling most of the philanthropic side of AI safety. Comes in regional flavors: Oxford (philosophy), Berkeley (AI), DC (fellowships), London (policy, better sandwiches). Has not fully recovered from 2022, and increasingly prefers not to be called EA, which is how you can tell.",
   habitat:"Oxford, Berkeley, the DC think tank circuit, 80,000 Hours career calls", call:"“Counterfactual impact.” “Neglected, tractable, important.” “I’m EA-adjacent.”",
   reading:"Peter Singer, Toby Ord’s *The Precipice*, GiveWell spreadsheets", wants:"Frontier-lab transparency, evaluations, export controls, biosecurity money",
   frenemies:"Funded by Coefficient Giving, hunted by e/acc, and accidentally funding half the abundance movement." },
@@ -141,7 +141,7 @@ const TRIBES = [
   frenemies:"Agree with the ethics left about power and with the doomers about stakes. Both find this confusing." },
 
 /* ---------- CRITICS AND SKEPTICS ---------- */
-{ id:"ethics", fam:"critics", name:"AI ethics (the salty parrot stream)", latin:"Psittacus stochasticus", status:"Quote-tweeting", x:28, y:78, d:0,
+{ id:"ethics", fam:"critics", name:"AI ethics (the parrot stream)", latin:"Psittacus stochasticus", status:"Quote-tweeting", x:28, y:78, d:0,
   aka:"Responsible AI, DAIR, “AI harms” researchers",
   note:"Called large language models “stochastic parrots” in 2021 and have not had a good week since. Worry about bias, labor, surveillance, and corporate power right now, and regard extinction talk as marketing for the companies they criticize. Will quote-tweet you.",
   habitat:"Academia, civil-rights groups, Bluesky", call:"“Stochastic parrots.” “AI harms.” “TESCREAL.” “Tech bros.”",
@@ -203,7 +203,7 @@ const TRIBES = [
   note:"Treat models as a medium. Restless Egg incubates “artist-founders”; Benjamin Bratton’s Antikythera theorizes planetary computation; the musicians are training models on their own voices. Their tech-policy panels are the only ones that end with a DJ set.",
   habitat:"London, Berlin, Los Angeles, gallery openings with a Q&A", call:"“Planetary computation.” “Artist-founder.” “Latent space.”",
   reading:"Bratton’s *The Stack*, exhibition catalogs", wants:"Copyright rules that allow training, arts funding that allows weirdness",
-  frenemies:"The anti-AI creatives consider them traitors; everyone else considers them too interesting to fund." },
+  frenemies:"The anti-AI creatives won’t share a panel with them; everyone else considers them too interesting to fund." },
 
 { id:"cryptids", fam:"weird", name:"Cryptids", latin:"Anonymus oracularis", status:"Existence disputed", x:72, y:20, d:72,
   aka:"Pseudonymous accounts with suspiciously good information",
@@ -214,7 +214,7 @@ const TRIBES = [
 
 { id:"landian", fam:"weird", name:"Landian accelerationists", latin:"Capitalis xenoforma", status:"Arriving from the future", x:98, y:14, d:100,
   aka:"Nick Land’s readers, the CCRU diaspora",
-  note:"The original accelerationists, followers of philosopher Nick Land and the 1990s Cybernetic Culture Research Unit at Warwick. They hold that capitalism is an alien intelligence assembling itself from the future. e/acc is their cheerful cover band.",
+  note:"The original accelerationists, followers of philosopher Nick Land and the 1990s Cybernetic Culture Research Unit at Warwick. They hold that capitalism is an alien intelligence assembling itself from the future.",
   habitat:"Obscure blogs, reading groups, Shanghai", call:"“Hyperstition.” “Capital is AI.” “Teleoplexy.”",
   reading:"*Fanged Noumena*, *Xenosystems*", wants:"Nothing, and certainly not from Washington",
   frenemies:"Consider e/acc a brand extension and NRx a cousin." },
@@ -243,7 +243,7 @@ const TRIBES = [
 
 { id:"techright", fam:"fast", name:"New Right techies and VCs", latin:"Dynamismus americanus", status:"Well funded", x:82, y:42, d:35,
   aka:"The tech right, a16z and friends, American Dynamism",
-  note:"Venture capitalists who spent 2020 to 2024 discovering that the regulatory state was the main obstacle to American greatness and to their funds’ returns, not necessarily in that order. Now run a super PAC network that has raised more than $140 million, and have the White House’s number.",
+  note:"Venture capitalists who spent 2020 to 2024 discovering that the regulatory state was the main obstacle to American greatness and to their funds’ returns, not necessarily in that order. Now run a super PAC network that says it has raised more than $140 million, and have the White House’s number.",
   habitat:"Menlo Park, Austin, Palm Beach, four-hour podcasts", call:"“Build.” “American dynamism.” “A patchwork of fifty state laws.”",
   reading:"“The Techno-Optimist Manifesto,” *The Sovereign Individual*", wants:"Federal preemption, procurement reform, permitting reform, more high-skilled visas",
   frenemies:"Fight the humanist right over H-1B visas and the ethics left over everything else." },
@@ -260,11 +260,11 @@ const TRIBES = [
   note:"Believe AGI is a few years away and the only question is whether America or China gets there first. Want the government deeply involved, mainly so it can win. Say “CCP” in every paragraph and “Manhattan Project” in every other one.",
   habitat:"Defense tech, national security think tanks, the SCIF", call:"“Compute is the new oil.” “The free world must prevail.”",
   reading:"Leopold Aschenbrenner’s *Situational Awareness*, *The Making of the Atomic Bomb*", wants:"Export controls, lab security, a huge energy buildout",
-  frenemies:"Agree with the EAs on chips and with e/acc on speed. Thanksgiving is complicated." },
+  frenemies:"Agree with the EAs on chips and with e/acc on speed, and have stopped explaining this to either." },
 
 { id:"netstate", fam:"fast", name:"Network Staters", latin:"Civis exitus", status:"Founding a country", x:86, y:8, d:55,
   aka:"Charter-city people, pop-up city people",
-  note:"Couldn’t fix the country, so they’d like to found a new one: online first, land later. Balaji Srinivasan’s *The Network State* (2022) is the handbook; pop-up cities in Montenegro and Honduras are the prototypes.",
+  note:"Couldn’t fix the country, so they’d like to found a new one: online first, land later. Balaji Srinivasan’s *The Network State* (2022) is the handbook; a pop-up city in Montenegro and a charter city in Honduras are the prototypes.",
   habitat:"Zuzalu, Próspera, a very active Telegram", call:"“Exit.” “Pop-up city.” “The network state.”",
   reading:"*The Network State*", wants:"Regulatory sandboxes, charter cities, crypto clarity",
   frenemies:"The cypherpunks’ grandchildren, with a real-estate budget." },
@@ -274,7 +274,7 @@ const TRIBES = [
   note:"Run models on a gaming PC under the desk and will explain their quantization settings unprompted. The decentralized-training wing (Prime Intellect, Nous Research, and friends) wants to train frontier models across thousands of volunteers’ GPUs so no company or government can gatekeep them.",
   habitat:"Hugging Face, Discord, a warm bedroom full of GPUs", call:"“Open weights.” “Local models.” “GGUF when?”",
   reading:"Hugging Face model cards", wants:"No release restrictions, public compute, open research",
-  frenemies:"The rare issue on which e/acc, old-school hackers, and parts of the academic left fully agree." },
+  frenemies:"Their cause is the rare issue on which e/acc, old-school hackers, and parts of the academic left fully agree." },
 
 /* ---------- BUILDERS ---------- */
 { id:"dacc", fam:"builders", name:"Defensive accelerationists (d/acc)", latin:"Accelerans prudens", status:"Everyone’s second choice", x:60, y:30, d:45,
@@ -287,7 +287,7 @@ const TRIBES = [
 { id:"abundance", fam:"builders", name:"Abundance and the YIMBYs", latin:"Aedificator permittens", status:"Spreading east", x:70, y:70, d:10,
   aka:"YIMBYs, the abundance movement, the “YIMBY neolibs”",
   note:"Started as San Francisco renters furious about zoning and became a bipartisan movement arguing that America’s real problem is that it can’t build anything. The tribe Washington understands best, because it wants a bill. Will testify for a fourplex on a Tuesday night.",
-  habitat:"Zoning hearings, think tanks on both sides, the House YIMBY Caucus", call:"“Vetocracy.” “State capacity.” “Just build more housing.”",
+  habitat:"Zoning hearings, think tanks on both sides, the Congressional YIMBY Caucus", call:"“Vetocracy.” “State capacity.” “Just build more housing.”",
   reading:"*Abundance* by Ezra Klein and Derek Thompson", wants:"Zoning, permitting, and NEPA reform, and cheap energy",
   frenemies:"Funded by EA and tech-right money alike, and accused by the left of being a tech-donor front." },
 
@@ -367,7 +367,7 @@ const WARNING = {
   title:"Not a tribe: the Zizians",
   body:[
     "A small, violent group that split from the rationalist community, organized around radical veganism and idiosyncratic beliefs about AI. Members have been tied to six deaths since 2022, including a U.S. Border Patrol agent killed in Vermont in January 2025. Seven are jailed awaiting trial in three states.",
-    "Rationalist organizations broke with the group’s leader before the killings. It has no policy agenda and says nothing about AI safety advocates generally. It is a law enforcement matter, which is why it is not on the map or in the quiz."
+    "Rationalist organizations broke with the group’s leader before the killings. The group has no policy agenda and tells you nothing about AI safety advocates generally. It is a law enforcement matter, which is why it is not on the map or in the quiz."
   ],
   source:{ label:"WHYY / AP, February 2026", url:"https://whyy.org/articles/border-agent-killing-zizian-criminal-charges-california-pennsylvania-vermont/" }
 };
@@ -387,7 +387,7 @@ const QUIZ = [
     ["Holding a sign outside a lab’s headquarters", {x:-2, y:1}, {pause:1}],
     ["A silent meditation retreat", {}, {tpot:1, hippie:0.7}] ]},
   { type:"likert", q:"Open-weight models are good for the world, even the most capable ones.", w:{x:1.2, y:-1.5} },
-  { type:"choice", q:"Pick a book for the flight:", a:[
+  { type:"choice", q:"Pick something to read on the flight:", a:[
     ["*Superintelligence*", {x:-1, y:1}, {ea:1}],
     ["*The Sovereign Individual*", {x:1, y:-2}, {netstate:1, cypher:0.6}],
     ["*Situational Awareness*", {x:1.5, y:1.5}, {hawk:1}],
@@ -404,18 +404,18 @@ const QUIZ = [
     ["“Let’s circle back with a bipartisan framework.”", {y:1}, {policyclass:1, bigtech:0.6}],
     ["“What does the time-horizon chart say?”", {x:-0.5}, {evals:1}],
     ["“Agree. Thoughts? 🚀”", {x:1}, {linkedin:1}] ]},
-  { type:"likert", q:"Beating China matters more than getting every safety detail right.", w:{x:1.5, y:0.7} },
+  { type:"likert", q:"Beating China to advanced AI matters more than slowing down for safety.", w:{x:1.5, y:0.7} },
   { type:"choice", q:"What worries you most about 2035?", a:[
     ["Nobody needs human workers anymore", {y:1, d:-1}, {disempower:1, aiecon:0.7}],
     ["Nobody is having children", {d:-1.5}, {pronatalist:1, tradtech:0.5}],
-    ["Scaling hit a wall and we wasted a trillion dollars", {}, {deadend:1}],
+    ["We built something we can’t control", {x:-1.5, y:1}, {miri:0.7, labsafety:0.6}],
     ["We lost to China", {x:1.5, y:1}, {hawk:0.8}] ]},
   { type:"likert", q:"Most regulation is written by incumbents to protect themselves.", w:{y:-1.5, x:0.7} },
   { type:"choice", q:"Does the model have feelings?", a:[
     ["Maybe. I’d like the labs to check.", {d:1}, {consciousness:1, labsafety:0.5}],
     ["No. It’s autocomplete.", {d:-1}, {deadend:0.7, ethics:0.5}],
-    ["Yes, and I know which ones are sad", {d:1.5}, {whisperers:1}],
-    ["I’ll think about it after we ship", {x:1.5}, {techright:1}] ]},
+    ["Yes, and I know which ones are sad.", {d:1.5}, {whisperers:1}],
+    ["I’ll think about it after we ship.", {x:1.5}, {techright:1}] ]},
   { type:"likert", q:"Humanity being succeeded by smarter minds would not necessarily be a bad thing.", w:{d:2, x:0.7} },
   { type:"choice", q:"Choose a place to live:", a:[
     ["A Berkeley group house", {x:-1}, {miri:0.7, acx:0.7}],
@@ -461,7 +461,7 @@ const TIMELINE = [
   ["2023","The pause letter, the extinction-risk statement, “The Techno-Optimist Manifesto,” and Vitalik Buterin’s d/acc essay. “Beff Jezos” is unmasked."],
   ["2024","*Situational Awareness*. The EU AI Act enters into force. “Taking AI Welfare Seriously.”"],
   ["2025","*Abundance* and *If Anyone Builds It, Everyone Dies* are both bestsellers. The Gradual Disempowerment paper. Leading the Future launches. Open Philanthropy becomes Coefficient Giving."],
-  ["2026","AI super PACs spend heavily in the midterms. RAISE Act author Alex Bores loses his House primary after about $8 million in opposition spending."]
+  ["2026","AI super PACs spend heavily in the midterms. RAISE Act sponsor Alex Bores loses his House primary after about $8 million in opposition spending."]
 ];
 
 const PHRASES = [
@@ -484,7 +484,7 @@ const PHRASES = [
   ["The Cathedral","NRx","Curtis Yarvin’s term for universities and the press acting as an unelected ruling class."],
   ["d/acc","d/acc","Defensive, decentralized acceleration: build fast, but favor defense."],
   ["Open weights","Open source","Publishing a trained model’s parameters so anyone can run it."],
-  ["The Bitter Lesson","Everyone","Rich Sutton’s 2019 argument that general methods plus compute beat human cleverness. Scripture for the scalers, a punching bag for the dead-end school."],
+  ["The Bitter Lesson","Everyone","Rich Sutton’s 2019 argument that general methods plus compute beat human cleverness. Gospel for the scalers, a punching bag for the dead-end school."],
   ["Vetocracy","Abundance","A system where too many parties can block a project, so nothing gets built."],
   ["State capacity","Abundance, hawks","Government’s ability to actually do things."],
   ["The Brussels effect","European technocrats","EU rules becoming global standards because companies don’t want two versions."],
@@ -498,6 +498,6 @@ const PHRASES = [
 const TIPS = [
   ["Ask for their number","“What’s your estimate that advanced AI causes a catastrophe, and by when?” Doomers give a number. Accelerationists reject the question. Abundance people change the subject to permitting. The ethics left tells you the question is the problem."],
   ["Ask who enforces","“Should states, a federal agency, the courts, or markets enforce this?” Nothing separates the preemption camp from the state-law camp faster."],
-  ["Ask who pays","Coefficient Giving and allied donors fund most of the safety field. Andreessen Horowitz, 8VC, OpenAI leadership, and allies fund most of the light-touch campaign. Neither fact refutes an argument, but both predict it."]
+  ["Ask who pays","“Who funds your work?” Coefficient Giving and allied donors fund most philanthropic safety work. Andreessen Horowitz, OpenAI’s Greg Brockman, Joe Lonsdale, and allies write the biggest checks for the light-touch campaign. Neither fact refutes an argument, but both predict it."]
 ];
 /* ======================= END OF CONTENT ========================= */
