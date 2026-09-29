@@ -30,7 +30,7 @@ Each argument is one line of the title, 2–3 words per line.
 
 ## Plates
 
-Each tribe has a Bauhaus emblem in `PLATES`, just after the content block, keyed by tribe `id`. Plates are drawn on a 120 × 120 grid with four fills: `a` International Orange, `k` Cod Gray, `p` Smoke White, `r` Timberwolf (`as`/`ks`/`ps`/`rs` for strokes). A new tribe without a plate simply renders without one.
+Each tribe has a Bauhaus plate in `PLATES`, just after the content block, keyed by tribe `id`. Each entry is `"viewBox|shapes"`: flat SVG shapes in the four FAI master fills only (`#FF4F00`, `#121212`, `#F3F3F3`, `#D9D9D6`). The plates were generated with QuiverAI Arrow 2, using FAI's freestyle illustrations as style references, then snapped to those four fills. A new tribe without a plate simply renders without one.
 
 ## The wall (shared quiz results)
 
