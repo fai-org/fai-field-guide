@@ -50,7 +50,7 @@ function doPost(e) {
     const name = String(b.name || "").replace(/\s+/g, " ").trim().slice(0, 20);
     const flat = name.toLowerCase().replace(/[^a-z]/g, "");
     const nums = [b.x, b.y, b.d].map(Number);
-    if (!name || !/^[\p{L}\p{N} .'\-]+$/u.test(name) || name.split(" ").length > 2) return json_({ ok: false, error: "bad name" });
+    if (!name || !/^[\p{L}\p{N} .'’\-]+$/u.test(name) || name.split(" ").length > 2) return json_({ ok: false, error: "bad name" });
     if (BLOCK.some(w => flat.includes(w))) return json_({ ok: false, error: "bad name" });
     if (!/^[a-z]{2,20}$/.test(String(b.tribe))) return json_({ ok: false, error: "bad tribe" });
     if (nums.some(n => !(n >= 0 && n <= 100))) return json_({ ok: false, error: "bad position" });
