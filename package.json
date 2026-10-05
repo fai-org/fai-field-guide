@@ -1,0 +1,14 @@
+{
+  "name": "fai-field-guide",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "migrate": "wrangler d1 migrations apply tribes-wall --remote",
+    "test": "node --test \"worker/test/*.test.js\" && node tools/check-quiz.mjs"
+  },
+  "devDependencies": {
+    "wrangler": "^4"
+  }
+}
