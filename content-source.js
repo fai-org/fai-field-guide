@@ -342,7 +342,7 @@ const QUIZ = [
     ["A cafeteria tray, same as the CEO’s", {y:0.3, d:-0.5}, {engineers:1.2}] ]},
   { type:"choice", q:"Your posting style:", a:[
     ["lowercase, kind, slightly mystical", {d:0.5}, {tpot:1.2}],
-    ["One-sentence paragraphs. Like this. Agree?", {x:0.5}, {linkedin:1.2}],
+    ["Humbled to announce. Honored to share. Thrilled to be on this journey.", {x:0.5}, {linkedin:1.2}],
     ["Frog avatar, classical statue, shirtless photo", {d:-1}, {vitalists:1}],
     ["Anime avatar, one-line prophecy", {x:1, d:1}, {cryptids:1}],
     ["I don’t post. I file comments.", {x:-0.5, y:1.5}, {eurocrats:1}] ]},
