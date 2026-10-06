@@ -1,6 +1,6 @@
 # A Field Guide to the Tribes of Silicon Valley
 
-A microsite from the Foundation for American Innovation: 27 tribes in seven families, a three-axis habitat map, a 23-question sorting quiz, a phrasebook, and a public wall of quiz takers.
+A microsite from the Foundation for American Innovation: 27 tribes in seven families, a three-axis habitat map, a 25-question sorting quiz, a phrasebook, and a public wall of quiz takers.
 
 Live (pre-launch, not indexed): https://tribes.thefai.workers.dev
 
