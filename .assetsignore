@@ -1,0 +1,15 @@
+# Only the site itself is served as static assets.
+.git
+.github
+.wrangler
+node_modules
+worker
+tools
+wall
+*.md
+*.json
+*.jsonc
+content-source.js
+.assetsignore
+.gitignore
+.dev.vars
