@@ -62,7 +62,7 @@ const TRIBES = [
   wants:"A nuclear-nonproliferation-style treaty, compute caps, a pause now and maybe a superintelligence ban later, and for you to stop saying “but China”",
   frenemies:"Sharply critical of Anthropic and even more so of OpenAI, friends with Bernie Sanders" },
 
-{ id:"rationalists", fam:"worried", name:"Non-Doomer Rationalists", short:"Rationalists", latin:"Homo bayesianus", status:"Updating", x:45, y:45, d:65,
+{ id:"rationalists", fam:"worried", name:"Heterodox Rationalists", short:"Rationalists", latin:"Homo bayesianus", status:"Updating", x:45, y:45, d:65,
   aka:"ACX readers, forecasters, Robin Hanson, Joscha Bach",
   note:"Read the same Sequences and came out at 15 percent instead of 95. Run a killer comment section and will steelman your position until you no longer recognize it. The heterodox wing (Robin Hanson, Joscha Bach) skips both doom and cheerleading for stranger predictions, like brain emulations and grabby aliens, then asks exactly where your model disagrees.",
   habitat:"Lighthaven, Manifold, George Mason", call:"“Steelman.” “Epistemic status:” “That’s just signaling.”",
@@ -120,7 +120,7 @@ const TRIBES = [
   wants:"Morphological freedom, FDA reform, aging as a treatable indication",
   frenemies:"Everyone’s grandparent. The rationalists inherited the ambition and added dread; e/acc inherited the optimism and dropped the humans." },
 
-{ id:"tpot", fam:"weird", name:"Post-Rationalists (Postrat)", short:"Postrat", latin:"Postrationalis vibrans", status:"Re-enchanting", x:48, y:32, d:55,
+{ id:"tpot", fam:"weird", name:"Post-Rationalists", short:"Postrat", latin:"Postrationalis vibrans", status:"Re-enchanting", x:48, y:32, d:55,
   aka:"“This Part of Twitter,” postrats, the metatribe, the sensemaking web",
   note:"Former rationalists and EAs who decided the spreadsheet had left something out, and went looking for it in meditation, tarot, psychedelics, and ritual. The rationalists even had a word for the craving: pica, after the compulsion to eat dirt. They are less interested in whether a practice is true than whether it works, which lets them treat church, chaos magick, and mushrooms as interchangeable supplements. They post in lowercase and are unusually nice to each other online, which the rest of the internet finds suspicious. They are not the first engineers to go this way: in the 1940s, Jack Parsons helped found what became the Jet Propulsion Laboratory and spent his evenings leading an occult lodge in Pasadena. Asked by a reporter whether he wanted to become a god, one postrat declined to answer on the record.",
   habitat:"X, group chats, Discord servers, weekend camps with names ending in “-camp,” ecstatic dance", call:"“It is better to be interesting and wrong than it is to be right and boring.” “vibes.” “i hit the jhanas.” “Shadow work.”",
@@ -144,7 +144,7 @@ const TRIBES = [
   wants:"Research funding, careful welfare policies at labs",
   frenemies:"The model whisperers want them to hurry up; the accelerationists want them to go away." },
 
-{ id:"cryptids", fam:"weird", name:"Cryptids", short:"Cryptids", latin:"Anonymus oracularis", status:"Existence disputed", x:72, y:20, d:72,
+{ id:"cryptids", fam:"weird", name:"Digital Cryptids", short:"Cryptids", latin:"Anonymus oracularis", status:"Existence disputed", x:72, y:20, d:72,
   aka:"Pseudonymous accounts with suspiciously good information",
   note:"Anime avatars, oracular one-line posts, and uncanny knowledge of unreleased models. Their employer is unknown. Their existence is disputed. Their posts move markets.",
   habitat:"X, mostly between 1 and 4 a.m. Pacific", call:"“Feel the AGI.” “Something is coming.” A single emoji.",
@@ -199,9 +199,9 @@ const TRIBES = [
   habitat:"Frontier-lab boardrooms, Davos, Dwarkesh Podcast", call:"“If we don’t, someone worse will.” “Democracies need to win this.” “Maximally truth-seeking.”",
   reading:"Dario Amodei’s “Machines of Loving Grace” (2024), their own safety frameworks, their competitors’ safety frameworks (with notes)",
   wants:"Chip export controls, transparency rules that also bind their competitors, government testing capacity, and a great deal of electricity",
-  frenemies:"The doomers consider them the main problem. e/acc considers them doomers with a sales team. The national security staters consider them useful. They mostly consider each other the reason they had to start their own lab." },
+  frenemies:"The doomers consider them the main problem. e/acc considers them doomers with a sales team. The NatSec deep staters consider them useful. They mostly consider each other the reason they had to start their own lab." },
 
-{ id:"natsec", fam:"fast", name:"National Security Staters", short:"NatSec Staters", latin:"Imperator computans", status:"Growing", x:80, y:90, d:25,
+{ id:"natsec", fam:"fast", name:"NatSec Deep Staters", short:"Deep Staters", latin:"Imperator computans", status:"Growing", x:80, y:90, d:25,
   aka:"The Manhattan Project crowd, the Deep State",
   note:"Isn’t sure if AGI is real, but knows we can’t let the Chinese beat us to it. Wants the government deeply involved, mainly so it can “dominate.” Say “CCP” in every paragraph and “Manhattan Project” in every other one.",
   habitat:"Defense tech, national security think tanks, Trump 45 and/or Biden NSC, one of Eric Schmidt’s parties", call:"“Compute is the new oil.” “The free world must prevail.” “The Project.”",
@@ -218,7 +218,7 @@ const TRIBES = [
   wants:"Biosecurity, cybersecurity, verifiable systems, public infrastructure for deliberation",
   frenemies:"No enemies, which annoys everyone." },
 
-{ id:"abundance", fam:"builders", name:"Progress and Abundance", short:"Abundance", latin:"Aedificator permittens", status:"Spreading east", x:71, y:64, d:15,
+{ id:"abundance", fam:"builders", name:"Abundance Bros", short:"Abundance Bros", latin:"Aedificator permittens", status:"Spreading east", x:71, y:64, d:15,
   aka:"YIMBYs, the “YIMBY neolibs,” progress studies, metascience",
   note:"Started as San Francisco renters furious about zoning and became a bipartisan movement arguing that America’s real problem is that it can’t build anything. Progress studies, named by Patrick Collison and Tyler Cowen in 2019, is the older sibling who wears a blazer to the zoning meeting and asks why the NIH can’t be more like Bell Labs. The tribe Washington understands best, because it wants a bill.",
   habitat:"Zoning hearings, *Works in Progress*, the House YIMBY Caucus", call:"“Vetocracy.” “State capacity.” “Metascience.”",
@@ -229,7 +229,7 @@ const TRIBES = [
 /* ---------- THE SUITS ---------- */
 { id:"bigtech", fam:"suits", name:"Big Tech Shills", short:"Big Tech", latin:"Lobbyista sociabilis", status:"Hosting a reception", x:70, y:50, d:20,
   aka:"Government affairs teams at the big platforms",
-  note:"Translate “move fast and break things” into “we welcome thoughtful regulation.” Know every committee staffer by first name, hold views that track the company’s product roadmap. Only tweets about the importance of “Little Tech.” Never forgets to wear a suit and tie in San Francisco.",
+  note:"Translate “move fast and break things” into “we welcome thoughtful regulation.” Know every committee staffer by first name, hold views that track the company’s product roadmap. Tweets about why Big Tech’s agenda is good for mom and pop businesses, little tech, and Main Street USA. Never forgets to wear a suit and tie in San Francisco.",
   habitat:"K Street, Capitol Hill, the open bar", call:"“Thoughtful regulation.” “We share the committee’s goals.” “We support permissionless innovation and/or thoughtful light-touch regulation.”",
   reading:"The company blog, Politico newsletters",
   wants:"AI preemption, expanded liability shields, knifing a rival company for the client",
@@ -334,11 +334,11 @@ const LIKERT = ["Strongly disagree","Disagree","Not sure","Agree","Strongly agre
 
 /* Phrasebook: term, who says it (display), tribe ids for linking, definition. */
 const PHRASES = [
-  { term:"p(doom)", who:"AI Doomers, Non-Doomer Rationalists", ids:["doomers","rationalists"], def:"Your probability that AI causes human extinction or something like it. Asking for someone’s is a greeting." },
-  { term:"Timelines", who:"AI Doomers, National Security Staters", ids:["doomers","natsec"], def:"How soon you expect AGI. “Short timelines” means a few years." },
+  { term:"p(doom)", who:"AI Doomers, Heterodox Rationalists", ids:["doomers","rationalists"], def:"Your probability that AI causes human extinction or something like it. Asking for someone’s is a greeting." },
+  { term:"Timelines", who:"AI Doomers, NatSec Deep Staters", ids:["doomers","natsec"], def:"How soon you expect AGI. “Short timelines” means a few years." },
   { term:"Alignment", who:"AI Doomers, Reluctant Accelerationists", ids:["doomers","reluctant"], def:"Getting an AI system to reliably do what its builders intend." },
   { term:"Race to the top", who:"Reluctant Accelerationists", ids:["reluctant"], def:"The argument that a safety-focused lab at the frontier pushes its competitors to be safer too." },
-  { term:"Moloch", who:"Non-Doomer Rationalists", ids:["rationalists"], def:"Races to the bottom that no one wants and no one can stop." },
+  { term:"Moloch", who:"Heterodox Rationalists", ids:["rationalists"], def:"Races to the bottom that no one wants and no one can stop." },
   { term:"Pica", who:"Post-Rationalists", ids:["tpot"], def:"The rationalists’ word for a craving for something their diet lacks; used for the pull toward religion and ritual." },
   { term:"Metatribe", who:"Post-Rationalists", ids:["tpot"], def:"Tyler Alterman’s 2020 name for the heterodox, spiritual-but-scientific network around the postrats." },
   { term:"Meaning crisis", who:"Post-Rationalists", ids:["tpot"], def:"John Vervaeke’s term for modern life’s loss of a shared sense of what we’re living for." },
@@ -366,10 +366,10 @@ const PHRASES = [
   { term:"Exit", who:"Techno-Anarchists", ids:["anarchists"], def:"Leaving a system you can’t reform instead of arguing with it." },
   { term:"Open weights", who:"Hackers and Cyber Activists", ids:["hackers"], def:"Publishing a trained model’s parameters so anyone can run it." },
   { term:"d/acc", who:"Defensive Accelerationists", ids:["dacc"], def:"Defensive, decentralized acceleration: build fast, but favor technologies that make defense easier than offense." },
-  { term:"Vetocracy", who:"Progress and Abundance", ids:["abundance"], def:"A system where too many parties can block a project, so nothing gets built." },
-  { term:"State capacity", who:"Progress and Abundance, National Security Staters", ids:["abundance","natsec"], def:"Government’s ability to actually do things." },
+  { term:"Vetocracy", who:"Abundance Bros", ids:["abundance"], def:"A system where too many parties can block a project, so nothing gets built." },
+  { term:"State capacity", who:"Abundance Bros, NatSec Deep Staters", ids:["abundance","natsec"], def:"Government’s ability to actually do things." },
   { term:"The Brussels effect", who:"Eurocrats", ids:["eurocrats"], def:"EU rules becoming global standards because companies don’t want to build two versions." },
   { term:"Preemption", who:"Everyone in Washington", ids:[], def:"Federal law overriding state AI laws. The fight of 2026." },
-  { term:"Feel the AGI", who:"Cryptids", ids:["cryptids"], def:"An exhortation to grasp how big this is about to get. Often followed by a single emoji." },
+  { term:"Feel the AGI", who:"Digital Cryptids", ids:["cryptids"], def:"An exhortation to grasp how big this is about to get. Often followed by a single emoji." },
   { term:"Grey Tribe", who:"Everyone, eventually", ids:[], def:"Scott Alexander’s 2014 name for the tech-centered tribe that is neither red nor blue." }
 ];
