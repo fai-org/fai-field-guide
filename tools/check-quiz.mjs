@@ -4,9 +4,10 @@
 import fs from 'fs';
 const html = fs.readFileSync(process.argv[2] || new URL('../index.html', import.meta.url), 'utf8');
 const block = html.slice(html.indexOf('/* ========================== CONTENT'), html.indexOf('/* ======================= END OF CONTENT'));
-const { TRIBES, QUIZ } = new Function(`${block}; return { TRIBES, QUIZ };`)();
+const { TRIBES, EGGS, QUIZ } = new Function(`${block}; return { TRIBES, EGGS, QUIZ };`)();
 
-const ids = new Set(TRIBES.map(t => t.id));
+// Bonus points may name a hidden tribe (EGGS); those never enter the ranking below.
+const ids = new Set(TRIBES.concat(EGGS).map(t => t.id));
 const problems = [];
 for (const [i, q] of QUIZ.entries()) {
   if (q.type === 'likert') { if (!q.w || !Object.keys(q.w).length) problems.push(`Q${i + 1}: likert without weights`); continue; }
@@ -16,7 +17,7 @@ for (const [i, q] of QUIZ.entries()) {
     for (const t in b) if (!ids.has(t)) problems.push(`Q${i + 1} “${text}”: unknown tribe ${t}`);
   }
 }
-for (const t of TRIBES) for (const k of ['x', 'y', 'd']) if (!(t[k] >= 0 && t[k] <= 100)) problems.push(`${t.id}: ${k} out of range`);
+for (const t of TRIBES.concat(EGGS)) for (const k of ['x', 'y', 'd']) if (!(t[k] >= 0 && t[k] <= 100)) problems.push(`${t.id}: ${k} out of range`);
 
 // Same scoring as the page.
 const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y, 0.8 * (a.d - b.d));

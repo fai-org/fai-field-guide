@@ -7,6 +7,8 @@ export const TRIBE_NAMES = {
   cryptids: "Digital Cryptids", eacc: "Effective Accelerationists", techright: "The Tech Right", nrx: "Neoreactionaries",
   vitalists: "Vitalists", reluctant: "Reluctant Accelerationists", natsec: "NatSec Deep Staters",
   dacc: "Defensive Accelerationists", abundance: "Abundance Bros", bigtech: "Big Tech Shills", eurocrats: "Eurocrats",
-  linkedin: "LinkedInfluencers"
+  linkedin: "LinkedInfluencers",
+  // Hidden tribes, reachable only through the quiz.
+  straussian: "West Coast Straussians", hyper: "Hyperdimensional Subscribers"
 };
 export const TRIBE_IDS = Object.keys(TRIBE_NAMES);

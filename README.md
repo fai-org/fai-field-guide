@@ -11,12 +11,13 @@ The site is one file, `index.html`. All copy lives in the first `<script>` block
 - `SITE`: title, dek, intro, footer; `WALL`: the wall's API address and privacy note
 - `AXES`: what 0 and 100 mean on speed (`x`), steering (`y`) and destination (`d`)
 - `FAMILIES` and `TRIBES`: one object per tribe, with its position on the three axes
+- `EGGS`: hidden tribes, off the map and the index. One with `neutral: true` is the result when every answer is “Not sure” or skipped; any other wins when a chosen answer gives it bonus points
 - `QUIZ`: `likert` statements move the axes by `w` per step of agreement; `choice` questions move them by `m` and give bonus points `b` to tribes
 - `PHRASES`: the phrasebook; `ids` link a term to tribes
 
 Wrap book, magazine and blog titles in `*asterisks*` for italics; use curly quotes. `content-source.js` is a standalone copy of the block for reviewing diffs; the site reads only `index.html`.
 
-Tribe ids also appear in `worker/tribes.js`. Add or rename a tribe in both places.
+Tribe ids, including hidden ones, also appear in `worker/tribes.js`. Add or rename a tribe in both places.
 
 After changing tribes or quiz weights, run `node tools/check-quiz.mjs`. It checks the data, shows how 100,000 random quiz takers are distributed, and confirms every tribe can be reached.
 

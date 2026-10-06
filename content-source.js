@@ -252,6 +252,25 @@ const TRIBES = [
   frenemies:"Loved by recruiters, hunted for sport by every other tribe." }
 ];
 
+/* Hidden tribes. Not on the map or in the index; reachable only through the quiz. */
+const EGGS = [
+{ id:"straussian", fam:"weird", name:"West Coast Straussians", short:"West Coast Straussians", latin:"Esotericus claremontensis", status:"Between the lines", x:50, y:50, d:50, neutral:true,
+  aka:"The Claremont school, Harry Jaffa’s students, the Flight 93 people",
+  note:"You answered “not sure” to everything. That is how we knew. Leo Strauss taught that serious writers put one teaching on the page for the public and another between the lines for the few who can read it. His West Coast students, gathered at the Claremont Institute, add that the American Founding was the high point of political thought and that most things since have been a decline. Wrote the most-read essay of the 2016 election under a Roman pseudonym. Do not take quizzes; take positions esoterically.\n\nYour exoteric result is that you have no views. Your esoteric result is in the footnotes.",
+  habitat:"Claremont, Hillsdale, a seminar on the Declaration, the footnotes", call:"“Read it again.” “What is the regime?” “The Founders understood this.”",
+  reading:"*Natural Right and History*, *Crisis of the House Divided*, the Federalist, this quiz, esoterically",
+  wants:"A return to the principles of the Founding, explained over a twelve-week course",
+  frenemies:"Claimed by the tech right as its philosophers. The tech right has not done the reading." },
+
+{ id:"hyper", fam:"builders", name:"Hyperdimensional Subscribers", short:"Hyperdimensional Subscribers", latin:"Lector longissimus", status:"Still reading", x:74, y:46, d:30,
+  aka:"Dean Ball’s readers, people who say “it’s more complicated than that, and here’s how”",
+  note:"Subscribe to *Hyperdimensional*, Dean Ball’s newsletter on AI policy, and have read, or at least opened, every post. Each one arrives at six thousand words and is about state preemption, or the architecture of a liability regime, or a model release, with a digression you did not see coming. Have strong views on SB 1047 and none on anything that has happened since they started this week’s post. Will tell you the question is more subtle than that, then tell you how, at length.\n\nNobody knows how many of them there are. Dean does, and has not said, which subscribers consider on brand.",
+  habitat:"Substack, the policy group chat, a long flight", call:"“Did you see the latest Hyperdimensional?” “It’s long, but worth it.” “He actually addresses that in section four.”",
+  reading:"*Hyperdimensional*, then the forty tabs it opened",
+  wants:"A federal framework that preempts the states, with footnotes",
+  frenemies:"Every tribe cites Dean when he agrees with them and calls the post “long” when he does not." }
+];
+
 const QUIZ = [
   { type:"choice", q:"Someone at a party asks for your p(doom). You:", a:[
     ["Give a number, with error bars", {x:-1}, {rationalists:1, doomers:0.6}],
@@ -272,7 +291,8 @@ const QUIZ = [
     ["*The Sovereign Individual*", {x:1, y:-2}, {anarchists:1.2}],
     ["*Situational Awareness*", {x:1.5, y:1.5}, {natsec:1}],
     ["*Fanged Noumena*", {x:2, y:-1, d:2}, {eacc:1}],
-    ["A tarot deck, which is technically not a book", {d:0.5}, {tpot:1.2}] ]},
+    ["A tarot deck, which is technically not a book", {d:0.5}, {tpot:1.2}],
+    ["The latest *Hyperdimensional* post, which is longer than the flight", {x:1, y:0.3}, {hyper:1}] ]},
   { type:"likert", q:"I would take a pill that let me live to 200.", w:{x:0.5, d:1.5} },
   { type:"choice", q:"Your ideal government is:", a:[
     ["Smaller, and out of my way", {y:-2}, {hackers:1.2}],
