@@ -111,13 +111,18 @@ test("a moderator can list, hide, export and block words", async () => {
   const list = await (await call("/admin/api/entries", { headers: h })).json();
   assert.equal(list.total, 1); assert.equal(list.email, "mod@thefai.org");
   const id = list.entries[0].id;
-  assert.equal((await call(`/admin/api/entries/${id}`, { method: "POST", headers: h, body: JSON.stringify({ hidden: true }) })).status, 200);
+  const w = { ...h, "Content-Type": "application/json", Origin: ORIGIN, "Sec-Fetch-Site": "same-origin" };
+  const forgery = { "Content-Type": "text/plain", Origin: "https://evil.example", "Sec-Fetch-Site": "cross-site" };
+  for (const bad of [{ ...w, Origin: forgery.Origin }, { ...w, "Sec-Fetch-Site": forgery["Sec-Fetch-Site"] }, { ...w, "Content-Type": forgery["Content-Type"] }])
+    assert.equal((await call(`/admin/api/entries/${id}`, { method: "POST", headers: bad, body: JSON.stringify({ hidden: true }) })).status, 403);
+  assert.equal((await (await call("/api/wall")).json()).count, 1);
+  assert.equal((await call(`/admin/api/entries/${id}`, { method: "POST", headers: w, body: JSON.stringify({ hidden: true }) })).status, 200);
   assert.equal((await (await call("/api/wall")).json()).count, 0);
   assert.equal(env.DB.raw.prepare("SELECT moderated_by FROM entries").get().moderated_by, "mod@thefai.org");
   const csv = await (await call("/admin/export.csv", { headers: h })).text();
   assert.match(csv, /^id,created_at,name/); assert.match(csv, /BOB,doomers,AI Doomers,4,84,75,yes,mod@thefai.org/);
-  assert.equal((await call("/admin/api/blocklist", { method: "POST", headers: h, body: JSON.stringify({ term: "Zq" }) })).status, 200);
+  assert.equal((await call("/admin/api/blocklist", { method: "POST", headers: w, body: JSON.stringify({ term: "Zq" }) })).status, 200);
   assert.equal((await post({ name: "ZQ" })).status, 400);
-  assert.equal((await call(`/admin/api/entries/${id}`, { method: "DELETE", headers: h })).status, 200);
+  assert.equal((await call(`/admin/api/entries/${id}`, { method: "DELETE", headers: w })).status, 200);
   assert.equal(env.DB.raw.prepare("SELECT COUNT(*) AS n FROM entries").get().n, 0);
 });

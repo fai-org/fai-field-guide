@@ -16,7 +16,9 @@ export default {
       else res = await env.ASSETS.fetch(request);
     } catch (e) {
       console.error(e);
-      res = json({ ok: false, code: "server_error", message: "Something went wrong. Try again in a moment." }, 500);
+      const o = url.pathname === "/api/wall" ? allowedOrigin(request, env, url) : {};
+      res = json({ ok: false, code: "server_error", message: "Something went wrong. Try again in a moment." }, 500,
+        o.ok && o.origin ? { "Access-Control-Allow-Origin": o.origin, "Vary": "Origin" } : {});
     }
     return withHeaders(res, env);
   }
@@ -133,6 +135,12 @@ async function admin(request, env, url) {
   const email = await accessEmail(request, env);
   if (!email) return new Response("Forbidden.", { status: 403 });
   const path = url.pathname, m = request.method;
+  /* Changes must come from the admin page itself: same origin, sent as JSON (which a cross-site form can't do). */
+  if (m !== "GET" && m !== "HEAD") {
+    const origin = request.headers.get("Origin"), site = request.headers.get("Sec-Fetch-Site");
+    if ((origin && origin !== url.origin) || (site && site !== "same-origin") || !(request.headers.get("Content-Type") || "").startsWith("application/json"))
+      return json({ ok: false, code: "forbidden" }, 403);
+  }
 
   if (path === "/admin" || path === "/admin/") return new Response(adminPage, { headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store" } });
 
