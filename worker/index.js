@@ -13,7 +13,7 @@ export default {
     try {
       if (url.pathname === "/api/wall") res = await wallApi(request, env, url);
       else if (url.pathname === "/admin" || url.pathname.startsWith("/admin/")) res = await admin(request, env, url);
-      else res = shareUrls(await env.ASSETS.fetch(request), url);
+      else res = await env.ASSETS.fetch(request);
     } catch (e) {
       console.error(e);
       res = json({ ok: false, code: "server_error", message: "Something went wrong. Try again in a moment." }, 500);
@@ -21,15 +21,6 @@ export default {
     return withHeaders(res, env);
   }
 };
-
-/* Link previews need absolute image and page URLs; point them at whichever domain served the page. */
-function shareUrls(res, url) {
-  if (typeof HTMLRewriter === "undefined" || !(res.headers.get("Content-Type") || "").includes("text/html")) return res;
-  return new HTMLRewriter()
-    .on('meta[property="og:image"]', { element: e => e.setAttribute("content", url.origin + "/og.png") })
-    .on('meta[property="og:url"]', { element: e => e.setAttribute("content", url.origin + "/") })
-    .transform(res);
-}
 
 function withHeaders(res, env) {
   const r = new Response(res.body, res);

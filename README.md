@@ -25,7 +25,7 @@ After changing tribes or quiz weights, run `node tools/check-quiz.mjs`. It check
 
 Each tribe has an avatar (a portrait) in `AVATARS` and a plate (abstract emblem art) in `PLATES`, keyed by tribe id, as `"viewBox|shapes"`. Both were generated with QuiverAI Arrow 2, snapped to the four FAI master fills (`#FF4F00`, `#121212`, `#F3F3F3`, `#D9D9D6`) and optimized with SVGO. The characters are generic types, not real people. Ancestral tribes sit on a Timberwolf circle, the rest on orange. Plates head each tribe's entry, the quiz result, the map's hover cards and the shareable result card, and crop to fit their box. A tribe without an avatar renders a plain placeholder; one without a plate shows none.
 
-The cover art beside the title (a pith helmet and binoculars) is made the same way. `og.png` is the link-preview image built from it; the Worker points the page's `og:image` and `og:url` at whichever domain served the page.
+The cover art beside the title (a pith helmet and binoculars) is made the same way. `og.png` is the link-preview image built from it; the page's `og:image` and `og:url` point at tribes.thefai.org wherever it is served.
 
 ## Hosting
 
