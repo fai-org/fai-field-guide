@@ -6,11 +6,16 @@
 //   node tools/outline-display.mjs /path/to/SchmalfetteGrotesk.otf "A field guide" "to the tribes" "of Silicon Valley"
 //
 // Each extra argument is one line of the title (2–3 words per line).
+// --marker=NAME writes between NAME:start and NAME:end instead (default
+// "display", the hero title). The gift guide title uses --marker=gifts-display.
 
 import fs from "node:fs";
 import opentype from "opentype.js";
 
-const [fontPath, ...lines] = process.argv.slice(2);
+const args = process.argv.slice(2);
+const flag = args.find(a => a.startsWith("--marker="));
+const MARKER = flag ? flag.slice(9) : "display";
+const [fontPath, ...lines] = args.filter(a => a !== flag);
 if (!fontPath || !lines.length) {
   console.error("usage: node tools/outline-display.mjs <font.otf> <line> [line ...]");
   process.exit(1);
@@ -49,7 +54,7 @@ const svg = `<svg class="display" viewBox="0 0 ${width.toFixed(1)} ${height.toFi
 
 const file = new URL("../index.html", import.meta.url);
 const html = fs.readFileSync(file, "utf8");
-const re = /(<!-- display:start -->)[\s\S]*?(<!-- display:end -->)/;
-if (!re.test(html)) { console.error("display markers not found in index.html"); process.exit(1); }
+const re = new RegExp(`(<!-- ${MARKER}:start -->)[\\s\\S]*?(<!-- ${MARKER}:end -->)`);
+if (!re.test(html)) { console.error(`${MARKER} markers not found in index.html`); process.exit(1); }
 fs.writeFileSync(file, html.replace(re, `$1${svg}$2`));
 console.log(`Outlined ${lines.length} lines, ${width.toFixed(0)}×${height.toFixed(0)} units.`);

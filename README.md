@@ -14,12 +14,19 @@ The site is one file, `index.html`. All copy lives in the first `<script>` block
 - `EGGS`: hidden tribes, off the map and the index. One with `neutral: true` is the result when every answer is “Not sure” or skipped; any other wins when a chosen answer gives it bonus points
 - `QUIZ`: `likert` statements move the axes by `w` per step of agreement; `choice` questions move them by `m` and give bonus points `b` to tribes
 - `PHRASES`: the phrasebook; `ids` link a term to tribes
+- `CHRISTMAS` and `GIFTS`: Christmas mode and the gift guide (see below)
 
 Wrap book, magazine and blog titles in `*asterisks*` for italics; use curly quotes. `content-source.js` is a standalone copy of the block for reviewing diffs; the site reads only `index.html`.
 
 Tribe ids, including hidden ones, also appear in `worker/tribes.js`. Add or rename a tribe in both places.
 
 After changing tribes or quiz weights, run `node tools/check-quiz.mjs`. It checks the data, shows how 100,000 random quiz takers are distributed, and confirms every tribe can be reached.
+
+## Christmas mode and the gift guide
+
+Christmas mode reskins the site in the FAI Christmas brand from Paper (“Christmas at Sea Cliff”: cream stock, cranberry, fir, ink, gold glitter; type stays ink) and adds a Gift guide tab. It is on by default between `CHRISTMAS.from` and `CHRISTMAS.to`, with a toggle in the rail; a visitor's choice is remembered for the season. `?christmas` turns it on outside those dates (`?christmas=0` turns it off), and any link to `#gifts` turns it on for that visit.
+
+`GIFTS` holds the guide in tiers. Each item's `ids` are the tribes it is for (`"all"` for every tribe) and `also` lists tribes the text mentions; the tribe's entry and the quiz result show its gifts, and the result also shows one for your natural enemy. Add a `url` to link an item. In Christmas mode the avatars and plates print their four fills in the Christmas inks. The gift guide title is outlined like the main title: `node tools/outline-display.mjs <font.otf> "A field guide" "to post-IPO" "holiday giving" --marker=gifts-display`.
 
 ## Avatars and plates
 
