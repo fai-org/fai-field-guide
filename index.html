@@ -485,7 +485,9 @@ html.xmas .map-legend .anc::before{ background:var(--fir); border-color:var(--co
 .g-prev{ font-family:var(--sans); font-size:14px; color:var(--muted); margin:0; }
 .g-tools{ display:flex; flex-wrap:wrap; gap:12px 16px; align-items:center; margin:32px 0 0; padding:16px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); font-family:var(--sans); font-size:14px; }
 .g-tools label{ font-weight:600; }
-.g-tools select{ font-family:var(--sans); font-size:15px; padding:8px 10px; border:1px solid var(--ink); border-radius:2px; background:var(--panel); color:var(--ink); max-width:100%; }
+.g-tools .sel{ position:relative; display:inline-block; max-width:100%; color:var(--ink); }
+.g-tools select{ appearance:none; -webkit-appearance:none; font-family:var(--sans); font-size:15px; padding:8px 42px 8px 10px; border:1px solid var(--ink); border-radius:2px; background:var(--panel); color:var(--ink); max-width:100%; cursor:pointer; }
+.g-tools .sel::after{ content:""; position:absolute; right:16px; top:50%; width:7px; height:7px; margin-top:-6px; border:solid currentColor; border-width:0 1.5px 1.5px 0; transform:rotate(45deg); pointer-events:none; }
 .g-tools .btn{ margin-left:auto; }
 .g-none{ font-family:var(--sans); font-size:15px; margin:24px 0 0; }
 .g-tier{ margin-top:48px; }
@@ -1440,7 +1442,7 @@ function renderGifts(){
     <div class="g-intro">${paras(GIFTS.intro)}</div>
     <p class="g-prev">Previous field reports: ${prev}.</p>
     <div class="g-tools"><label for="giftfor">Shopping for</label>
-      <select id="giftfor"><option value="">Every tribe</option>${opts}</select>
+      <span class="sel"><select id="giftfor"><option value="">Every tribe</option>${opts}</select></span>
       <a class="btn sm" href="#quiz">${S.youTribe ? "Your quiz result" : "Not sure? Take the quiz"}</a></div>
     ${giftFor && !giftsFor(giftFor).length ? `<p class="g-none">The ${esc(byId[giftFor].name)} are not on this year’s list. These work for every tribe:</p>` : ""}
     ${tiers.map(t => `<section class="g-tier"><header><h3>${esc(t.name)}</h3><span class="range">${esc(t.price)}</span></header>
