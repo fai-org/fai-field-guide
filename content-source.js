@@ -422,7 +422,7 @@ const CHRISTMAS = { exit:"Regular edition",
 
 /* GIFTS: the gift guide, in tiers. Each item: name, price, who ("For the …"
    line, shown as written), ids (the tribes it is for; "all" for every tribe),
-   also (other tribes it suits; shown as “Also for”), text (*italics* and [links](https://…) work), an optional url, and img: the picture, gifts/<img>.webp.
+   also (other tribes it suits; shown after the main one as “and …”), text (*italics* and [links](https://…) work), an optional url, and img: the picture, gifts/<img>.webp.
    finale:true sets an item apart at the end of the guide, with a button to its url. */
 const GIFTS = {
   title: "A Field Guide to Post-IPO Holiday Giving",
