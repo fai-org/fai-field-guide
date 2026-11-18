@@ -42,7 +42,7 @@ const XMAS_META = {
   "og:title": "A Field Guide to Post-IPO Holiday Giving",
   "og:description": "FAI’s Tech Right Gift Guide 2026, organized by tribe and sorted by liquidity.",
   "og:url": "/christmas",                   // made absolute with the serving host, so staging previews work
-  "og:image": "/og-christmas.jpg?v=1",
+  "og:image": "/og-christmas.jpg?v=2",
   "og:image:alt": "FAI’s Tech Right Gift Guide 2026: A field guide to post-IPO holiday giving, with drawings of a jar of chili crisp, a lighthouse, a leather jacket and a parrot."
 };
 const XMAS_ICONS = { 'link[rel="icon"][type="image/svg+xml"]': "favicon-christmas.svg?v=1", 'link[rel="icon"][sizes]': "favicon-christmas-32.png?v=1", 'link[rel="apple-touch-icon"]': "apple-touch-icon-christmas.png?v=1" };
