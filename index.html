@@ -442,6 +442,41 @@ html.xmas .map-legend .anc::before{ background:var(--fir); border-color:var(--co
 .xmas-exit{ display:inline-flex; align-items:center; gap:8px; font-family:var(--sans); font-size:13px; font-weight:500; line-height:1; color:var(--cod); text-decoration:none; white-space:nowrap; padding:8px 12px; border:1px solid var(--cod); border-radius:2px; }
 .xmas-exit .dot{ width:10px; height:10px; border-radius:50%; background:#FF4F00; flex:none; }
 .xmas-exit:hover{ background:var(--cod); color:var(--cream); }
+/* The pop-up Christmas switch on the regular site */
+.xpromo{ position:fixed; z-index:60; right:16px; bottom:max(16px, env(safe-area-inset-bottom)); display:flex; align-items:center; gap:4px;
+  padding:8px 8px 8px 10px; background:#121212; color:#F3F3F3; border-radius:999px; box-shadow:0 10px 30px rgb(0 0 0 / .28);
+  transform:translateY(160%) rotate(-6deg); transition:transform .6s cubic-bezier(.34,1.56,.64,1); }
+.xpromo.in{ transform:none; }
+@media (max-width:671px){ .xpromo{ left:50%; right:auto; translate:-50% 0; } }
+.xswitch{ display:flex; align-items:center; gap:10px; background:none; border:0; color:inherit; font:600 15px/1 var(--sans); padding:4px 6px; cursor:pointer; border-radius:999px; }
+.xswitch:focus-visible{ outline:2px solid #FF4F00; outline-offset:2px; }
+.xtrack{ position:relative; width:52px; height:28px; border-radius:999px; background:#3a3a3a; transition:background .35s; flex:none; }
+.xknob{ position:absolute; top:4px; left:4px; width:20px; height:20px; border-radius:50%; background:#B02B22; transition:transform .45s cubic-bezier(.34,1.8,.5,1); }
+.xknob::before{ content:""; position:absolute; left:6px; top:-4px; width:8px; height:5px; border-radius:1px; background:#C9A04A; }
+.xknob::after{ content:""; position:absolute; left:5px; top:5px; width:5px; height:3px; border-radius:50%; background:rgb(255 255 255 / .7); transform:rotate(-30deg); }
+.xswitch[aria-checked="true"] .xtrack{ background:#3C503A; }
+.xswitch[aria-checked="true"] .xknob{ transform:translateX(24px) rotate(360deg); }
+.xlab{ white-space:nowrap; min-width:7.5em; text-align:left; }
+.xclose{ width:32px; height:32px; border:0; border-radius:50%; background:none; color:#F3F3F3; opacity:.6; font:20px/1 var(--sans); cursor:pointer; }
+.xclose:hover{ opacity:1; background:#2a2a2a; }
+@media (prefers-reduced-motion: no-preference){
+  .xpromo.in .xswitch[aria-checked="false"] .xknob{ animation:jingle 4.5s ease-in-out 1.6s infinite; }
+  @keyframes jingle{ 0%, 84%, 100%{ transform:none; } 87%{ transform:translateX(5px) rotate(18deg); } 90%{ transform:translateX(-1px) rotate(-14deg); } 93%{ transform:translateX(3px) rotate(9deg); } 96%{ transform:rotate(-4deg); } }
+  .xswitch[aria-checked="true"]{ animation:boing .5s cubic-bezier(.34,1.56,.64,1); }
+  @keyframes boing{ 30%{ transform:scale(1.12, .9); } 60%{ transform:scale(.95, 1.06); } }
+}
+.snow{ position:fixed; inset:0; width:100vw; height:100vh; z-index:70; pointer-events:none; display:none; }
+.snow.on{ display:block; }
+/* The page turns over on its way into Christmas */
+html.xflip-out, html.xflip-in{ perspective:1600px; overflow-x:hidden; }
+html.xflip-out .shell{ animation:flipout .5s cubic-bezier(.55,0,.8,.3) forwards; transform-origin:50% 40vh; }
+html.xflip-in .shell{ animation:flipin .7s cubic-bezier(.2,.9,.3,1.25) both; transform-origin:50% 40vh; }
+@keyframes flipout{ to{ transform:rotateY(90deg) scale(.92); } }
+@keyframes flipin{ from{ transform:rotateY(-90deg) scale(.92); } }
+html.xflip-out, html.xflip-in{ background:#121212; }
+html.xflip-out body, html.xflip-in body{ background:transparent; }
+html.xflip-out .shell, html.xflip-in .shell{ background:var(--bg); }
+html.xflip-out .xpromo{ transform:translateY(160%); }
 .tab.gifttab .n{ background:var(--fir, #3C503A); color:var(--on-orange); padding:0 6px; border-radius:2px; }
 
 /* ---------- Gift guide ---------- */
@@ -617,6 +652,13 @@ html.xmas .map-legend .anc::before{ background:var(--fir); border-color:var(--co
   <p class="small" id="share-msg" role="status"></p>
 </div></dialog>
 <div class="toast" id="toast" role="status"></div>
+<div class="xpromo" id="xpromo" hidden>
+  <button type="button" class="xswitch" id="xswitch" role="switch" aria-checked="false">
+    <span class="xtrack" aria-hidden="true"><span class="xknob"></span></span><span class="xlab" id="xlab"></span>
+  </button>
+  <button type="button" class="xclose" id="xclose" aria-label="Hide the Christmas mode switch">×</button>
+</div>
+<canvas class="snow" id="snow" aria-hidden="true"></canvas>
 
 <script>
 /* ========================== CONTENT ==========================
@@ -1047,10 +1089,11 @@ const PHRASES = [
   { term:"Grey Tribe", who:"Everyone, eventually", ids:[], def:"Scott Alexander’s 2014 name for the tech-centered tribe that is neither red nor blue." }
 ];
 /* Christmas mode: the FAI Christmas palette (cream stock, cranberry, fir,
-   ink, gold glitter) and the gift guide tab. It is on by default between
-   `from` and `to`; visitors can switch it off. A link to #gifts, or any
-   address with ?christmas, turns it on outside those dates. */
-const CHRISTMAS = { exit:"Regular edition" };
+   ink, gold glitter) and the gift guide, served at /christmas (or any address
+   with ?christmas). The regular site at / is unchanged except for a pop-up
+   switch, shown until promoUntil, that leads to it. */
+const CHRISTMAS = { exit:"Regular edition",
+  promo:"Christmas mode", promoOn:"Ho ho ho", promoUntil:"2027-01-01" };
 
 /* GIFTS: the gift guide, in tiers. Each item: name, price, who ("For the …"
    line, shown as written), ids (the tribes it is for; "all" for every tribe),
@@ -1258,11 +1301,67 @@ const S = {
    so the guide at / never changes. ?christmas does the same on hosts without the Worker, such as a local server. */
 const xmas = /^\/christmas\/?$/.test(location.pathname) || new URLSearchParams(location.search).has("christmas");
 const XMAS_HOME = /(^|\.)(thefai\.org|workers\.dev)$/.test(location.hostname) ? "/christmas" : "?christmas";
+/* Snow: cartoon flakes on a canvas over the page. snow(ms) lets it fall for ms, then lets the last flakes land. */
+function snow(ms){
+  const c = $("#snow"), x = c.getContext("2d"), dpr = Math.min(2, window.devicePixelRatio || 1);
+  const size = () => { c.width = innerWidth * dpr; c.height = innerHeight * dpr; };
+  size(); addEventListener("resize", size); c.classList.add("on");
+  const n = Math.round(Math.min(220, innerWidth * innerHeight / 7000)), flakes = [];
+  const spawn = top => ({ x: Math.random() * innerWidth, y: top ? -10 - Math.random() * innerHeight * .6 : Math.random() * -40,
+    r: 2 + Math.random() * 4.5, v: 50 + Math.random() * 90, w: Math.random() * 6.28, s: .6 + Math.random() * 1.4 });
+  for (let i = 0; i < n; i++) flakes.push(spawn(true));
+  const end = performance.now() + ms; let last = performance.now();
+  (function tick(now){
+    const dt = Math.min(.05, (now - last) / 1000); last = now;
+    x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, innerWidth, innerHeight);
+    x.fillStyle = "#fff"; x.strokeStyle = "rgba(18,18,18,.28)"; x.lineWidth = 1;
+    // After its time is up the snow fades out over 1.2 seconds rather than waiting for the slowest flakes.
+    const fade = now < end ? 1 : Math.max(0, 1 - (now - end) / 1200); x.globalAlpha = fade;
+    let alive = 0;
+    for (const f of flakes){
+      if (f.done) continue;
+      f.y += f.v * dt; f.w += f.s * dt; f.x += Math.sin(f.w) * 22 * dt;
+      if (f.y > innerHeight + 10){ if (now < end) Object.assign(f, spawn(false)); else { f.done = true; continue; } }
+      alive++; x.beginPath(); x.arc(f.x, f.y, f.r, 0, 6.283); x.fill(); x.stroke();
+    }
+    if (alive && fade > 0) requestAnimationFrame(tick); else { c.classList.remove("on"); removeEventListener("resize", size); }
+  })(last);
+}
+const calm = matchMedia("(prefers-reduced-motion: reduce)");
+const SNOWKEY = "fai-tribes-snow";
+/* The regular site's pop-up switch: flip it and it snows, the page turns over, and you land on the gift guide. */
+function initPromo(){
+  const d = new Date(), today = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  const HIDE = "fai-tribes-xpromo-" + CHRISTMAS.promoUntil;
+  if (today >= CHRISTMAS.promoUntil || load(HIDE, false)) return;
+  const box = $("#xpromo"), sw = $("#xswitch");
+  $("#xlab").textContent = CHRISTMAS.promo;
+  box.hidden = false;
+  setTimeout(() => box.classList.add("in"), 900);
+  $("#xclose").onclick = () => { save(HIDE, true); box.classList.remove("in"); setTimeout(() => box.hidden = true, 400); };
+  sw.onclick = () => {
+    if (sw.getAttribute("aria-checked") === "true") return;
+    sw.setAttribute("aria-checked", "true"); $("#xlab").textContent = CHRISTMAS.promoOn;
+    const dest = XMAS_HOME + "#gifts";
+    if (calm.matches){ setTimeout(() => location.assign(dest), 250); return; }
+    try { sessionStorage.setItem(SNOWKEY, "1"); } catch(e){}
+    snow(4000);
+    setTimeout(() => document.documentElement.classList.add("xflip-out"), 1700);
+    setTimeout(() => location.assign(dest), 2200);
+  };
+}
 function initXmas(){
   buildDefs(xmas);
   if (!xmas){
     if (location.hash === "#gifts") location.replace(XMAS_HOME + "#gifts");   // old links to the gift guide
+    else initPromo();
     return;
+  }
+  let snowing = false; try { snowing = sessionStorage.getItem(SNOWKEY) === "1"; sessionStorage.removeItem(SNOWKEY); } catch(e){}
+  if (snowing && !calm.matches){
+    const h = document.documentElement; h.classList.add("xflip-in");
+    $(".shell").addEventListener("animationend", () => h.classList.remove("xflip-in"), { once: true });
+    snow(3500);
   }
   document.documentElement.classList.add("xmas");
   $("#gifttab").hidden = false;

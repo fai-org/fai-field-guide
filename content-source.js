@@ -414,10 +414,11 @@ const PHRASES = [
   { term:"Grey Tribe", who:"Everyone, eventually", ids:[], def:"Scott Alexander’s 2014 name for the tech-centered tribe that is neither red nor blue." }
 ];
 /* Christmas mode: the FAI Christmas palette (cream stock, cranberry, fir,
-   ink, gold glitter) and the gift guide tab. It is on by default between
-   `from` and `to`; visitors can switch it off. A link to #gifts, or any
-   address with ?christmas, turns it on outside those dates. */
-const CHRISTMAS = { from:"2026-11-24", to:"2027-01-06", toggle:"Christmas mode", cta:"FAI’s Tech Right Gift Guide 2026" };
+   ink, gold glitter) and the gift guide, served at /christmas (or any address
+   with ?christmas). The regular site at / is unchanged except for a pop-up
+   switch, shown until promoUntil, that leads to it. */
+const CHRISTMAS = { exit:"Regular edition",
+  promo:"Christmas mode", promoOn:"Ho ho ho", promoUntil:"2027-01-01" };
 
 /* GIFTS: the gift guide, in tiers. Each item: name, price, who ("For the …"
    line, shown as written), ids (the tribes it is for; "all" for every tribe),
