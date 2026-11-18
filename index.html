@@ -523,6 +523,10 @@ html.xmas .map-legend .anc::before{ background:var(--fir); border-color:var(--co
 .gift-mini + .gift-mini{ margin-top:16px; padding-top:16px; border-top:1px solid var(--rule); }
 .gift-mini .nm{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:2px 12px; font-weight:600; font-size:16px; line-height:1.3; margin:0; }
 .gift-mini .price{ white-space:normal; }
+/* Gift names link out without an underline; a small arrow marks the link */
+.g-item .nm a, .gift-mini .nm a{ text-decoration:none; }
+.g-item .nm a:hover, .gift-mini .nm a:hover{ text-decoration:underline; }
+.g-item .nm a::after, .gift-mini .nm a::after{ content:"\2197"; display:inline-block; margin-left:.3em; font-family:var(--sans); font-size:.7em; font-style:normal; font-weight:400; color:var(--muted); text-decoration:none; }
 .gift-mini .tx{ font-size:14px; line-height:1.45; margin:4px 0 0; }
 /* The other tribes a gift suits, inline after the main one: "For the Vitalist and [avatar] NRx" */
 .g-item .who a.and{ white-space:nowrap; }
