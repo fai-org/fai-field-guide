@@ -24,7 +24,7 @@ After changing tribes or quiz weights, run `node tools/check-quiz.mjs`. It check
 
 ## Christmas mode and the gift guide
 
-Christmas mode reskins the site in the FAI Christmas brand from Paper (“Christmas at Sea Cliff”: cream stock, cranberry, fir, ink, gold glitter; type stays ink) and adds a Gift guide tab. It is on by default between `CHRISTMAS.from` and `CHRISTMAS.to`, with a toggle in the rail; a visitor's choice is remembered for the season. `?christmas` turns it on outside those dates (`?christmas=0` turns it off), and any link to `#gifts` turns it on for that visit.
+Christmas mode is a separate edition of the site at `/christmas` (tribes.thefai.org/christmas), so the guide at `/` never changes. It reskins the site in the FAI Christmas brand from Paper (“Christmas at Sea Cliff”: cream stock, cranberry, fir, ink, gold glitter; type stays ink), opens on a Gift guide tab, and has a “Regular edition” link back to `/`. The Worker serves the same `index.html` at `/christmas` with the gift guide's title and link preview. Hosts without the Worker (a local server, GitHub Pages) use `?christmas` instead. Old links to `/#gifts` forward to the Christmas edition.
 
 `GIFTS` holds the guide in tiers. Each item's `ids` are the tribes it is for (`"all"` for every tribe) and `also` lists tribes the text mentions; the tribe's entry and the quiz result show its gifts, and the result also shows one for your natural enemy. Add a `url` to link an item. In Christmas mode the avatars and plates print their four fills in the Christmas inks. The gift guide title is outlined like the main title: `node tools/outline-display.mjs <font.otf> "A field guide" "to post-IPO" "holiday giving" --marker=gifts-display`.
 
@@ -43,6 +43,7 @@ npm install
 npm test                 # Worker tests and the quiz check
 npx wrangler dev         # local copy with a local database
 npm run deploy           # publish (needs the FAI Cloudflare token in CLOUDFLARE_API_TOKEN)
+npm run deploy:staging   # publish to https://tribes-staging.thefai.workers.dev (its own wall database, no admin)
 npm run migrate          # apply new files in worker/migrations to the live database
 ```
 
