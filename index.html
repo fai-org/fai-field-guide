@@ -15,7 +15,12 @@
 <meta property="og:image:alt" content="A field guide to the tribes of Silicon Valley: a pith helmet and binoculars peering over tall grass at server racks and a laptop.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#FF4F00">
-<script>/* Christmas edition: set before first paint */ if (/^\/christmas\/?$/.test(location.pathname) || /[?&]christmas(=|&|$)/.test(location.search)) document.documentElement.classList.add("xmas");</script>
+<script>/* Christmas edition: set before first paint */ if (/^\/christmas\/?$/.test(location.pathname) || /[?&]christmas(=|&|$)/.test(location.search)) {
+  document.documentElement.classList.add("xmas");
+  // The Worker already swaps these at /christmas; this covers ?christmas on other hosts.
+  for (const [sel, href] of [['link[rel="icon"][type="image/svg+xml"]', "favicon-christmas.svg?v=1"], ['link[rel="icon"][sizes]', "favicon-christmas-32.png?v=1"], ['link[rel="apple-touch-icon"]', "apple-touch-icon-christmas.png?v=1"]])
+    document.addEventListener("DOMContentLoaded", () => { const l = document.querySelector(sel); if (l) l.href = href; });
+}</script>
 <link rel="icon" href="favicon.svg?v=2" type="image/svg+xml">
 <link rel="icon" href="favicon-32.png?v=2" sizes="32x32" type="image/png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=2">

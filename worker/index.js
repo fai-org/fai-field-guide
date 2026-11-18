@@ -41,19 +41,25 @@ const XMAS_META = {
   title: "A Field Guide to Post-IPO Holiday Giving | FAI",
   "og:title": "A Field Guide to Post-IPO Holiday Giving",
   "og:description": "FAI’s Tech Right Gift Guide 2026, organized by tribe and sorted by liquidity.",
-  "og:url": "https://tribes.thefai.org/christmas"
+  "og:url": "/christmas",                   // made absolute with the serving host, so staging previews work
+  "og:image": "/og-christmas.jpg?v=1",
+  "og:image:alt": "FAI’s Tech Right Gift Guide 2026: A field guide to post-IPO holiday giving, with drawings of a jar of chili crisp, a lighthouse, a leather jacket and a parrot."
 };
+const XMAS_ICONS = { 'link[rel="icon"][type="image/svg+xml"]': "favicon-christmas.svg?v=1", 'link[rel="icon"][sizes]': "favicon-christmas-32.png?v=1", 'link[rel="apple-touch-icon"]': "apple-touch-icon-christmas.png?v=1" };
 async function christmas(request, env, url) {
   const page = await env.ASSETS.fetch(new Request(url.origin + "/", request));
   if (!page.ok) return page;
-  const set = key => ({ element(el) { el.setAttribute("content", XMAS_META[key]); } });
-  return new HTMLRewriter()
+  const set = key => ({ element(el) { const v = XMAS_META[key]; el.setAttribute("content", v.startsWith("/") ? url.origin + v : v); } });
+  const rw = new HTMLRewriter()
     .on("title", { element(el) { el.setInnerContent(XMAS_META.title); } })
     .on('meta[property="og:title"]', set("og:title"))
     .on('meta[property="og:description"]', set("og:description"))
     .on('meta[property="og:url"]', set("og:url"))
-    .on('meta[name="theme-color"]', { element(el) { el.setAttribute("content", "#E9D7B6"); } })
-    .transform(page);
+    .on('meta[property="og:image"]', set("og:image"))
+    .on('meta[property="og:image:alt"]', set("og:image:alt"))
+    .on('meta[name="theme-color"]', { element(el) { el.setAttribute("content", "#E9D7B6"); } });
+  for (const [sel, href] of Object.entries(XMAS_ICONS)) rw.on(sel, { element(el) { el.setAttribute("href", href); } });
+  return rw.transform(page);
 }
 
 /* ---------- Public wall API ---------- */
