@@ -418,7 +418,7 @@ const PHRASES = [
    with ?christmas). The regular site at / is unchanged except for a pop-up
    switch, shown until promoUntil, that leads to it. */
 const CHRISTMAS = { exit:"Regular edition",
-  promo:"Christmas mode", promoOn:"Ho ho ho", promoUntil:"2027-01-01" };
+  promo:"Christmas mode", promoOn:"Ho ho ho", promoKick:"New: the 2026 gift guide", promoUntil:"2027-01-01" };
 
 /* GIFTS: the gift guide, in tiers. Each item: name, price, who ("For the …"
    line, shown as written), ids (the tribes it is for; "all" for every tribe),

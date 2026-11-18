@@ -443,40 +443,38 @@ html.xmas .map-legend .anc::before{ background:var(--fir); border-color:var(--co
 .xmas-exit .dot{ width:10px; height:10px; border-radius:50%; background:#FF4F00; flex:none; }
 .xmas-exit:hover{ background:var(--cod); color:var(--cream); }
 /* The pop-up Christmas switch on the regular site */
-.xpromo{ position:fixed; z-index:60; right:16px; bottom:max(16px, env(safe-area-inset-bottom)); display:flex; align-items:center; gap:4px;
-  padding:8px 8px 8px 10px; background:#121212; color:#F3F3F3; border-radius:999px; box-shadow:0 10px 30px rgb(0 0 0 / .28);
-  transform:translateY(160%) rotate(-6deg); transition:transform .6s cubic-bezier(.34,1.56,.64,1); }
+.xpromo{ position:fixed; z-index:60; right:24px; bottom:max(24px, env(safe-area-inset-bottom)); display:flex; align-items:center; gap:4px;
+  padding:14px 10px 14px 20px; background:#121212; color:#F3F3F3; border-radius:16px; box-shadow:0 18px 50px rgb(0 0 0 / .35), 0 0 0 3px #FF4F00;
+  transform:translateY(180%) rotate(-8deg); transition:transform .7s cubic-bezier(.34,1.56,.64,1), opacity .3s; }
 .xpromo.in{ transform:none; }
-@media (max-width:671px){ .xpromo{ left:50%; right:auto; translate:-50% 0; } }
-.xswitch{ display:flex; align-items:center; gap:10px; background:none; border:0; color:inherit; font:600 15px/1 var(--sans); padding:4px 6px; cursor:pointer; border-radius:999px; }
-.xswitch:focus-visible{ outline:2px solid #FF4F00; outline-offset:2px; }
-.xtrack{ position:relative; width:52px; height:28px; border-radius:999px; background:#3a3a3a; transition:background .35s; flex:none; }
-.xknob{ position:absolute; top:4px; left:4px; width:20px; height:20px; border-radius:50%; background:#B02B22; transition:transform .45s cubic-bezier(.34,1.8,.5,1); }
-.xknob::before{ content:""; position:absolute; left:6px; top:-4px; width:8px; height:5px; border-radius:1px; background:#C9A04A; }
-.xknob::after{ content:""; position:absolute; left:5px; top:5px; width:5px; height:3px; border-radius:50%; background:rgb(255 255 255 / .7); transform:rotate(-30deg); }
+.xpromo.gone{ transform:translateY(180%); }
+@media (max-width:671px){ .xpromo{ left:12px; right:12px; bottom:max(12px, env(safe-area-inset-bottom)); } .xswitch{ flex:1; } }
+.xswitch{ display:flex; align-items:center; gap:18px; background:none; border:0; color:inherit; padding:2px 4px; cursor:pointer; border-radius:12px; text-align:left; }
+.xswitch:focus-visible{ outline:2px solid #FF4F00; outline-offset:4px; }
+.xtext{ display:flex; flex-direction:column; gap:4px; flex:1; }
+.xkick{ font:500 11px/1.2 "IBM Plex Mono", ui-monospace, monospace; letter-spacing:.1em; text-transform:uppercase; color:#FF4F00; }
+.xlab{ font:600 20px/1.1 var(--sans); white-space:nowrap; }
+.xtrack{ position:relative; width:68px; height:38px; border-radius:999px; background:#3a3a3a; transition:background .35s; flex:none; }
+.xknob{ position:absolute; top:5px; left:5px; width:28px; height:28px; border-radius:50%; background:#B02B22; transition:transform .45s cubic-bezier(.34,1.8,.5,1); }
+.xknob::before{ content:""; position:absolute; left:9px; top:-5px; width:10px; height:6px; border-radius:1px; background:#C9A04A; }
+.xknob::after{ content:""; position:absolute; left:6px; top:7px; width:7px; height:4px; border-radius:50%; background:rgb(255 255 255 / .7); transform:rotate(-30deg); }
 .xswitch[aria-checked="true"] .xtrack{ background:#3C503A; }
-.xswitch[aria-checked="true"] .xknob{ transform:translateX(24px) rotate(360deg); }
-.xlab{ white-space:nowrap; min-width:7.5em; text-align:left; }
-.xclose{ width:32px; height:32px; border:0; border-radius:50%; background:none; color:#F3F3F3; opacity:.6; font:20px/1 var(--sans); cursor:pointer; }
+.xswitch[aria-checked="true"] .xknob{ transform:translateX(30px) rotate(360deg); }
+.xclose{ align-self:flex-start; width:28px; height:28px; border:0; border-radius:50%; background:none; color:#F3F3F3; opacity:.55; font:18px/1 var(--sans); cursor:pointer; }
 .xclose:hover{ opacity:1; background:#2a2a2a; }
 @media (prefers-reduced-motion: no-preference){
-  .xpromo.in .xswitch[aria-checked="false"] .xknob{ animation:jingle 4.5s ease-in-out 1.6s infinite; }
-  @keyframes jingle{ 0%, 84%, 100%{ transform:none; } 87%{ transform:translateX(5px) rotate(18deg); } 90%{ transform:translateX(-1px) rotate(-14deg); } 93%{ transform:translateX(3px) rotate(9deg); } 96%{ transform:rotate(-4deg); } }
-  .xswitch[aria-checked="true"]{ animation:boing .5s cubic-bezier(.34,1.56,.64,1); }
-  @keyframes boing{ 30%{ transform:scale(1.12, .9); } 60%{ transform:scale(.95, 1.06); } }
+  .xpromo.in:not(.gone){ animation:nudge 6s ease-in-out 2.5s infinite; }
+  @keyframes nudge{ 0%, 90%, 100%{ translate:0 0; } 92%{ translate:0 -8px; } 94%{ translate:0 0; } 96%{ translate:0 -4px; } 98%{ translate:0 0; } }
+  .xpromo.in .xswitch[aria-checked="false"] .xknob{ animation:jingle 6s ease-in-out 2.5s infinite; }
+  @keyframes jingle{ 0%, 90%, 100%{ transform:none; } 92%{ transform:translateX(6px) rotate(20deg); } 94%{ transform:translateX(-1px) rotate(-14deg); } 96%{ transform:translateX(3px) rotate(9deg); } 98%{ transform:rotate(-4deg); } }
+  .xswitch[aria-checked="true"] .xtrack{ animation:boing .5s cubic-bezier(.34,1.56,.64,1); }
+  @keyframes boing{ 30%{ transform:scale(1.15, .88); } 60%{ transform:scale(.95, 1.06); } }
 }
 .snow{ position:fixed; inset:0; width:100vw; height:100vh; z-index:70; pointer-events:none; display:none; }
 .snow.on{ display:block; }
-/* The page turns over on its way into Christmas */
-html.xflip-out, html.xflip-in{ perspective:1600px; overflow-x:hidden; }
-html.xflip-out .shell{ animation:flipout .5s cubic-bezier(.55,0,.8,.3) forwards; transform-origin:50% 40vh; }
-html.xflip-in .shell{ animation:flipin .7s cubic-bezier(.2,.9,.3,1.25) both; transform-origin:50% 40vh; }
-@keyframes flipout{ to{ transform:rotateY(90deg) scale(.92); } }
-@keyframes flipin{ from{ transform:rotateY(-90deg) scale(.92); } }
-html.xflip-out, html.xflip-in{ background:#121212; }
-html.xflip-out body, html.xflip-in body{ background:transparent; }
-html.xflip-out .shell, html.xflip-in .shell{ background:var(--bg); }
-html.xflip-out .xpromo{ transform:translateY(160%); }
+/* The white-out at the height of the blizzard, behind the flakes */
+.whiteout{ position:fixed; inset:0; z-index:65; pointer-events:none; opacity:0; background:radial-gradient(ellipse 120% 90% at 35% 40%, #fff 0, #f5f2ec 60%, #e9e4da 100%); transition:opacity 1.6s cubic-bezier(.2,.7,.2,1); }
+.whiteout.on{ opacity:1; transition:opacity 1.2s cubic-bezier(.5,0,.75,.5); }
 .tab.gifttab .n{ background:var(--fir, #3C503A); color:var(--on-orange); padding:0 6px; border-radius:2px; }
 
 /* ---------- Gift guide ---------- */
@@ -659,11 +657,13 @@ html.xflip-out .xpromo{ transform:translateY(160%); }
 </div></dialog>
 <div class="toast" id="toast" role="status"></div>
 <div class="xpromo" id="xpromo" hidden>
-  <button type="button" class="xswitch" id="xswitch" role="switch" aria-checked="false">
-    <span class="xtrack" aria-hidden="true"><span class="xknob"></span></span><span class="xlab" id="xlab"></span>
+  <button type="button" class="xswitch" id="xswitch" role="switch" aria-checked="false" aria-describedby="xkick">
+    <span class="xtext"><span class="xkick" id="xkick"></span><span class="xlab" id="xlab"></span></span>
+    <span class="xtrack" aria-hidden="true"><span class="xknob"></span></span>
   </button>
   <button type="button" class="xclose" id="xclose" aria-label="Hide the Christmas mode switch">×</button>
 </div>
+<div class="whiteout" id="whiteout" aria-hidden="true"></div>
 <canvas class="snow" id="snow" aria-hidden="true"></canvas>
 
 <script>
@@ -1099,7 +1099,7 @@ const PHRASES = [
    with ?christmas). The regular site at / is unchanged except for a pop-up
    switch, shown until promoUntil, that leads to it. */
 const CHRISTMAS = { exit:"Regular edition",
-  promo:"Christmas mode", promoOn:"Ho ho ho", promoUntil:"2027-01-01" };
+  promo:"Christmas mode", promoOn:"Ho ho ho", promoKick:"New: the 2026 gift guide", promoUntil:"2027-01-01" };
 
 /* GIFTS: the gift guide, in tiers. Each item: name, price, who ("For the …"
    line, shown as written), ids (the tribes it is for; "all" for every tribe),
@@ -1311,31 +1311,42 @@ const S = {
    so the guide at / never changes. ?christmas does the same on hosts without the Worker, such as a local server. */
 let xmas = /^\/christmas\/?$/.test(location.pathname) || new URLSearchParams(location.search).has("christmas");
 const XMAS_HOME = /(^|\.)(thefai\.org|workers\.dev)$/.test(location.hostname) ? "/christmas" : "?christmas";
-/* Snow: cartoon flakes on a canvas over the page. snow(ms) lets it fall for ms, then lets the last flakes land. */
-function snow(ms){
+/* Snow: cartoon flakes on a canvas over the page. snowstorm() returns a handle whose target
+   (level 0–1, wind in px/s, speed, size) the snow eases toward; stop() lets it fade out. */
+function snowstorm(){
   const c = $("#snow"), x = c.getContext("2d"), dpr = Math.min(2, window.devicePixelRatio || 1);
   const size = () => { c.width = innerWidth * dpr; c.height = innerHeight * dpr; };
   size(); addEventListener("resize", size); c.classList.add("on");
-  const n = Math.round(Math.min(220, innerWidth * innerHeight / 7000)), flakes = [];
-  const spawn = top => ({ x: Math.random() * innerWidth, y: top ? -10 - Math.random() * innerHeight * .6 : Math.random() * -40,
-    r: 2 + Math.random() * 4.5, v: 50 + Math.random() * 90, w: Math.random() * 6.28, s: .6 + Math.random() * 1.4 });
-  for (let i = 0; i < n; i++) flakes.push(spawn(true));
-  const end = performance.now() + ms; let last = performance.now();
+  const MAX = Math.round(Math.min(900, innerWidth * innerHeight / 1400));
+  const cur = { level: 0, wind: 0, speed: 1, size: 1 };
+  const st = { target: { level: .3, wind: 0, speed: 1, size: 1 }, end: Infinity, stop(){ st.end = performance.now(); } };
+  const spawn = (f, anywhere) => {
+    const side = cur.wind > 180 && Math.random() < .5;
+    return Object.assign(f, { x: side ? -20 : Math.random() * (innerWidth + 300) - 300 * (cur.wind > 0 ? 1 : 0),
+      y: side ? Math.random() * innerHeight : anywhere ? -Math.random() * innerHeight : -10 - Math.random() * 40,
+      r: 1.5 + Math.random() * 3.5, v: 60 + Math.random() * 80, w: Math.random() * 6.28, s: .6 + Math.random() * 1.4, z: Math.random(), dead: false });
+  };
+  const flakes = Array.from({ length: MAX }, () => spawn({}, true));
+  let last = performance.now();
   (function tick(now){
     const dt = Math.min(.05, (now - last) / 1000); last = now;
-    x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, innerWidth, innerHeight);
-    x.fillStyle = "#fff"; x.strokeStyle = "rgba(18,18,18,.28)"; x.lineWidth = 1;
-    // After its time is up the snow fades out over 1.2 seconds rather than waiting for the slowest flakes.
-    const fade = now < end ? 1 : Math.max(0, 1 - (now - end) / 2500); x.globalAlpha = fade;
+    const k = Math.min(1, dt * 2.2);
+    for (const key in cur) cur[key] += (st.target[key] - cur[key]) * k;
+    const live = Math.round(MAX * cur.level), fade = now < st.end ? 1 : Math.max(0, 1 - (now - st.end) / 2500);
+    x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, innerWidth, innerHeight); x.globalAlpha = fade;
+    x.fillStyle = "#fff"; x.strokeStyle = "rgba(18,18,18,.22)"; x.lineWidth = 1;
     let alive = 0;
-    for (const f of flakes){
-      if (f.done) continue;
-      f.y += f.v * dt; f.w += f.s * dt; f.x += Math.sin(f.w) * 22 * dt;
-      if (f.y > innerHeight + 10){ if (now < end) Object.assign(f, spawn(false)); else { f.done = true; continue; } }
-      alive++; x.beginPath(); x.arc(f.x, f.y, f.r, 0, 6.283); x.fill(); x.stroke();
-    }
-    if (alive && fade > 0) requestAnimationFrame(tick); else { c.classList.remove("on"); removeEventListener("resize", size); }
+    flakes.forEach((f, i) => {
+      if (f.dead) { if (i < live && now < st.end) spawn(f); else return; }
+      const depth = .55 + f.z * .9;
+      f.y += f.v * cur.speed * depth * dt; f.w += f.s * dt;
+      f.x += (cur.wind * depth + Math.sin(f.w) * 22) * dt;
+      if (f.y > innerHeight + 12 || f.x > innerWidth + 40 || f.x < -60){ if (i < live && now < st.end) spawn(f); else { f.dead = true; return; } }
+      alive++; x.beginPath(); x.arc(f.x, f.y, f.r * cur.size * depth, 0, 6.283); x.fill(); if (cur.level < .6) x.stroke();
+    });
+    if (fade > 0 && (alive || now < st.end)) requestAnimationFrame(tick); else { c.classList.remove("on"); removeEventListener("resize", size); }
   })(last);
+  return st;
 }
 const calm = matchMedia("(prefers-reduced-motion: reduce)");
 /* The regular site's pop-up switch: flip it and it snows, the page turns over, and you land on the gift guide. */
@@ -1344,23 +1355,24 @@ function initPromo(){
   const HIDE = "fai-tribes-xpromo-" + CHRISTMAS.promoUntil;
   if (today >= CHRISTMAS.promoUntil || load(HIDE, false)) return;
   const box = $("#xpromo"), sw = $("#xswitch");
-  $("#xlab").textContent = CHRISTMAS.promo;
+  $("#xlab").textContent = CHRISTMAS.promo; $("#xkick").textContent = CHRISTMAS.promoKick;
   box.hidden = false;
   setTimeout(() => box.classList.add("in"), 900);
   $("#xclose").onclick = () => { save(HIDE, true); box.classList.remove("in"); setTimeout(() => box.hidden = true, 400); };
   sw.onclick = () => {
     if (sw.getAttribute("aria-checked") === "true") return;
     sw.setAttribute("aria-checked", "true"); $("#xlab").textContent = CHRISTMAS.promoOn;
-    // Christmas comes on in place, so the snow keeps falling through the flip; the address changes to match.
+    // Christmas comes on in place, under the white-out, and the address changes to match.
     const arrive = () => { history.pushState(null, "", XMAS_HOME + "#gifts"); enterXmas(); window.scrollTo(0, 0); route(); };
     if (calm.matches){ setTimeout(arrive, 250); return; }
-    const h = document.documentElement;
-    snow(9000);
-    setTimeout(() => h.classList.add("xflip-out"), 1700);
-    setTimeout(() => {
-      arrive(); h.classList.replace("xflip-out", "xflip-in");
-      $(".shell").addEventListener("animationend", () => h.classList.remove("xflip-in"), { once: true });
-    }, 2200);
+    const storm = snowstorm(), wo = $("#whiteout");
+    $("#xpromo").classList.add("gone");
+    storm.target = { level: .35, wind: 90, speed: 1.4, size: 1.05 };                                   // it starts to snow
+    setTimeout(() => storm.target = { level: 1, wind: 560, speed: 3.4, size: 1.4 }, 700);               // then it blows
+    setTimeout(() => wo.classList.add("on"), 900);                                                      // until you can't see
+    setTimeout(arrive, 2300);
+    setTimeout(() => { wo.classList.remove("on"); storm.target = { level: .28, wind: 25, speed: .85, size: 1 }; }, 2800);   // and it clears on Christmas
+    setTimeout(() => storm.stop(), 11000);
   };
   // Back from the gift guide to the regular address: reload so the regular site comes back as it was.
   addEventListener("popstate", () => { if (xmas && !/^\/christmas\/?$/.test(location.pathname) && !new URLSearchParams(location.search).has("christmas")) location.reload(); });
