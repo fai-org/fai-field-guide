@@ -415,10 +415,10 @@ const PHRASES = [
 ];
 /* Christmas mode: the FAI Christmas palette (cream stock, cranberry, fir,
    ink, gold glitter) and the gift guide, served at /christmas (or any address
-   with ?christmas). The regular site at / is unchanged except for a pop-up
-   switch, shown until promoUntil, that leads to it. */
-const CHRISTMAS = { exit:"Regular edition",
-  promo:"Christmas mode", promoOn:"Ho ho ho", promoKick:"New: the 2026 gift guide", promoUntil:"2027-01-01" };
+   with ?christmas). The regular site at / is unchanged except for a switch at
+   the end of the tab bar, shown until promoUntil, that turns it on. The same
+   switch, on, sits there in Christmas mode and turns it off. */
+const CHRISTMAS = { label:"Christmas mode", promoUntil:"2027-01-01" };
 
 /* GIFTS: the gift guide, in tiers. Each item: name, price, who ("For the …"
    line, shown as written), ids (the tribes it is for; "all" for every tribe),
