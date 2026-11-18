@@ -1309,7 +1309,7 @@ const S = {
 /* ---------- Christmas mode and the gift guide ---------- */
 /* The Christmas edition lives at its own address, /christmas (the Worker serves the same page there),
    so the guide at / never changes. ?christmas does the same on hosts without the Worker, such as a local server. */
-const xmas = /^\/christmas\/?$/.test(location.pathname) || new URLSearchParams(location.search).has("christmas");
+let xmas = /^\/christmas\/?$/.test(location.pathname) || new URLSearchParams(location.search).has("christmas");
 const XMAS_HOME = /(^|\.)(thefai\.org|workers\.dev)$/.test(location.hostname) ? "/christmas" : "?christmas";
 /* Snow: cartoon flakes on a canvas over the page. snow(ms) lets it fall for ms, then lets the last flakes land. */
 function snow(ms){
@@ -1326,7 +1326,7 @@ function snow(ms){
     x.setTransform(dpr, 0, 0, dpr, 0, 0); x.clearRect(0, 0, innerWidth, innerHeight);
     x.fillStyle = "#fff"; x.strokeStyle = "rgba(18,18,18,.28)"; x.lineWidth = 1;
     // After its time is up the snow fades out over 1.2 seconds rather than waiting for the slowest flakes.
-    const fade = now < end ? 1 : Math.max(0, 1 - (now - end) / 1200); x.globalAlpha = fade;
+    const fade = now < end ? 1 : Math.max(0, 1 - (now - end) / 2500); x.globalAlpha = fade;
     let alive = 0;
     for (const f of flakes){
       if (f.done) continue;
@@ -1338,7 +1338,6 @@ function snow(ms){
   })(last);
 }
 const calm = matchMedia("(prefers-reduced-motion: reduce)");
-const SNOWKEY = "fai-tribes-snow";
 /* The regular site's pop-up switch: flip it and it snows, the page turns over, and you land on the gift guide. */
 function initPromo(){
   const d = new Date(), today = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -1352,13 +1351,19 @@ function initPromo(){
   sw.onclick = () => {
     if (sw.getAttribute("aria-checked") === "true") return;
     sw.setAttribute("aria-checked", "true"); $("#xlab").textContent = CHRISTMAS.promoOn;
-    const dest = XMAS_HOME + "#gifts";
-    if (calm.matches){ setTimeout(() => location.assign(dest), 250); return; }
-    try { sessionStorage.setItem(SNOWKEY, "1"); } catch(e){}
-    snow(4000);
-    setTimeout(() => document.documentElement.classList.add("xflip-out"), 1700);
-    setTimeout(() => location.assign(dest), 2200);
+    // Christmas comes on in place, so the snow keeps falling through the flip; the address changes to match.
+    const arrive = () => { history.pushState(null, "", XMAS_HOME + "#gifts"); enterXmas(); window.scrollTo(0, 0); route(); };
+    if (calm.matches){ setTimeout(arrive, 250); return; }
+    const h = document.documentElement;
+    snow(9000);
+    setTimeout(() => h.classList.add("xflip-out"), 1700);
+    setTimeout(() => {
+      arrive(); h.classList.replace("xflip-out", "xflip-in");
+      $(".shell").addEventListener("animationend", () => h.classList.remove("xflip-in"), { once: true });
+    }, 2200);
   };
+  // Back from the gift guide to the regular address: reload so the regular site comes back as it was.
+  addEventListener("popstate", () => { if (xmas && !/^\/christmas\/?$/.test(location.pathname) && !new URLSearchParams(location.search).has("christmas")) location.reload(); });
 }
 function initXmas(){
   buildDefs(xmas);
@@ -1367,13 +1372,15 @@ function initXmas(){
     else initPromo();
     return;
   }
-  let snowing = false; try { snowing = sessionStorage.getItem(SNOWKEY) === "1"; sessionStorage.removeItem(SNOWKEY); } catch(e){}
-  if (snowing && !calm.matches){
-    const h = document.documentElement; h.classList.add("xflip-in");
-    $(".shell").addEventListener("animationend", () => h.classList.remove("xflip-in"), { once: true });
-    snow(3500);
-  }
+  enterXmas();
+}
+/* Switch the page into the Christmas edition (on load at /christmas, or in place from the regular site's switch). */
+function enterXmas(){
+  xmas = true;
+  buildDefs(true);
+  $("#xpromo").hidden = true;
   document.documentElement.classList.add("xmas");
+  for (const [sel, href] of [['link[rel="icon"][type="image/svg+xml"]', "favicon-christmas.svg?v=1"], ['link[rel="icon"][sizes]', "favicon-christmas-32.png?v=1"], ['link[rel="apple-touch-icon"]', "apple-touch-icon-christmas.png?v=1"]]){ const l = $(sel); if (l) l.href = href; }
   $("#gifttab").hidden = false;
   $('meta[name="theme-color"]').content = "#E9D7B6";
   const out = $("#xmas-exit");
