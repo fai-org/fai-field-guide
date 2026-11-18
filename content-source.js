@@ -495,5 +495,13 @@ const GIFTS = {
         text:"FAI’s staff belong to most of the 27, and deny belonging to any. If you’re working out how to give some of this away well, start with Nan Ransohoff on [the third wave of American philanthropy](https://nanransohoff.substack.com/p/the-third-wave-of-american-philanthropy), Joe Lonsdale’s [letter to new philanthropists](https://blog.joelonsdale.com/p/dear-new-philanthropists), and *Asterisk*’s conversation with Rob Reich and Alexander Berger on [what to do with all this AI money](https://asteriskmag.substack.com/p/what-should-we-do-about-all-this). Or skip the reading, make a [tax-deductible donation](https://www.thefai.org/donate) to FAI, and give [Grace Werner](https://www.thefai.org/profile/grace-werner) a call." }
     ]}
   ],
-  foot: "*We accept fiat currency, crypto, ANT, SPCX, startup equity, licensing-deal proceeds, real estate, DDR5, Mac minis, and lighthouses."
+  foot: "*We accept fiat currency, crypto, ANT, SPCX, startup equity, licensing-deal proceeds, real estate, DDR5, Mac minis, and lighthouses.",
+  /* hidden: gifts for the hidden tribes (EGGS). They appear only on those
+     tribes' entries and quiz results, never in the guide itself. */
+  hidden: [
+    { img:"rug", name:"An Antique Bakshaish Rug", price:"Spectacularly expensive", who:"For the Hyperdimensional Subscriber", ids:["hyper"], url:"https://x.com/deanwball/status/2109392229383180678",
+      text:"Dean Ball posts “[rug drops](https://x.com/deanwball/status/2109392229383180678)” to X, ranked “in roughly descending order of how lit I think they are.” He owns a Ferahan, which is low pile, so he hangs it on the wall, and in October he called a Bakshaish, a tribal rug from near Heriz in northwest Iran, “extraordinary.” Good antique rugs are, in his words, “[spectacularly expensive in absolute terms](https://x.com/deanwball/status/2118185785082183833) and outrageously cheap relative to the magnitude of the weavers’ artistic achievement.” Subscribers on a budget can use his [market tip](https://x.com/deanwball/status/2109398211991585097): dense floral Persian “city” rugs have fallen in price because interior designers stopped wanting them." },
+    { img:"suit", name:"*The Suit: A Machiavellian Approach to Men’s Style* by Nicholas Antongiavanni", price:"Used, price varies", who:"For the West Coast Straussian", ids:["straussian"], url:"https://www.abebooks.com/servlet/SearchResults?isbn=9780060891862",
+      text:"Before he ran policy planning at the State Department, Michael Anton posted on the menswear forums as “manton,” and in 2006 he published a style guide written as a parody of *The Prince*, under the name Nicholas Antongiavanni. It is out of print, so [find a used copy](https://www.abebooks.com/servlet/SearchResults?isbn=9780060891862). The author wrote under a pen name about one subject while drawing on another, and the recipient will assume the real teaching is in the chapter on trousers." }
+  ]
 };
