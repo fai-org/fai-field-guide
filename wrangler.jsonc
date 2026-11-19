@@ -23,7 +23,9 @@
     "ACCESS_AUD": "5fd3ebaa715db5c89ef62b1965b5ea3d8236913fb2ffecbc47bb425334acfa2a",
     "ADMIN_EMAIL_DOMAIN": "thefai.org",
     // Keep search engines out until launch; set to "0" to allow indexing.
-    "NOINDEX": "1"
+    "NOINDEX": "1",
+    // The public address (Netlify proxies tribes.thefai.org to this Worker); /christmas's link preview uses it.
+    "PUBLIC_ORIGIN": "https://tribes.thefai.org"
   },
   "observability": { "enabled": true },
   // Staging, for sharing work before it ships: `npm run deploy:staging` → https://tribes-staging.thefai.workers.dev
@@ -38,7 +40,7 @@
       "ratelimits": [
         { "name": "RATE_LIMITER", "namespace_id": "2702", "simple": { "limit": 5, "period": 60 } }
       ],
-      "vars": { "ALLOWED_ORIGINS": "", "ACCESS_TEAM_DOMAIN": "", "ACCESS_AUD": "", "ADMIN_EMAIL_DOMAIN": "thefai.org", "NOINDEX": "1" },
+      "vars": { "ALLOWED_ORIGINS": "", "ACCESS_TEAM_DOMAIN": "", "ACCESS_AUD": "", "ADMIN_EMAIL_DOMAIN": "thefai.org", "NOINDEX": "1", "PUBLIC_ORIGIN": "" },
       "observability": { "enabled": true }
     }
   }
