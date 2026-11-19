@@ -172,6 +172,19 @@ h2 {
 footer.colophon { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
 footer.colophon img { height: 26px; width: auto; }
 
+
+/* Pull quotes from the menswear canon */
+.pull { margin: 0; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; max-width: 34ch; margin-inline: auto; }
+.pull p { margin: 0; font-family: var(--text); font-style: italic; font-size: clamp(18px, 2vw, 21px); line-height: 1.45; text-wrap: balance; }
+.pull cite { font-style: normal; font-size: 10.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-soft); line-height: 1.6; text-wrap: balance; }
+.pull cite i { font-style: italic; letter-spacing: 0.12em; }
+.pull::before { content: ""; width: 28px; height: 1px; background: var(--orange); }
+.pull.grand { max-width: 40ch; }
+.pull.grand p { font-family: var(--display); font-style: normal; font-size: clamp(24px, 3.4vw, 34px); line-height: 1.3; }
+.pull.grand::before { display: none; }
+.copy .pull { margin-top: 18px; }
+.wardrobes > header .pull { margin-top: 10px; }
+
 @media (max-width: 760px) {
   body { font-size: 16px; }
   .opening, .spread, .wardrobes .spread, .wardrobes .spread.flip { grid-template-columns: 1fr; }
@@ -201,8 +214,13 @@ footer.colophon img { height: 26px; width: auto; }
     </div>
   </header>
 
+  <blockquote class="pull grand"><p>“Men in general judge more by their eyes than by their hands, because seeing is given to everyone, touching to few. Everyone sees how you appear, few touch what you are.”</p><cite>Niccolò Machiavelli, <i>The Prince</i></cite></blockquote>
+
   <section class="opening">
+    <div class="copy" style="gap: 28px">
     <p class="lede-text">Mastering the local uniform helps you accelerate your career, win friends, and influence people. A DC-appropriate professional wardrobe can be had for less than $3,000 if you size yourself correctly, stay disciplined, and carefully select pieces that work well together. Dressing seriously is a key first step to you being treated as a serious person.</p>
+      <blockquote class="pull"><p>“So he adopted the Washington uniform of a dark blue suit, white shirt, and red tie, and was soon for the first time being called presidential.”</p><cite>Nicholas Antongiavanni, <i>The Suit</i></cite></blockquote>
+    </div>
     <nav class="contents" aria-label="Contents">
       <img src="img/tape.jpg" alt="A tailor’s tape measure, shears, chalk and folded cloth">
       <div class="smallcaps">Contents</div>
@@ -218,7 +236,7 @@ footer.colophon img { height: 26px; width: auto; }
   </section>
 
   <section class="spread" id="suit">
-    <figure><img src="img/suit.jpg" alt="A man in a gray three-roll-two suit and striped tie"></figure>
+    <figure><img src="img/suit.jpg" alt="A man in a gray three-roll-two suit and striped tie"><blockquote class="pull"><p>“For my part, I do not deny their right to wear black suits; I assert only that in doing so they look bad.”</p><cite>Nicholas Antongiavanni, <i>The Suit</i></cite></blockquote></figure>
     <div class="copy">
       <header><h2>The Suit</h2><div class="rule" aria-hidden="true"></div></header>
       <p class="intro">Your first suits should be a versatile foundation. You can wear them to almost any professional meeting or presentation (excluding a black tie event, where you should wear a tuxedo). Get this right, and the rest will follow. Always wear them with a tie.</p>
@@ -245,11 +263,12 @@ footer.colophon img { height: 26px; width: auto; }
     <div class="copy" style="align-self: center">
       <div class="rule" aria-hidden="true"></div>
       <p class="note">Once you acquire the foundation, you can branch out in other directions. A good third item to acquire is a navy blazer with gold buttons, as it will go with everything you own.</p>
+      <blockquote class="pull"><p>“True blazers must have metal buttons; a blue jacket with horn buttons can be most elegant, but it is not a blazer.”</p><cite>Nicholas Antongiavanni, <i>The Suit</i></cite></blockquote>
     </div>
   </section>
 
   <section class="spread" id="sport-coat">
-    <figure><img src="img/sportcoat.jpg" alt="A man in a houndstooth sport coat, orange tie and cream trousers"></figure>
+    <figure><img src="img/sportcoat.jpg" alt="A man in a houndstooth sport coat, orange tie and cream trousers"><blockquote class="pull"><p>“When considering the purchase of a sportcoat try to imagine how it will look after five years of wear, slightly roughed up and worn. If you think it’s the kind of old friend you’d like to have around, then buy it.”</p><cite>Alan Flusser, <i>Making the Man</i></cite></blockquote></figure>
     <div class="copy">
       <header><h2>The Sport Coat</h2><div class="rule" aria-hidden="true"></div></header>
       <p class="intro">Sport coats and blazers may be used for less formal professional situations (but you should always wear a suit and tie to government meetings). Sport coats can be worn with or without a tie, and with suit trousers, more casual trousers, chinos, or dark jeans.</p>
@@ -277,6 +296,7 @@ footer.colophon img { height: 26px; width: auto; }
         <figure><img src="img/collar-buttondown.jpg" alt="Button-down collar with a tie"><figcaption>Button-down collar</figcaption></figure>
         <figure><img src="img/collar-cuff.jpg" alt="Barrel cuff"><figcaption>Barrel cuff</figcaption></figure>
       </div>
+      <blockquote class="pull"><p>“Think of your face as a portrait and your shirt collar as its frame.”</p><cite>Alan Flusser, <i>Style and the Man</i></cite></blockquote>
     </figure>
     <div class="copy">
       <header><h2>The Shirt</h2><div class="rule" aria-hidden="true"></div></header>
@@ -299,11 +319,12 @@ footer.colophon img { height: 26px; width: auto; }
     <div class="copy" style="align-self: center">
       <header><h2>Accessories</h2><div class="rule" aria-hidden="true"></div></header>
       <p class="intro">The details are where most people make mistakes. Opt for conservative options first; once you know the rules, you know how to break them well. Suggested brands can be found new or vintage – the savvy shopper knows how to carefully filter eBay, Poshmark, Grailed, and in-person stores to score good deals on pieces they otherwise couldn’t afford.</p>
+      <blockquote class="pull"><p>“As no serious writer would want to compromise his prose by omitting the correct punctuation, no serious <i>élégant</i> leaves his chest pocket similarly unattended.”</p><cite>Alan Flusser, <i>Style and the Man</i></cite></blockquote>
     </div>
   </section>
 
   <section class="spread flip" id="style-tips">
-    <figure><img src="img/tailor.jpg" alt="A tailor marking a customer’s jacket sleeve"></figure>
+    <figure><img src="img/tailor.jpg" alt="A tailor marking a customer’s jacket sleeve"><blockquote class="pull"><p>“Real innovation has always taken place with an awareness of, rather than an ignorance of, the rules. After all, how can you push the envelope if there is no envelope to push?”</p><cite>Alan Flusser, <i>Dressing the Man</i></cite></blockquote></figure>
     <div class="copy">
       <header><h2>Style Tips</h2><div class="rule" aria-hidden="true"></div></header>
       <p class="item"><span class="smallcaps">Fit Is King.</span> Correct tailoring and alterations are more important than the brand or price. Even an inexpensive suit looks professional if it fits properly.</p>
@@ -319,6 +340,7 @@ footer.colophon img { height: 26px; width: auto; }
     <header>
       <h2>Example Wardrobes</h2>
       <div class="rule" aria-hidden="true"></div>
+      <blockquote class="pull"><p>“Everything you buy should be wearable with most everything you already own.”</p><cite>Nicholas Antongiavanni, <i>The Suit</i></cite></blockquote>
     </header>
     <section class="spread" id="basics">
       <figure>
@@ -409,6 +431,7 @@ footer.colophon img { height: 26px; width: auto; }
       <figure>
         <img src="img/tuxedo.jpg" alt="A man in a shawl collar tuxedo, bow tie and cummerbund">
         <div class="title-block"><span class="smallcaps">Example Wardrobes</span><h3>Black Tie</h3><div class="rule" aria-hidden="true"></div><span class="budget">$2,000 Budget</span></div>
+        <blockquote class="pull"><p>“So I conclude that good formal wear must arise from good form, and that good form always requires good formal wear.”</p><cite>Nicholas Antongiavanni, <i>The Suit</i></cite></blockquote>
       </figure>
       <div class="list">
         <div><h4 class="smallcaps">Tuxedo</h4>
@@ -433,6 +456,8 @@ footer.colophon img { height: 26px; width: auto; }
       </div>
     </section>
   </section>
+
+  <blockquote class="pull grand"><p>“Clothes should be worn for comfort and unconscious ease. The wearer should look like himself, and no other, no matter what the occasion or what he has on.”</p><cite>Brooks Brothers, circa 1939</cite></blockquote>
 
   <footer class="colophon">
     <div class="rule" aria-hidden="true"></div>
