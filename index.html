@@ -431,8 +431,13 @@ html.xmas .hero-art.base [fill="#f3f3f3" i]{ fill:#F6EDDB; }
 html.xmas .hero-art.base [fill="#d9d9d6" i]{ fill:#E9D7B6; }
 html.xmas .rail{ background-color:var(--cream); background-image:var(--grain); }
 /* In the Christmas edition the rail is the gift guide's cover: its title, the tree, and a line back to the field guide */
-html.xmas .rail h1 .xkick{ display:block; font:500 12px/1.3 "IBM Plex Mono", ui-monospace, monospace; letter-spacing:.06em; text-transform:uppercase; margin:0 0 14px; }
+html.xmas .rail h1 .xkick{ display:block; font:500 12px/1.3 "IBM Plex Mono", ui-monospace, monospace; letter-spacing:.06em; text-transform:uppercase; text-wrap:balance; margin:0 0 14px; }
 html.xmas .hero-art.tree svg{ aspect-ratio:auto; }
+#xlab{ font-size:13px; letter-spacing:.06em; text-transform:uppercase; }
+/* The tree gets a larger slot than the field guide's cover art */
+html.xmas .rail-head{ grid-template-columns:minmax(0,1fr) 160px; }
+@media (min-width:672px){ html.xmas .rail-head{ grid-template-columns:minmax(0,1fr) minmax(0,46%); } html.xmas .rail-head .hero-art{ max-width:300px; } }
+@media (min-width:1056px){ html.xmas .rail-head .hero-art{ max-width:min(260px, 32vh); } }
 html.xmas .hero-art.tree [stroke="#1F201C"]{ stroke:var(--cod); }
 .rail .companion{ font-family:var(--sans); font-size:14px; margin:12px 0 0; }
 .rail .companion[hidden]{ display:none; }
@@ -456,12 +461,12 @@ html.xmas .map-legend .anc::before{ background:var(--fir); border-color:var(--co
 @media (min-width:672px){ .xswitch{ right:-16px; margin-right:-16px; padding-right:16px; } }
 @media (min-width:1056px){ .xswitch{ right:-24px; margin-right:-24px; padding-right:24px; } }
 @media (max-width:519px){ #xlab{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; } .xswitch{ padding-left:16px; } }
-.xtrack{ position:relative; width:46px; height:26px; border-radius:999px; background:color-mix(in srgb, var(--ink) 22%, transparent); transition:background .35s; flex:none; }
-.xknob{ position:absolute; top:4px; left:4px; width:18px; height:18px; border-radius:50%; background:#B02B22; transition:transform .45s cubic-bezier(.34,1.8,.5,1); }
+.xtrack{ position:relative; width:50px; height:30px; border-radius:999px; background:color-mix(in srgb, var(--ink) 22%, transparent); transition:background .35s; flex:none; }
+.xknob{ position:absolute; top:8px; left:5px; width:18px; height:18px; border-radius:50%; background:#B02B22; transition:transform .45s cubic-bezier(.34,1.8,.5,1); }
 .xknob::before{ content:""; position:absolute; left:6px; top:-3px; width:6px; height:4px; border-radius:1px; background:#C9A04A; }
 .xknob::after{ content:""; position:absolute; left:4px; top:4px; width:5px; height:3px; border-radius:50%; background:rgb(255 255 255 / .7); transform:rotate(-30deg); }
 .xswitch[aria-checked="true"] .xtrack{ background:#3C503A; }
-.xswitch[aria-checked="true"] .xknob{ transform:translateX(20px) rotate(360deg); }
+.xswitch[aria-checked="true"] .xknob{ transform:translateX(22px) rotate(360deg); }
 @media (prefers-reduced-motion: no-preference){
   .xswitch[aria-checked="false"] .xknob{ animation:jingle 6s ease-in-out 2.5s infinite; }
   @keyframes jingle{ 0%, 90%, 100%{ transform:none; } 92%{ transform:translateX(5px) rotate(20deg); } 94%{ transform:translateX(-1px) rotate(-14deg); } 96%{ transform:translateX(2px) rotate(9deg); } 98%{ transform:rotate(-4deg); } }
