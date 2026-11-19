@@ -420,7 +420,7 @@ const PHRASES = [
    switch, on, sits there in Christmas mode and turns it off. */
 const CHRISTMAS = { label:"Christmas mode", promoUntil:"2027-01-01",
   dek:"Gifts for all 27 tribes of Silicon Valley, sorted by liquidity.",
-  companion:"A companion to", fieldGuide:"A Field Guide to the Tribes of Silicon Valley" };
+  companion:"A companion to", fieldGuide:"A field guide to the tribes of Silicon Valley" };
 
 /* GIFTS: the gift guide, in tiers. Each item: name, price, who ("For the …"
    line, shown as written), ids (the tribes it is for; "all" for every tribe),
