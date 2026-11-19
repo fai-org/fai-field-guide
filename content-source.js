@@ -418,7 +418,9 @@ const PHRASES = [
    with ?christmas). The regular site at / is unchanged except for a switch at
    the end of the tab bar, shown until promoUntil, that turns it on. The same
    switch, on, sits there in Christmas mode and turns it off. */
-const CHRISTMAS = { label:"Christmas mode", promoUntil:"2027-01-01" };
+const CHRISTMAS = { label:"Christmas mode", promoUntil:"2027-01-01",
+  dek:"Gifts for all 27 tribes of Silicon Valley, sorted by liquidity.",
+  companion:"A companion to", fieldGuide:"A Field Guide to the Tribes of Silicon Valley" };
 
 /* GIFTS: the gift guide, in tiers. Each item: name, price, who ("For the …"
    line, shown as written), ids (the tribes it is for; "all" for every tribe),
@@ -439,6 +441,8 @@ const GIFTS = {
         text:"Everyone in Washington agrees this Chinese export should flow freely. Keep a [jar](https://www.amazon.com/s?k=lao+gan+ma+spicy+chili+crisp) at your desk and a second one at home in case of escalation. Our general counsel, Tim Hwang, is reportedly preparing his application to join the Lao Gan Ma frontier lab as a Member of Technical Staff. No BIS license is required." },
       { img:"usbc", name:"USB-C Cable", price:"~$10", who:"For the Eurocrat", ids:["eurocrats"], url:"https://www.amazon.com/s?k=usb-c+cable",
         text:"The EU [required USB-C charging](https://commission.europa.eu/news-and-media/news/eu-common-charger-rules-power-all-your-devices-single-charger-2024-12-28_en) on phones sold in Europe starting in December 2024, and Apple moved the iPhone to USB-C the year before. Hand a Eurocrat the cable and they will explain the Brussels effect for forty minutes. The equivalent cable for the AI Act is still in draft." },
+      { img:"eightball", name:"Magic 8 Ball", price:"~$12", who:"For the Digital Cryptid", ids:["cryptids"], url:"https://www.amazon.com/s?k=magic+8+ball",
+        text:"The die inside a [Magic 8 Ball](https://www.amazon.com/s?k=magic+8+ball) has 20 answers: ten say yes, five say no, and five, such as “Reply hazy, try again” and “Better not tell you now,” say neither. A Digital Cryptid can shake it at 3 a.m. Pacific, post the answer about a model nobody else has seen, and let the replies work out what it means. When the model ships, delete the posts that said no and pin the ones that said yes." },
       { img:"calendar", name:"2027 Wall Calendar", price:"~$15", who:"For the LLM Skeptic", ids:["skeptics"], url:"https://www.amazon.com/s?k=2027+wall+calendar",
         text:"They have been waiting for the wall since GPT-3, and now they can hang one. It has twelve months, each a fresh chance to announce that scaling has stopped working. Get the [kind with big squares](https://www.amazon.com/s?k=2027+wall+calendar) so there’s room to write “Hitting a wall” under every model release." },
       { img:"encyclical", name:"*Magnifica Humanitas* by Pope Leo XIV", price:"$17.95", who:"For the Right Humanist", ids:["righthumanists"], also:["reluctant", "lefthumanists"], url:"https://ignatius.com/magnifica-humanitas-magnificent-humanity-mhh/",

@@ -430,6 +430,12 @@ html.xmas .hero-art.base [fill="#121212" i]{ fill:#1F201C; }
 html.xmas .hero-art.base [fill="#f3f3f3" i]{ fill:#F6EDDB; }
 html.xmas .hero-art.base [fill="#d9d9d6" i]{ fill:#E9D7B6; }
 html.xmas .rail{ background-color:var(--cream); background-image:var(--grain); }
+/* In the Christmas edition the rail is the gift guide's cover: its title, the tree, and a line back to the field guide */
+html.xmas .rail h1 .xkick{ display:block; font:500 12px/1.3 "IBM Plex Mono", ui-monospace, monospace; letter-spacing:.06em; text-transform:uppercase; margin:0 0 14px; }
+html.xmas .hero-art.tree svg{ aspect-ratio:auto; }
+html.xmas .hero-art.tree [stroke="#1F201C"]{ stroke:var(--cod); }
+.rail .companion{ font-family:var(--sans); font-size:14px; margin:12px 0 0; }
+.rail .companion[hidden]{ display:none; }
 html.xmas .res-top{ background:var(--panel); color:var(--ink); border-color:var(--ink); }
 html.xmas .res-top .tag{ background:var(--ink); border-color:var(--ink); color:var(--bg); }
 html.xmas .res-id .av{ border-color:var(--ink); }
@@ -483,7 +489,7 @@ html.xmas:not([data-theme="light"]) .g-art [fill="#15191A"]{ fill:#55704F; }
 .g-head h2{ margin:0; }
 .g-head .display{ display:block; width:100%; max-width:520px; height:auto; color:var(--ink); }
 .g-head .kick{ font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:13px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin:0 0 20px; }
-.g-intro{ font-size:19px; line-height:1.5; max-width:62ch; margin:32px 0 0; }
+.g-intro{ font-size:19px; line-height:1.5; max-width:62ch; margin:0; }
 .g-intro p{ margin:0 0 12px; }
 .g-prev{ font-family:var(--sans); font-size:14px; color:var(--muted); margin:0; }
 .g-tools{ display:flex; flex-wrap:wrap; gap:12px 16px; align-items:center; margin:32px 0 0; padding:16px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); font-family:var(--sans); font-size:14px; }
@@ -567,6 +573,7 @@ html.xmas:not([data-theme="light"]) .g-art [fill="#15191A"]{ fill:#55704F; }
     <template id="tree-art"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 396 1050 1048" preserveAspectRatio="xMaxYMax meet"><g fill="#3C503A"><path d="M480 672L720 1152H240zM528 960L768 1440H288zM624 1056L816 1440H432z"/></g><g fill="#253828"><path d="M528 960L624 1152H432zM624 1056L672 1152H576zM600 1104L768 1440H432z"/></g><path fill="#15191A" d="M600 1104L624 1152H576z"/><g class="bauble"><path d="M768 400V458.4" stroke="#1F201C" stroke-width="4"/><rect x="753.6" y="458.4" width="28.8" height="21.6" fill="#1F201C"/><circle cx="768" cy="672" r="192" fill="#B02B22" filter="url(#xg-red)"/></g><g fill="#C9A04A" filter="url(#xg-gold)"><circle cx="19" cy="646" r="6.5"/><circle cx="73" cy="705" r="7.5"/><circle cx="127" cy="758" r="9.5"/><circle cx="180" cy="808" r="11.5"/><circle cx="233" cy="852" r="13.5"/><circle cx="285" cy="892" r="16.0"/><circle cx="337" cy="927" r="18.5"/><circle cx="389" cy="958" r="21.0"/><circle cx="441" cy="983" r="23.5"/><circle cx="492" cy="1004" r="25.0"/><circle cx="543" cy="1021" r="26.0"/><circle cx="593" cy="1032" r="26.5"/><circle cx="643" cy="1039" r="26.0"/><circle cx="693" cy="1042" r="24.5"/><circle cx="743" cy="1039" r="22.5"/><circle cx="792" cy="1032" r="20.0"/><circle cx="840" cy="1021" r="17.0"/><circle cx="889" cy="1004" r="13.5"/><circle cx="937" cy="983" r="11.0"/><circle cx="985" cy="957" r="8.5"/><circle cx="1032" cy="927" r="6.5"/></g></svg></template>
   </div>
   <p class="dek" id="dek"></p>
+  <p class="companion" id="companion" hidden></p>
   <div class="rail-ctas"><a class="btn solid" href="#quiz" id="herocta">Find your tribe</a><span class="heronum" id="heronum"></span></div>
   <figure class="mapcard" id="mapcard">
     <div class="map-head">
@@ -1091,7 +1098,9 @@ const PHRASES = [
    with ?christmas). The regular site at / is unchanged except for a switch at
    the end of the tab bar, shown until promoUntil, that turns it on. The same
    switch, on, sits there in Christmas mode and turns it off. */
-const CHRISTMAS = { label:"Christmas mode", promoUntil:"2027-01-01" };
+const CHRISTMAS = { label:"Christmas mode", promoUntil:"2027-01-01",
+  dek:"Gifts for all 27 tribes of Silicon Valley, sorted by liquidity.",
+  companion:"A companion to", fieldGuide:"A Field Guide to the Tribes of Silicon Valley" };
 
 /* GIFTS: the gift guide, in tiers. Each item: name, price, who ("For the …"
    line, shown as written), ids (the tribes it is for; "all" for every tribe),
@@ -1112,6 +1121,8 @@ const GIFTS = {
         text:"Everyone in Washington agrees this Chinese export should flow freely. Keep a [jar](https://www.amazon.com/s?k=lao+gan+ma+spicy+chili+crisp) at your desk and a second one at home in case of escalation. Our general counsel, Tim Hwang, is reportedly preparing his application to join the Lao Gan Ma frontier lab as a Member of Technical Staff. No BIS license is required." },
       { img:"usbc", name:"USB-C Cable", price:"~$10", who:"For the Eurocrat", ids:["eurocrats"], url:"https://www.amazon.com/s?k=usb-c+cable",
         text:"The EU [required USB-C charging](https://commission.europa.eu/news-and-media/news/eu-common-charger-rules-power-all-your-devices-single-charger-2024-12-28_en) on phones sold in Europe starting in December 2024, and Apple moved the iPhone to USB-C the year before. Hand a Eurocrat the cable and they will explain the Brussels effect for forty minutes. The equivalent cable for the AI Act is still in draft." },
+      { img:"eightball", name:"Magic 8 Ball", price:"~$12", who:"For the Digital Cryptid", ids:["cryptids"], url:"https://www.amazon.com/s?k=magic+8+ball",
+        text:"The die inside a [Magic 8 Ball](https://www.amazon.com/s?k=magic+8+ball) has 20 answers: ten say yes, five say no, and five, such as “Reply hazy, try again” and “Better not tell you now,” say neither. A Digital Cryptid can shake it at 3 a.m. Pacific, post the answer about a model nobody else has seen, and let the replies work out what it means. When the model ships, delete the posts that said no and pin the ones that said yes." },
       { img:"calendar", name:"2027 Wall Calendar", price:"~$15", who:"For the LLM Skeptic", ids:["skeptics"], url:"https://www.amazon.com/s?k=2027+wall+calendar",
         text:"They have been waiting for the wall since GPT-3, and now they can hang one. It has twelve months, each a fresh chance to announce that scaling has stopped working. Get the [kind with big squares](https://www.amazon.com/s?k=2027+wall+calendar) so there’s room to write “Hitting a wall” under every model release." },
       { img:"encyclical", name:"*Magnifica Humanitas* by Pope Leo XIV", price:"$17.95", who:"For the Right Humanist", ids:["righthumanists"], also:["reluctant", "lefthumanists"], url:"https://ignatius.com/magnifica-humanitas-magnificent-humanity-mhh/",
@@ -1400,6 +1411,12 @@ function enterXmas(){
   document.documentElement.classList.add("xmas");
   for (const [sel, href] of [['link[rel="icon"][type="image/svg+xml"]', "favicon-christmas.svg?v=1"], ['link[rel="icon"][sizes]', "favicon-christmas-32.png?v=1"], ['link[rel="apple-touch-icon"]', "apple-touch-icon-christmas.png?v=1"]]){ const l = $(sel); if (l) l.href = href; }
   $("#gifttab").hidden = false;
+  // The rail becomes the gift guide's cover. The field guide keeps one line, linking back to it.
+  $(".rail h1").innerHTML = `<span class="xkick">${esc(GIFTS.kicker)}</span><span class="vh" id="title">${esc(GIFTS.title)}</span>${$("#gifts-title").innerHTML}`;
+  const art = $(".rail .hero-art"); art.classList.replace("base", "tree"); art.innerHTML = $("#tree-art").innerHTML;
+  $("#dek").textContent = CHRISTMAS.dek;
+  const co = $("#companion"); co.hidden = false;
+  co.innerHTML = `${esc(CHRISTMAS.companion)} <a href="#tribes"><i>${esc(CHRISTMAS.fieldGuide)}</i></a>.`;
   $('meta[name="theme-color"]').content = "#E9D7B6";
   // The switch, now on, turns it off. Leaving keeps you on the same tribe or view, minus the gift guide, which only exists here.
   const sw = $("#xswitch");
@@ -1461,9 +1478,7 @@ function renderGifts(){
   const tiers = GIFTS.tiers.map(t => ({ ...t, items: t.items.filter(g => !g.finale && show(g)) })).filter(t => t.items.length);
   const fin = GIFT_ITEMS.find(g => g.finale);
   $("#v-gifts").innerHTML = `<div class="gifts">
-    <header class="g-head"><div><p class="kick">${esc(GIFTS.kicker)}</p><h2 tabindex="-1" id="gifts-h"><span class="vh">${esc(GIFTS.title)}</span>${$("#gifts-title").innerHTML}</h2></div>
-      <div class="g-art" aria-hidden="true">${$("#tree-art").innerHTML}</div>
-</header>
+    <h2 tabindex="-1" id="gifts-h" class="vh">${esc(GIFTS.title)}</h2>
     <div class="g-intro">${paras(GIFTS.intro)}</div>
     <p class="g-prev">Previous field reports: ${prev}.</p>
     <div class="g-tools"><label for="giftfor">Shopping for</label>
