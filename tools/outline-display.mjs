@@ -6,11 +6,19 @@
 //   node tools/outline-display.mjs /path/to/SchmalfetteGrotesk.otf "A field guide" "to the tribes" "of Silicon Valley"
 //
 // Each extra argument is one line of the title (2–3 words per line).
+// --marker=NAME writes between NAME:start and NAME:end instead (default
+// "display", the hero title). The gift guide title uses --marker=gifts-display.
+// --lead=N sets the baseline-to-baseline distance in ems (default 0.9). The
+// Christmas edition's titles use --lead=1, so their baselines land on its module grid.
 
 import fs from "node:fs";
 import opentype from "opentype.js";
 
-const [fontPath, ...lines] = process.argv.slice(2);
+const args = process.argv.slice(2);
+const flag = args.find(a => a.startsWith("--marker="));
+const MARKER = flag ? flag.slice(9) : "display";
+const leadFlag = args.find(a => a.startsWith("--lead="));
+const [fontPath, ...lines] = args.filter(a => a !== flag && a !== leadFlag);
 if (!fontPath || !lines.length) {
   console.error("usage: node tools/outline-display.mjs <font.otf> <line> [line ...]");
   process.exit(1);
@@ -20,7 +28,7 @@ const buf = fs.readFileSync(fontPath);
 const font = opentype.parse(buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.length));
 const SIZE = 100;                       // 1 unit = 1% of the em
 const TRACK = 0.018 * SIZE;             // brand tracking, +0.015–0.02em
-const LEAD = 0.9 * SIZE;                // baseline to baseline
+const LEAD = (leadFlag ? Number(leadFlag.slice(7)) : 0.9) * SIZE;   // baseline to baseline
 const CAP = font.tables.os2.sCapHeight / font.unitsPerEm * SIZE;
 
 // opentype.js's toPathData drops separators before zeros ("L25.10"), so serialize here.
@@ -49,7 +57,7 @@ const svg = `<svg class="display" viewBox="0 0 ${width.toFixed(1)} ${height.toFi
 
 const file = new URL("../index.html", import.meta.url);
 const html = fs.readFileSync(file, "utf8");
-const re = /(<!-- display:start -->)[\s\S]*?(<!-- display:end -->)/;
-if (!re.test(html)) { console.error("display markers not found in index.html"); process.exit(1); }
+const re = new RegExp(`(<!-- ${MARKER}:start -->)[\\s\\S]*?(<!-- ${MARKER}:end -->)`);
+if (!re.test(html)) { console.error(`${MARKER} markers not found in index.html`); process.exit(1); }
 fs.writeFileSync(file, html.replace(re, `$1${svg}$2`));
 console.log(`Outlined ${lines.length} lines, ${width.toFixed(0)}×${height.toFixed(0)} units.`);

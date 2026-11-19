@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FAI Guide to Professional Attire</title>
+<meta name="description" content="A menswear guide for new staff at the Foundation for American Innovation, with example wardrobes for $3,000, $6,500 and black tie.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&display=swap">
+<style>html{-webkit-text-size-adjust:100%}body{margin:0;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}img{max-width:100%}</style>
+</head>
+<body>
+<style>
+/* Layout: a mail-order Ivy catalogue on one long sheet of cream stock; each section is a two-page spread (drawing beside copy) that stacks on a phone. Single theme by choice: the paper is the design. */
+:root {
+  --paper: #F2EBDA;
+  --ink: #121212;
+  --ink-soft: #3d3a33;
+  --orange: #FF4F00;
+  --hair: rgba(18, 18, 18, 0.55);
+  --display: "Libre Caslon Display", "Libre Caslon Text", Georgia, "Times New Roman", serif;
+  --text: "Libre Caslon Text", Georgia, "Times New Roman", serif;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+a { color: inherit; }
+a:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+.sheet {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-block: 40px 72px;
+  padding-left: max(20px, env(safe-area-inset-left, 0px));
+  padding-right: max(20px, env(safe-area-inset-right, 0px));
+}
+.frame {
+  border: 1px solid var(--ink);
+  outline: 1px solid var(--ink);
+  outline-offset: 5px;
+  padding: clamp(28px, 6vw, 72px) clamp(18px, 5vw, 64px);
+  margin: 6px;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(72px, 12vw, 128px);
+}
+
+.smallcaps {
+  font-size: 11.5px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  line-height: 1.5;
+}
+.rule {
+  display: flex; flex-direction: column; gap: 2px;
+  width: 44px; margin-inline: auto;
+}
+.rule::before, .rule::after { content: ""; background: var(--orange); }
+.rule::before { height: 1.5px; }
+.rule::after { height: 0.75px; }
+
+/* Masthead */
+.masthead { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; }
+.masthead .pre { font-style: italic; font-size: clamp(20px, 3vw, 28px); line-height: 1; }
+.masthead .smallcaps { text-wrap: balance; }
+.masthead h1 {
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(44px, 9vw, 92px); line-height: 1; margin: 0;
+  text-wrap: balance;
+}
+.masthead img.cover { width: min(100%, 520px); margin-top: 8px; }
+.masthead .imprint { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.masthead .imprint img { height: 22px; width: auto; }
+
+/* Intro + contents */
+.opening {
+  display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 7vw, 88px); align-items: center;
+}
+.lede-text { font-size: 19px; line-height: 1.6; margin: 0; }
+.lede-text::first-letter {
+  float: left; font-family: var(--display); color: var(--orange);
+  font-size: 4.1em; line-height: 0.82; padding: 0.06em 0.08em 0 0;
+}
+.contents { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.contents img { width: min(100%, 300px); }
+.contents ol { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; }
+.contents a { text-decoration: none; }
+.contents a:hover .name { color: var(--orange); }
+
+/* Spreads */
+.spread {
+  display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 7vw, 88px); align-items: start;
+}
+.spread.flip > figure { order: 2; }
+.spread figure {
+  margin: 0; position: sticky; top: calc(24px + env(safe-area-inset-top, 0px));
+  display: flex; flex-direction: column; align-items: center; gap: 28px;
+}
+.spread figure img { width: 100%; max-width: 440px; }
+.copy { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.copy header { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; margin-bottom: 8px; }
+h2 {
+  font-family: var(--display); font-weight: 400; margin: 0;
+  font-size: clamp(38px, 5.5vw, 54px); line-height: 1.05; text-wrap: balance;
+}
+.intro { font-style: italic; text-align: center; font-size: 18px; margin: 0; text-wrap: pretty; }
+.copy p { margin: 0; }
+.copy .item { hyphens: auto; }
+.copy .item .smallcaps { font-size: 11px; letter-spacing: 0.16em; margin-right: 0.35em; }
+.suppliers {
+  display: flex; flex-direction: column; align-items: center; text-align: center; gap: 4px;
+  margin-top: 18px; padding-top: 22px; border-top: 0.75px solid var(--hair);
+}
+.suppliers .smallcaps { margin-bottom: 8px; }
+.suppliers i { display: block; margin-top: 8px; }
+.note { font-style: italic; text-align: center; font-size: 18px; text-wrap: balance; }
+
+.collars {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 28px 20px;
+  width: 100%; max-width: 440px; align-items: end;
+}
+.spread .collars figure { position: static; gap: 8px; }
+.spread .collars img { width: 100%; max-width: 190px; }
+.collars figcaption { font-style: italic; font-size: 14px; text-align: center; }
+
+/* Wardrobes */
+.wardrobes { display: flex; flex-direction: column; gap: clamp(72px, 12vw, 120px); }
+.wardrobes .spread { grid-template-columns: 2fr 3fr; gap: clamp(32px, 5vw, 64px); }
+.wardrobes .spread.flip { grid-template-columns: 3fr 2fr; }
+.wardrobes > header { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+.title-block { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+.title-block h3 { font-family: var(--display); font-weight: 400; margin: 0; font-size: clamp(36px, 5vw, 50px); line-height: 1.05; }
+.title-block .budget { font-style: italic; font-size: 18px; }
+.list { display: flex; flex-direction: column; gap: 16px; min-width: 0; font-variant-numeric: lining-nums tabular-nums; }
+.list h4 { margin: 0 0 2px; color: var(--orange); font-weight: 400; }
+.row {
+  display: grid; grid-template-columns: 1.2em minmax(0, 1fr) auto; column-gap: 8px;
+  font-size: 16px; line-height: 1.5;
+}
+.row .qty { text-align: right; align-self: start; }
+/* Leader dots run along the last line only: the dotted ground sits at the
+   block's last baseline and the item text paints paper over its own run. */
+.row .desc {
+  align-self: end; text-wrap: pretty;
+  background-image: linear-gradient(to right, var(--ink) 1px, transparent 1px);
+  background-size: 3.5px 1px; background-repeat: repeat-x;
+  background-position: 0 calc(100% - 0.42em);
+}
+.row a { text-decoration: none; background: var(--paper); padding-right: 6px; }
+.row a i { white-space: nowrap; }
+.row a:hover { text-decoration: underline; text-decoration-color: var(--orange); text-underline-offset: 3px; }
+.row .price { align-self: end; text-align: right; padding-left: 2px; background: var(--paper); }
+.total {
+  display: flex; justify-content: space-between; align-items: baseline;
+  border-top: 0.75px solid var(--ink); padding-top: 12px; margin-top: 4px;
+}
+.total strong { font-size: 19px; }
+.hint { font-style: italic; font-size: 14px; color: var(--ink-soft); text-align: center; margin: 0; }
+
+footer.colophon { display: flex; flex-direction: column; align-items: center; gap: 12px; text-align: center; }
+footer.colophon img { height: 26px; width: auto; }
+
+@media (max-width: 760px) {
+  body { font-size: 16px; }
+  .opening, .spread, .wardrobes .spread, .wardrobes .spread.flip { grid-template-columns: 1fr; }
+  .spread.flip > figure { order: 0; }
+  .spread figure { position: static; }
+  .spread figure img, .collars { max-width: 340px; }
+  .frame { outline-offset: 4px; }
+  .row { font-size: 15px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .contents a .name, .row a { transition: color 120ms ease; }
+}
+</style>
+
+<main class="sheet">
+<div class="frame">
+
+  <header class="masthead">
+    <div class="pre">Guide to</div>
+    <h1>Professional Attire</h1>
+    <div class="rule" aria-hidden="true"></div>
+    <div class="smallcaps">A Menswear Guide for New Staff</div>
+    <img class="cover" src="img/cover.jpg" alt="Two men in pen and ink, one in a gray suit and striped tie, one in a navy blazer and gray trousers with a coat over his arm">
+    <div class="imprint">
+      <img src="img/Acronym-Black.svg" alt="FAI">
+      <span class="smallcaps">Washington, DC</span>
+    </div>
+  </header>
+
+  <section class="opening">
+    <p class="lede-text">Mastering the local uniform helps you accelerate your career, win friends, and influence people. A DC-appropriate professional wardrobe can be had for less than $3,000 if you size yourself correctly, stay disciplined, and carefully select pieces that work well together. Dressing seriously is a key first step to you being treated as a serious person.</p>
+    <nav class="contents" aria-label="Contents">
+      <img src="img/tape.jpg" alt="A tailor’s tape measure, shears, chalk and folded cloth">
+      <div class="smallcaps">Contents</div>
+      <ol>
+        <li><a href="#suit"><span class="name">The Suit</span></a></li>
+        <li><a href="#sport-coat"><span class="name">The Sport Coat</span></a></li>
+        <li><a href="#shirt"><span class="name">The Shirt</span></a></li>
+        <li><a href="#accessories"><span class="name">Accessories</span></a></li>
+        <li><a href="#style-tips"><span class="name">Style Tips</span></a></li>
+        <li><a href="#wardrobes"><span class="name">Example Wardrobes</span></a></li>
+      </ol>
+    </nav>
+  </section>
+
+  <section class="spread" id="suit">
+    <figure><img src="img/suit.jpg" alt="A man in a gray three-roll-two suit and striped tie"></figure>
+    <div class="copy">
+      <header><h2>The Suit</h2><div class="rule" aria-hidden="true"></div></header>
+      <p class="intro">Your first suits should be a versatile foundation. You can wear them to almost any professional meeting or presentation (excluding a black tie event, where you should wear a tuxedo). Get this right, and the rest will follow. Always wear them with a tie.</p>
+      <p class="item"><span class="smallcaps">Color &amp; Pattern.</span> Your first two suits should be solid <b>Navy</b> and <b>Gray (Medium to Charcoal)</b>. Additional suits could be navy or charcoal pinstripes, gray glen check, or dark brown. <i>Avoid:</i> Black, loud patterns like windowpane, textured fabrics, and light colors.</p>
+      <p class="item"><span class="smallcaps">Fabric.</span> Stick to <b>100% Wool</b> (Twill, Birdseye, or Hopsack). <i>Tip:</i> <b>Tropical Wool</b> is ideal for DC’s Summer heat and humidity. <i>Avoid:</i> Polyester blends, cotton, or non-worsted wool.</p>
+      <p class="item"><span class="smallcaps">The Cut.</span> Opt for a classic full cut rather than “skinny” fits (you should look like Cary Grant, not Andrew Tate).</p>
+      <p class="item"><span class="smallcaps">Jacket.</span> Two-button or 3-roll-2 closure. Look for a soft shoulder and double vents. Opt for notch or peak lapels. Tailor sleeves to expose ¼″ of your shirt cuffs.</p>
+      <p class="item"><span class="smallcaps">Trousers.</span> High-rise waist with a slight break at the hem.</p>
+      <p class="item"><span class="smallcaps">Pockets.</span> Flap pockets are best. Patch or jetted pockets don’t belong on a business suit. Ticket pockets are old fashioned.</p>
+      <p class="item"><span class="smallcaps">Details.</span> Avoid “trendy” details like high-contrast button thread. Other details like pleats, hem style, or lining fabric are based on your taste. Look for natural horn buttons.</p>
+      <p class="item"><span class="smallcaps">Construction.</span> Seek out half or fully canvased construction. <i>Avoid:</i> Fused (glued) jackets for longevity, breathability, and drape. Heavily padded shoulders.</p>
+      <div class="suppliers">
+        <div class="smallcaps">Recommended Suppliers</div>
+        <i>Ready-to-Wear</i>
+        <span>Suitsupply, Spier &amp; Mackay, J. Press</span>
+        <i>Made-to-Measure</i>
+        <span>Suitsupply, Spier &amp; Mackay, Proper Cloth, Alton Lane, Enzo Custom</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="spread flip">
+    <figure><img src="img/hanger.jpg" alt="A navy blazer with gold buttons on a wooden hanger, a striped tie over the shoulder"></figure>
+    <div class="copy" style="align-self: center">
+      <div class="rule" aria-hidden="true"></div>
+      <p class="note">Once you acquire the foundation, you can branch out in other directions. A good third item to acquire is a navy blazer with gold buttons, as it will go with everything you own.</p>
+    </div>
+  </section>
+
+  <section class="spread" id="sport-coat">
+    <figure><img src="img/sportcoat.jpg" alt="A man in a houndstooth sport coat, orange tie and cream trousers"></figure>
+    <div class="copy">
+      <header><h2>The Sport Coat</h2><div class="rule" aria-hidden="true"></div></header>
+      <p class="intro">Sport coats and blazers may be used for less formal professional situations (but you should always wear a suit and tie to government meetings). Sport coats can be worn with or without a tie, and with suit trousers, more casual trousers, chinos, or dark jeans.</p>
+      <p class="item"><span class="smallcaps">Color &amp; Pattern.</span> Opt for a solid navy blazer with brass buttons, or a sport coat which can be in a range of colors and patterns, from solid tan camel hair, to houndstooth or windowpane. <i>Avoid:</i> suiting fabrics (except with a navy blazer).</p>
+      <p class="item"><span class="smallcaps">Fabric.</span> Stick to <b>Silk, Wool, or Linen</b> and opt for a more textured weave. <i>Tip:</i> <b>Linen</b> (or a wool/silk/linen blend) is great for DC’s summer heat and humidity. <i>Avoid:</i> Polyester blends, suiting fabrics.</p>
+      <p class="item"><span class="smallcaps">The Cut.</span> Opt for a classic full cut.</p>
+      <p class="item"><span class="smallcaps">Jacket.</span> Two-button, 3-roll-2 closure, or 6 button double breasted. Look for a soft shoulder and double vents. Opt for notch or peak lapels (peak with double breasted). Tailor sleeves to expose ¼″ of your shirt cuffs.</p>
+      <p class="item"><span class="smallcaps">Pockets.</span> Patch or flap pockets.</p>
+      <p class="item"><span class="smallcaps">Construction.</span> Half or fully canvased construction. <i>Avoid:</i> Fused (glued) jackets for longevity, breathability, and drape. Heavily padded shoulders.</p>
+      <div class="suppliers">
+        <div class="smallcaps">Recommended Suppliers</div>
+        <i>Ready-to-Wear</i>
+        <span>Suitsupply, Spier &amp; Mackay, J. Press</span>
+        <i>Made-to-Measure</i>
+        <span>Suitsupply, Spier &amp; Mackay, Proper Cloth, Alton Lane, Enzo Custom</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="spread flip" id="shirt">
+    <figure>
+      <div class="collars">
+        <figure><img src="img/collar-regular.jpg" alt="Regular collar with a tie"><figcaption>Regular collar</figcaption></figure>
+        <figure><img src="img/collar-semispread.jpg" alt="Semi-spread collar with a tie"><figcaption>Semi-spread collar</figcaption></figure>
+        <figure><img src="img/collar-buttondown.jpg" alt="Button-down collar with a tie"><figcaption>Button-down collar</figcaption></figure>
+        <figure><img src="img/collar-cuff.jpg" alt="Barrel cuff"><figcaption>Barrel cuff</figcaption></figure>
+      </div>
+    </figure>
+    <div class="copy">
+      <header><h2>The Shirt</h2><div class="rule" aria-hidden="true"></div></header>
+      <p class="intro">Keep it simple. Focus on quality and fit.</p>
+      <p class="item"><span class="smallcaps">Color &amp; Pattern.</span> Stick to solid <b>White or Mid-Blue</b>. No patterns to start.</p>
+      <p class="item"><span class="smallcaps">Fabric.</span> 100% Cotton (Oxford cloth, twill, or broadcloth). <i>Avoid:</i> Herringbone, flannel, chambray, etc.</p>
+      <p class="item"><span class="smallcaps">Collar &amp; Cuff.</span> Regular or semi-spread collars are most versatile. Stick to <b>barrel cuffs</b>. If you’re inspired by American Ivy style, you can get button-down collars (but make sure they’re big enough to accommodate a tie – Brooks Brothers is good for this)</p>
+      <div class="suppliers">
+        <div class="smallcaps">Recommended Suppliers</div>
+        <i>Ready-to-Wear</i>
+        <span>Charles Tyrwhitt, TM Lewin, Eton, or Brooks Brothers</span>
+        <i>Made-to-Measure</i>
+        <span>Suitsupply, Spier &amp; Mackay, Proper Cloth, Alton Lane, Enzo Custom</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="spread" id="accessories">
+    <figure><img src="img/accessories.jpg" alt="Braces, a pocket square, cufflinks, a tie, a leather belt and socks"></figure>
+    <div class="copy" style="align-self: center">
+      <header><h2>Accessories</h2><div class="rule" aria-hidden="true"></div></header>
+      <p class="intro">The details are where most people make mistakes. Opt for conservative options first; once you know the rules, you know how to break them well. Suggested brands can be found new or vintage – the savvy shopper knows how to carefully filter eBay, Poshmark, Grailed, and in-person stores to score good deals on pieces they otherwise couldn’t afford.</p>
+    </div>
+  </section>
+
+  <section class="spread flip" id="style-tips">
+    <figure><img src="img/tailor.jpg" alt="A tailor marking a customer’s jacket sleeve"></figure>
+    <div class="copy">
+      <header><h2>Style Tips</h2><div class="rule" aria-hidden="true"></div></header>
+      <p class="item"><span class="smallcaps">Fit Is King.</span> Correct tailoring and alterations are more important than the brand or price. Even an inexpensive suit looks professional if it fits properly.</p>
+      <p class="item"><span class="smallcaps">Bottom Button.</span> Never button the bottom button of your suit jacket.</p>
+      <p class="item"><span class="smallcaps">Plan for Summer.</span> For DC’s heat, look for half-canvased and half-lined jackets made from tropical wool.</p>
+      <p class="item"><span class="smallcaps">Silhouette.</span> Consider <b>side tabs</b> or button-on <b>braces</b> instead of a belt. They provide a cleaner line and are more comfortable.</p>
+      <p class="item"><span class="smallcaps">Budgeting.</span> You don’t need a massive budget. High-quality items can be found vintage and tailored to look top-tier.</p>
+      <p class="item"><span class="smallcaps">Breaking Rules.</span> The best dressed people often break the rules. Don’t attempt this until you have mastered the basics.</p>
+    </div>
+  </section>
+
+  <section class="wardrobes" id="wardrobes">
+    <header>
+      <h2>Example Wardrobes</h2>
+      <div class="rule" aria-hidden="true"></div>
+    </header>
+    <section class="spread" id="basics">
+      <figure>
+        <img src="img/stilllife.jpg" alt="Folded oxford shirt, ties, a belt, socks, penny loafers and cap toe oxfords">
+        <div class="title-block"><span class="smallcaps">Example Wardrobes</span><h3>Basics</h3><div class="rule" aria-hidden="true"></div><span class="budget">$3,000 Budget</span></div>
+      </figure>
+      <div class="list">
+        <div><h4 class="smallcaps">Business suits</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://suitsupply.com/en-us/men/suits/navy-perennial-tailored-fit-havana-suit/C9559-S1.html" target="_blank" rel="noopener">Navy all-season wool suit, <i>Suitsupply</i></a></span><span class="price">$598</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://suitsupply.com/en-us/men/suits/mid-grey-perennial-tailored-fit-lazio-suit/P7294.html" target="_blank" rel="noopener">Mid-gray tropical wool suit, <i>Suitsupply</i></a></span><span class="price">$599</span></div>
+        </div>
+        <div><h4 class="smallcaps">Navy blazer</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://propercloth.com/tailored-clothing/navy-newport-jacket-118591.html" target="_blank" rel="noopener">Navy hopsack blazer, <i>Proper Cloth</i></a></span><span class="price">$745</span></div>
+        </div>
+        <div><h4 class="smallcaps">Casual pants</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://www.llbean.com/llb/shop/22821?page=double-l-chinos-classic-fit-plain-front&amp;bc=12-26-502921&amp;feat=502921-GN3&amp;csp=a&amp;attrValue_0=1165&amp;pos=3" target="_blank" rel="noopener">Cotton twill chino, <i>L.L. Bean</i></a></span><span class="price">$70</span></div>
+        </div>
+        <div><h4 class="smallcaps">Dress shirts</h4>
+          <div class="row"><span class="qty">2</span><span class="desc"><a href="https://www.charlestyrwhitt.com/us/non-iron-twill-shirt---white/FON0409WHT.html?cgid=shirts-formal-shirts&amp;pf=browse#cgid=shirts-formal-shirts&amp;start=1" target="_blank" rel="noopener">White twill shirt, <i>CT Shirts</i></a></span><span class="price">$45</span></div>
+          <div class="row"><span class="qty">2</span><span class="desc"><a href="https://www.charlestyrwhitt.com/us/non-iron-twill-shirt---cornflower-blue/FON2487CFW.html?pf=pdp_colour_swatch" target="_blank" rel="noopener">Mid-blue twill shirt, <i>CT Shirts</i></a></span><span class="price">$45</span></div>
+          <div class="row"><span class="qty">2</span><span class="desc"><a href="https://us.spierandmackay.com/product/white-lightweight-oxford-dress-shirt-10027-c3kf5k-590" target="_blank" rel="noopener">White OCBD shirt, <i>Spier and Mackay</i></a></span><span class="price">$53</span></div>
+        </div>
+        <div><h4 class="smallcaps">Ties</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://us.spierandmackay.com/product/brown-double-stripe-tie-9536-tps-52" target="_blank" rel="noopener">Brown stripe tie, <i>S&amp;M</i></a></span><span class="price">$43</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://us.spierandmackay.com/product/burgundy-polkadot-twill-tie-16034-ti-pkdt-by1-480" target="_blank" rel="noopener">Burgundy dot tie, <i>S&amp;M</i></a></span><span class="price">$43</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://us.spierandmackay.com/product/blue--burgundy-stripe-tie-16029-ti-bws1-blb-311" target="_blank" rel="noopener">Navy and green stripe, <i>S&amp;M</i></a></span><span class="price">$43</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://us.spierandmackay.com/product/navy-brown--yellow-repp-stripe-silk-tie-12101-tps-58" target="_blank" rel="noopener">Multi-color stripe, <i>S&amp;M</i></a></span><span class="price">$43</span></div>
+        </div>
+        <div><h4 class="smallcaps">Shoes</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://www.florsheim.com/shop/style/14447-001.html" target="_blank" rel="noopener">Black cap toe Oxford, <i>Florsheim</i></a></span><span class="price">$145</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://www.florsheim.com/shop/style/17058-01.html" target="_blank" rel="noopener">Black penny loafer, <i>Florsheim</i></a></span><span class="price">$145</span></div>
+        </div>
+        <div><h4 class="smallcaps">Socks</h4>
+          <div class="row"><span class="qty">5</span><span class="desc"><a href="https://boardroomsocks.com/collections/over-the-calf-dress-socks/products/black-merino-wool-over-the-calf-dress-socks" target="_blank" rel="noopener">Over-calf Merino wool socks, <i>Boardroom</i></a></span><span class="price">$20</span></div>
+        </div>
+        <div><h4 class="smallcaps">Coats</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://www.macys.com/shop/product/men-classic-fit-iconic-belted-trench-raincoat?ID=1048412&amp;swatchColor=British%20Khaki" target="_blank" rel="noopener">Trench coat, <i>London Fog</i></a></span><span class="price">$158</span></div>
+        </div>
+        <div><h4 class="smallcaps">Accessories</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://factory.jcrew.com/p/mens/categories/accessories/belts/classic-dress-belt/BW729" target="_blank" rel="noopener">Black leather belt, <i>J. Crew Factory</i></a></span><span class="price">$40</span></div>
+        </div>
+        <div class="total"><span class="smallcaps">Total</span><strong>$3,058</strong></div>
+      </div>
+    </section>
+    <section class="spread flip" id="expanded-basics">
+      <figure>
+        <img src="img/doublebreasted.jpg" alt="A man in a double-breasted suit with a trench coat over his arm">
+        <div class="title-block"><span class="smallcaps">Example Wardrobes</span><h3>Expanded Basics</h3><div class="rule" aria-hidden="true"></div><span class="budget">$6,500 Budget</span></div>
+      </figure>
+      <div class="list">
+        <div><h4 class="smallcaps">Business suits</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://suitsupply.com/en-us/men/suits/navy-tailored-fit-havana-suit/C6634-S2.html" target="_blank" rel="noopener">Navy double breasted wool suit, <i>Suitsupply</i></a></span><span class="price">$798</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://suitsupply.com/en-us/men/suits/mid-grey-checked-tailored-fit-havana-suit/P7036.html" target="_blank" rel="noopener">Mid-gray check wool suit, <i>Suitsupply</i></a></span><span class="price">$999</span></div>
+        </div>
+        <div><h4 class="smallcaps">Navy blazer</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://jpress.com/products/navy-doeskin-double-breasted-blazer?_pos=6&amp;_sid=140939d4e&amp;search_ref=preserved" target="_blank" rel="noopener">Double breasted navy doeskin blazer, <i>J. Press</i></a></span><span class="price">$995</span></div>
+        </div>
+        <div><h4 class="smallcaps">Casual pants</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://jpress.com/products/made-in-usa-washed-twill-chino-pant-stone" target="_blank" rel="noopener">Cotton twill chino, <i>J. Press</i></a></span><span class="price">$150</span></div>
+        </div>
+        <div><h4 class="smallcaps">Dress shirts</h4>
+          <div class="row"><span class="qty">2</span><span class="desc"><a href="https://propercloth.com/dress-shirts/non-iron-white-80s-pinpoint-149515.html" target="_blank" rel="noopener">White pinpoint button down, <i>Proper Cloth</i></a></span><span class="price">$155</span></div>
+          <div class="row"><span class="qty">2</span><span class="desc"><a href="https://suitsupply.com/en-us/men/shirts/light-blue-classic-collar-shirt/H7009.html" target="_blank" rel="noopener">Light blue shirt, <i>Suitsupply</i></a></span><span class="price">$139</span></div>
+          <div class="row"><span class="qty">2</span><span class="desc"><a href="https://propercloth.com/dress-shirts/clark-white-oxford-cloth-343258.html" target="_blank" rel="noopener">White OCBD, <i>Proper Cloth</i></a></span><span class="price">$125</span></div>
+        </div>
+        <div><h4 class="smallcaps">Ties</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://us.spierandmackay.com/product/brown-double-stripe-tie-9536-tps-52" target="_blank" rel="noopener">Brown stripe tie, <i>S&amp;M</i></a></span><span class="price">$43</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://us.spierandmackay.com/product/burgundy-polkadot-twill-tie-16034-ti-pkdt-by1-480" target="_blank" rel="noopener">Burgundy dot tie, <i>S&amp;M</i></a></span><span class="price">$43</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://us.spierandmackay.com/product/blue--burgundy-stripe-tie-16029-ti-bws1-blb-311" target="_blank" rel="noopener">Navy and green stripe, <i>S&amp;M</i></a></span><span class="price">$43</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://us.spierandmackay.com/product/navy-brown--yellow-repp-stripe-silk-tie-12101-tps-58" target="_blank" rel="noopener">Multi-color stripe, <i>S&amp;M</i></a></span><span class="price">$43</span></div>
+        </div>
+        <div><h4 class="smallcaps">Shoes</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://www.allenedmonds.com/product/mens-park-avenue-cap-toe-oxford-dress-shoe-3023014/black-leather-ec4001390" target="_blank" rel="noopener">Black cap toe Oxford, <i>Allen Edmonds</i></a></span><span class="price">$450</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://www.ghbass.com/products/mens-larson-weejuns-penny-loafer-black?variant=52628669202800" target="_blank" rel="noopener">Black penny loafer, <i>G.H. Bass</i></a></span><span class="price">$195</span></div>
+        </div>
+        <div><h4 class="smallcaps">Coats</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://www.brooksbrothers.com/the-supima%C2%AE-cotton-trench-coat/ML00804_____KHAK_MED______.html?" target="_blank" rel="noopener">Trench coat, <i>Brooks Brothers</i></a></span><span class="price">$798</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://suitsupply.com/en-us/men/coats/navy-overcoat/J1073.html" target="_blank" rel="noopener">Navy cashmere overcoat, <i>Suitsupply</i></a></span><span class="price">$749</span></div>
+        </div>
+        <div><h4 class="smallcaps">Accessories</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://www.allenedmonds.com/product/mens-midland-avenue-dress-belt-3022982/black-ec4004935" target="_blank" rel="noopener">Black leather belt, <i>Allen Edmonds</i></a></span><span class="price">$135</span></div>
+          <div class="row"><span class="qty">5</span><span class="desc"><a href="https://www.pantherella.com/us/laburnum-long" target="_blank" rel="noopener">Over-calf Merino wool socks, <i>Pantherella</i></a></span><span class="price">$37</span></div>
+        </div>
+        <div class="total"><span class="smallcaps">Total</span><strong>$6,464</strong></div>
+      </div>
+    </section>
+    <section class="spread" id="black-tie">
+      <figure>
+        <img src="img/tuxedo.jpg" alt="A man in a shawl collar tuxedo, bow tie and cummerbund">
+        <div class="title-block"><span class="smallcaps">Example Wardrobes</span><h3>Black Tie</h3><div class="rule" aria-hidden="true"></div><span class="budget">$2,000 Budget</span></div>
+      </figure>
+      <div class="list">
+        <div><h4 class="smallcaps">Tuxedo</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://suitsupply.com/en-us/men/suits/black-tailored-fit-milano-tuxedo/P7149.html" target="_blank" rel="noopener">Shawl collar tuxedo, <i>Suitsupply</i></a></span><span class="price">$829</span></div>
+        </div>
+        <div><h4 class="smallcaps">Shirt</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://propercloth.com/dress-shirts/miles-120s-white-broadcloth-85069.html" target="_blank" rel="noopener">Pleated tux shirt, <i>Proper Cloth</i></a></span><span class="price">$145</span></div>
+        </div>
+        <div><h4 class="smallcaps">Tie</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://propercloth.com/products/silk-bow-tie?color=black-satin" target="_blank" rel="noopener">Satin bow tie, <i>Proper Cloth</i></a></span><span class="price">$125</span></div>
+        </div>
+        <div><h4 class="smallcaps">Shoes</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://www.allenedmonds.com/search#q=patent&amp;sortCriteria=relevance" target="_blank" rel="noopener">Opera dress loafer, <i>Allen Edmonds</i></a></span><span class="price">$450</span></div>
+        </div>
+        <div><h4 class="smallcaps">Accessories</h4>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://jpress.com/products/formal-braces-black-satin-with-silver-buckles" target="_blank" rel="noopener">Black braces, <i>J. Press</i></a></span><span class="price">$165</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://jpress.com/products/cufflink-and-stud-set-onyx-gold?collection_ref=preserved" target="_blank" rel="noopener">Gold/Onyx cufflink and stud set, <i>J. Press</i></a></span><span class="price">$150</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://jpress.com/products/silk-cummerband-satin?_pos=2&amp;_sid=787ac41cc&amp;_ss=r&amp;search_ref=preserved" target="_blank" rel="noopener">Satin cummerbund, <i>J. Press</i></a></span><span class="price">$110</span></div>
+          <div class="row"><span class="qty">1</span><span class="desc"><a href="https://www.pantherella.com/us/asberley-otc" target="_blank" rel="noopener">Over-calf black silk socks, <i>Pantherella</i></a></span><span class="price">$63</span></div>
+        </div>
+        <div class="total"><span class="smallcaps">Total</span><strong>$2,037</strong></div>
+      </div>
+    </section>
+  </section>
+
+  <footer class="colophon">
+    <div class="rule" aria-hidden="true"></div>
+    <img src="img/Acronym-Black.svg" alt="FAI">
+    <span class="smallcaps">Washington, DC</span>
+  </footer>
+
+</div>
+</main>
+
+</body></html>

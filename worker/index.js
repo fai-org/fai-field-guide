@@ -13,6 +13,8 @@ export default {
     try {
       if (url.pathname === "/api/wall") res = await wallApi(request, env, url);
       else if (url.pathname === "/admin" || url.pathname.startsWith("/admin/")) res = await admin(request, env, url);
+      else if (url.pathname === "/christmas/") res = Response.redirect(url.origin + "/christmas" + url.search, 301);
+      else if (url.pathname === "/christmas") res = await christmas(request, env, url);
       else res = await env.ASSETS.fetch(request);
     } catch (e) {
       console.error(e);
@@ -33,6 +35,32 @@ function withHeaders(res, env) {
 }
 const json = (body, status = 200, headers = {}) =>
   new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", ...headers } });
+
+/* ---------- The Christmas edition: the same page at /christmas, with its own link preview ---------- */
+const XMAS_META = {
+  title: "A Field Guide to Post-IPO Holiday Giving | FAI",
+  "og:title": "A Field Guide to Post-IPO Holiday Giving",
+  "og:description": "FAI’s Tech Right Gift Guide 2026, organized by tribe and sorted by liquidity.",
+  "og:url": "/christmas",                   // made absolute with the serving host, so staging previews work
+  "og:image": "/og-christmas.jpg?v=3",
+  "og:image:alt": "FAI’s Tech Right Gift Guide 2026: A field guide to post-IPO holiday giving, with a Christmas tree, a red glitter bauble and a gold garland."
+};
+const XMAS_ICONS = { 'link[rel="icon"][type="image/svg+xml"]': "favicon-christmas.svg?v=2", 'link[rel="icon"][sizes]': "favicon-christmas-32.png?v=2", 'link[rel="apple-touch-icon"]': "apple-touch-icon-christmas.png?v=2" };
+async function christmas(request, env, url) {
+  const page = await env.ASSETS.fetch(new Request(url.origin + "/", request));
+  if (!page.ok) return page;
+  const set = key => ({ element(el) { const v = XMAS_META[key]; el.setAttribute("content", v.startsWith("/") ? url.origin + v : v); } });
+  const rw = new HTMLRewriter()
+    .on("title", { element(el) { el.setInnerContent(XMAS_META.title); } })
+    .on('meta[property="og:title"]', set("og:title"))
+    .on('meta[property="og:description"]', set("og:description"))
+    .on('meta[property="og:url"]', set("og:url"))
+    .on('meta[property="og:image"]', set("og:image"))
+    .on('meta[property="og:image:alt"]', set("og:image:alt"))
+    .on('meta[name="theme-color"]', { element(el) { el.setAttribute("content", "#E9D7B6"); } });
+  for (const [sel, href] of Object.entries(XMAS_ICONS)) rw.on(sel, { element(el) { el.setAttribute("href", href); } });
+  return rw.transform(page);
+}
 
 /* ---------- Public wall API ---------- */
 function allowedOrigin(request, env, url) {
