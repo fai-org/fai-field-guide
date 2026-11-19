@@ -13,7 +13,7 @@ export default {
     try {
       if (url.pathname === "/api/wall") res = await wallApi(request, env, url);
       else if (url.pathname === "/admin" || url.pathname.startsWith("/admin/")) res = await admin(request, env, url);
-      else if (url.pathname === "/christmas/") res = new Response(null, { status: 301, headers: { Location: "/christmas" + url.search } });   // relative, so it stays on the public host behind the proxy
+      else if (url.pathname === "/christmas/") res = new Response(null, { status: 301, headers: { Location: (env.PUBLIC_ORIGIN || "") + "/christmas" + url.search } });   // the proxy would resolve a relative path against workers.dev
       else if (url.pathname === "/christmas") res = await christmas(request, env, url);
       else res = await env.ASSETS.fetch(request);
     } catch (e) {
