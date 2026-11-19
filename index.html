@@ -529,6 +529,8 @@ html.xmas .map-legend .cr::before{ width:5px; height:5px; margin:0 8px 2px 3px; 
   html.xmas .xa-hang{ animation:sway 6s ease-in-out infinite alternate; }
   @keyframes sway{ from{ transform:rotate(-1.2deg); } to{ transform:rotate(1.2deg); } }
 }
+/* With motion allowed, a script swings the bauble on its string (swingBauble); its transform is set inline. */
+.xswitch.xphys .xball{ transition:none; animation:none; transform-origin:22.5px 0; }
 .snow{ position:fixed; inset:0; width:100vw; height:100vh; z-index:70; pointer-events:none; display:none; }
 .snow.on{ display:block; }
 /* The white-out at the height of the blizzard, behind the flakes */
@@ -1281,8 +1283,8 @@ const GIFTS = {
         text:"A lighthouse is remote, sits on the coast, and exists to warn people about a danger they can’t see until it’s too late. The federal government regularly auctions surplus lighthouses on [realestatesales.gov](https://realestatesales.gov), and Rhode Island’s Warwick Neck Light went up for bid this year. The AI Doomer can keep the light on every night, whether or not the ships pay attention." },
       { img:"hsr", name:"Hart-Scott-Rodino Filing", price:"$35,000 to $2.46 million", who:"For the Tech Right acquirer", ids:["techright"], also:["lefthumanists", "eurocrats"], url:"https://www.ftc.gov/enforcement/competition-matters/2026/01/new-hsr-thresholds-filing-fees-2026",
         text:"The standard way to buy an AI startup is now to hire the founders, license the technology, and leave the empty corporate shell behind, which skips merger review. In February, Senators Warren, Wyden, and Blumenthal [asked the FTC and DOJ](https://www.warren.senate.gov/newsroom/press-releases/warren-wyden-blumenthal-call-on-federal-regulators-to-investigate-meta-google-nvidia-reverse-acqui-hire-deals) to look at these “reverse acqui-hires.” For the acquirer who wants to buy a company the old-fashioned way, by buying it, the FTC’s [premerger filing fee](https://www.ftc.gov/enforcement/competition-matters/2026/01/new-hsr-thresholds-filing-fees-2026) runs from $35,000 to $2.46 million. The FTC does not offer gift-wrapping." },
-      { img:"tailor", name:"Bespoke Suits and Shoes", price:"Five figures, plus airfare", who:"For the Tech Right donor", ids:["techright"], also:["bigtech"],
-        text:"You are a political donor now, and the SF uniform of a fleece vest and a hoodie won’t get you through a fundraiser. Fly to Milan for suits and to Tokyo for shoes, and plan to go back several times over the next few months for fittings. To learn the rules before you go, read Alan Flusser’s [*Dressing the Man*](https://www.amazon.com/s?k=alan+flusser+dressing+the+man) or [*The Suit*](https://www.abebooks.com/servlet/SearchResults?isbn=9780060891862), which Michael Anton wrote under a pen name." },
+      { img:"tailor", name:"Bespoke Menswear", price:"Five figures, plus airfare", who:"For the Tech Right donor", ids:["techright"], also:["bigtech"],
+        text:"You are a political donor now, and the SF uniform of a fleece vest and a hoodie won’t get you through a fundraiser. Fly to Milan for suits and to Tokyo for shoes, and plan to go back several times over the next few months for fittings. To learn the rules before you go, read [*Dressing the Man*](https://www.amazon.com/s?k=alan+flusser+dressing+the+man), by Alan Flusser, or [*The Suit*](https://www.abebooks.com/servlet/SearchResults?isbn=9780060891862) (written by Michael Anton under a pen name). On a budget? Consult the [FAI guide to professional attire](/attire/) for tips." },
       { img:"alcor", name:"Alcor Membership", price:"$220,000 (whole body)", who:"For the Transhumanist", ids:["transhumanists"], also:["rationalists"], url:"https://www.alcor.org/membership/",
         text:"Alcor in Scottsdale will hold your Transhumanist at −196°C until medicine catches up, usually paid for through life insurance. Neuro-only preservation costs less, for anyone confident about which part matters. Ask for a gift receipt; the return window has no end date." },
       { img:"jacket", name:"Jensen Huang’s Leather Jacket", price:"$960,000, or under $10,000 new", who:"For the NatSec Deep Stater who has everything", ids:["natsec"], url:"https://www.tomshardware.com/peripherals/wearable-tech/nvidia-ceo-jensen-huangs-trademark-leather-jacket-raises-nearly-usd1-million-at-charity-auction-bidding-makes-usd60-000-valuation-look-like-pocket-change",
@@ -1383,7 +1385,7 @@ const byId = Object.fromEntries(TRIBES.concat(EGGS).map(t => [t.id, t]));
 const FAM_IDS = Object.keys(FAMILIES);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
 /* *Titles* render in italics; a blank line starts a new paragraph; a single newline is a line break. */
-const rich = s => esc(s).replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+|#[\w\/-]+)\)/g, (m, t, u) => u[0] === "#" ? `<a href="${u}">${t}</a>` : `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).replace(/\*([^*]+)\*/g, "<i>$1</i>").replace(/\n/g, "<br>");
+const rich = s => esc(s).replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+|#[\w\/-]+|\/[\w\/-]*)\)/g, (m, t, u) => u[0] === "#" ? `<a href="${u}">${t}</a>` : `<a href="${u}" target="_blank" rel="noopener">${t}</a>`).replace(/\*([^*]+)\*/g, "<i>$1</i>").replace(/\n/g, "<br>");
 const paras = s => String(s).split(/\n\n+/).map(p => `<p>${rich(p)}</p>`).join("");
 const plain = s => String(s).replace(/\*/g, "");
 const firstSentence = s => (plain(s).match(/^.*?[.!?](\s|$)/) || [plain(s)])[0].trim();
@@ -1495,7 +1497,7 @@ function initPromo(){
     if (sw.getAttribute("aria-checked") === "true") return;
     sw.setAttribute("aria-checked", "true");
     // Christmas comes on in place, under the white-out, and the address changes to match.
-    const arrive = () => { history.pushState(null, "", XMAS_HOME + "#gifts"); enterXmas(); window.scrollTo(0, 0); route(); };
+    const arrive = () => { history.pushState(null, "", XMAS_HOME + "#gifts"); enterXmas(); window.scrollTo(0, 0); route(); if (bauble) setTimeout(() => bauble.knock(-3), 500); };
     if (calm.matches){ setTimeout(arrive, 250); return; }
     const storm = snowstorm(), wo = $("#whiteout"), timers = [];
     const at = (ms, f) => timers.push(setTimeout(f, ms));
@@ -1518,9 +1520,46 @@ function initXmas(){
   if (!xmas){
     if (location.hash === "#gifts") location.replace(XMAS_HOME + "#gifts");   // old links to the gift guide
     else initPromo();
+    swingBauble();
     return;
   }
   enterXmas();
+  swingBauble();
+}
+/* The switch's bauble hangs from its string like a pendulum. Sliding the switch drags the top of the string across,
+   and the bauble lags behind, swings out and settles. Left alone it takes a small knock every few seconds, and the
+   pointer nudges it on the way past. With reduced motion, the CSS moves it instead. */
+let bauble = null;
+function swingBauble(){
+  const sw = $("#xswitch"), ball = sw && sw.querySelector(".xball");
+  if (bauble || !ball || sw.hidden || calm.matches) return;
+  sw.classList.add("xphys");
+  const SLIDE = 15, W2 = 52, DAMP = 1.5, LEVER = 1 / 30;   // slide in svg units; ω² of the swing; damping; how hard the slide pulls
+  const on = () => sw.getAttribute("aria-checked") === "true";
+  let x = on() ? SLIDE : 0, v = 0, th = 0, w = 0, target = x, last = 0, raf = 0;
+  const draw = () => { ball.style.transform = `translate(${x.toFixed(2)}px, 0) rotate(${(th * 57.2958).toFixed(2)}deg)`; };
+  const step = t => {
+    const dt = Math.min(.032, (t - last) / 1000); last = t;
+    const a = 140 * (target - x) - 21 * v;                    // the top of the string springs to its place
+    v += a * dt; x += v * dt;
+    w += (-W2 * Math.sin(th) + a * LEVER * Math.cos(th) - DAMP * w) * dt; th += w * dt;
+    draw();
+    if (Math.abs(target - x) < .02 && Math.abs(v) < .02 && Math.abs(th) < .001 && Math.abs(w) < .005){ x = target; v = th = w = 0; draw(); raf = 0; return; }
+    raf = requestAnimationFrame(step);
+  };
+  const go = () => { if (!raf){ last = performance.now(); raf = requestAnimationFrame(step); } };
+  const knock = s => { if (document.hidden) return; w += s; go(); };
+  bauble = { knock };
+  draw();
+  new MutationObserver(() => { target = on() ? SLIDE : 0; go(); }).observe(sw, { attributes: true, attributeFilter: ["aria-checked"] });
+  // The pointer brushes it in the direction it was moving.
+  let px = null;
+  sw.addEventListener("pointermove", e => { if (px !== null && e.pointerType === "mouse") { const d = e.clientX - px; if (Math.abs(d) > 2) knock(Math.max(-1.2, Math.min(1.2, d * .08))); } px = e.clientX; });
+  sw.addEventListener("pointerleave", () => px = null);
+  // A knock now and then: a jingle on the regular site, a lighter one once it is Christmas.
+  const idle = () => { setTimeout(() => { if (!raf) knock((Math.random() < .5 ? -1 : 1) * (on() ? 1.1 : 2.2)); idle(); }, 5000 + Math.random() * 4000); };
+  setTimeout(idle, 2500);
+  if (xmas) setTimeout(() => knock(-3), 500);                  // it arrives swinging
 }
 /* Switch the page into the Christmas edition (on load at /christmas, or in place from the regular site's switch). */
 function enterXmas(){
