@@ -1847,7 +1847,7 @@ async function resultCard(R){
   const serif = `"IBM Plex Serif", Georgia, serif`, sans = `"IBM Plex Sans", Arial, sans-serif`;
   if (document.fonts) await Promise.all([`600 60px ${serif}`, `italic 400 28px ${serif}`, `500 24px ${sans}`, `600 22px ${sans}`]
     .map(f => document.fonts.load(f, t.name + t.latin).catch(() => {})));
-  const logoSvg = $(".lockup svg").outerHTML.replace(/currentColor/g, "#121212");
+  const logoSvg = $(".lockup svg").outerHTML.replace(/currentColor/g, "#121212").replace('width="152" height="34"', 'width="1920" height="425"');
   const [plate, face, logo] = await Promise.all([
     PLATES[t.id] ? svgImg(svgDoc(PLATES[t.id], H, H)) : null,
     AVATARS[t.id] ? svgImg(svgDoc(AVATARS[t.id], 144, 144)) : null,
