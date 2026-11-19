@@ -18,7 +18,7 @@
 <script>/* Christmas edition: set before first paint */ if (/^\/christmas\/?$/.test(location.pathname) || /[?&]christmas(=|&|$)/.test(location.search)) {
   document.documentElement.classList.add("xmas");
   // The Worker already swaps these at /christmas; this covers ?christmas on other hosts.
-  for (const [sel, href] of [['link[rel="icon"][type="image/svg+xml"]', "favicon-christmas.svg?v=1"], ['link[rel="icon"][sizes]', "favicon-christmas-32.png?v=1"], ['link[rel="apple-touch-icon"]', "apple-touch-icon-christmas.png?v=1"]])
+  for (const [sel, href] of [['link[rel="icon"][type="image/svg+xml"]', "favicon-christmas.svg?v=2"], ['link[rel="icon"][sizes]', "favicon-christmas-32.png?v=2"], ['link[rel="apple-touch-icon"]', "apple-touch-icon-christmas.png?v=2"]])
     document.addEventListener("DOMContentLoaded", () => { const l = document.querySelector(sel); if (l) l.href = href; });
 }</script>
 <link rel="icon" href="favicon.svg?v=2" type="image/svg+xml">
@@ -409,55 +409,106 @@ footer.foot p{ margin:0 0 8px; max-width:80ch; }
 .share .small{ margin:12px 0 0; min-height:1.4em; }
 .toast{ position:fixed; left:50%; bottom:calc(24px + env(safe-area-inset-bottom,0px)); transform:translateX(-50%); background:var(--cod); color:var(--smoke); font-family:var(--sans); font-size:14px; padding:12px 16px; border-radius:2px; display:none; z-index:30; }
 /* ============================================================
-   Christmas mode (html.xmas). The FAI Christmas brand: five inks on
-   cream stock. Cream is the paper, cranberry and fir belong to shapes,
-   type is always ink, and gold appears only as glitter.
+   Christmas mode (html.xmas): the FAI Christmas brand.
+   Lines are ruled first, all at one weight (--hair). Flat shapes
+   stand on a ground line or hang from a plumb line. Five inks:
+   cream, cranberry, fir, ink, and gold, which exists only as the
+   glitter photograph. Sizes are in page modules (--m). The art is
+   drawn with the brand's kit by tools/christmas-art.py.
    ============================================================ */
 .xmas-only{ display:none; }
 html.xmas{
-  --orange:#913129; --cod:#1F201C; --smoke:#F6EDDB; --timber:#D9C7A4; --on-orange:#F6EDDB;
-  --cream:#E9D7B6; --fir:#3C503A; --red:#B02B22; --gold:#C9A04A;
-  --bg:var(--smoke); --ink:var(--cod); --rule:var(--timber); --panel:var(--smoke); --muted:rgb(31 32 28 / .74); --faint:rgb(31 32 28 / .07);
-  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .34 0 0 0 0 .18 0 0 0 .55 -.22'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23g)'/%3E%3C/svg%3E");
+  --cream:#E9D7B6; --light:#F6E5C2; --cranberry:#913129; --fir:#3C503A; --xink:#1F201C;
+  --orange:var(--cranberry); --cod:var(--xink); --smoke:var(--light); --timber:var(--cream); --on-orange:var(--cream);
+  --m:30px; --hair:1.5px; --tabs-h:60px;
+  --mono:"IBM Plex Mono", ui-monospace, monospace;
+  --glit:url("xmas/glitter-gold.webp");
+  /* Paper stock: a speckle over a base color. On cream the speckle brings the base down to the cream ink. */
+  --speck-cream:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='s' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.048 .8' numOctaves='2' seed='3' stitchTiles='stitch' result='a'/%3E%3CfeColorMatrix in='a' values='0 0 0 0 .96 0 0 0 0 .86 0 0 0 0 .66 0 0 0 .42 -.08' result='f'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='2' seed='11' stitchTiles='stitch' result='b'/%3E%3CfeColorMatrix in='b' values='0 0 0 0 .52 0 0 0 0 .4 0 0 0 0 .22 0 0 0 .46 -.14' result='k'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.2' numOctaves='1' seed='31' stitchTiles='stitch' result='c'/%3E%3CfeColorMatrix in='c' values='0 0 0 0 .32 0 0 0 0 .24 0 0 0 0 .14 0 0 0 1.8 -1.12' result='l'/%3E%3CfeMerge%3E%3CfeMergeNode in='f'/%3E%3CfeMergeNode in='k'/%3E%3CfeMergeNode in='l'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23s)'/%3E%3C/svg%3E");
+  --speck-dark:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='s' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.048 .8' numOctaves='2' seed='3' stitchTiles='stitch' result='a'/%3E%3CfeColorMatrix in='a' values='0 0 0 0 .08 0 0 0 0 .05 0 0 0 0 .04 0 0 0 .34 -.06' result='f'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.6' numOctaves='2' seed='11' stitchTiles='stitch' result='b'/%3E%3CfeColorMatrix in='b' values='0 0 0 0 .06 0 0 0 0 .04 0 0 0 0 .03 0 0 0 .5 -.16' result='k'/%3E%3CfeTurbulence type='fractalNoise' baseFrequency='2.2' numOctaves='1' seed='31' stitchTiles='stitch' result='c'/%3E%3CfeColorMatrix in='c' values='0 0 0 0 .93 0 0 0 0 .85 0 0 0 0 .72 0 0 0 1.5 -1' result='l'/%3E%3CfeMerge%3E%3CfeMergeNode in='f'/%3E%3CfeMergeNode in='k'/%3E%3CfeMergeNode in='l'/%3E%3C/feMerge%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23s)'/%3E%3C/svg%3E");
+  --stock-cream:var(--speck-cream) var(--light); --stock-ink:var(--speck-dark) #23241F; --stock-fir:var(--speck-dark) #40553E;
+  /* data-theme="light" prints the stage on cream stock */
+  --bg:var(--cream); --ink:var(--xink); --rule:var(--xink); --panel:var(--cream); --muted:var(--xink); --faint:rgb(31 32 28 / .08); --stock:var(--stock-cream);
 }
-/* Dark by default, whatever the system setting; data-theme="light" opts out */
-html.xmas:not([data-theme="light"]){ --bg:var(--cod); --ink:var(--smoke); --rule:rgb(246 237 219 / .2); --panel:var(--cod); --muted:rgb(246 237 219 / .74); --faint:rgb(246 237 219 / .08); color-scheme:dark; }
-/* The gift pictures are drawn in ink on cream, so on the dark page they sit on a cream card */
-html.xmas:not([data-theme="light"]) .g-pic, html.xmas:not([data-theme="light"]) .gift-pic{ background:var(--smoke); border-radius:2px; }
+/* Ink stock by default, whatever the system setting */
+html.xmas:not([data-theme="light"]){ --bg:var(--xink); --ink:var(--cream); --rule:var(--cream); --panel:var(--xink); --muted:var(--cream); --faint:rgb(233 215 182 / .08); --stock:var(--stock-ink); color-scheme:dark; }
 html.xmas .xmas-only{ display:block; }
-/* The safari cover, printed in the Christmas inks (the same swap as the avatars) */
-html.xmas .hero-art.base [fill="#ff4f00" i]{ fill:#B02B22; }
-html.xmas .hero-art.base [fill="#121212" i]{ fill:#1F201C; }
-html.xmas .hero-art.base [fill="#f3f3f3" i]{ fill:#F6EDDB; }
-html.xmas .hero-art.base [fill="#d9d9d6" i]{ fill:#E9D7B6; }
-html.xmas .rail{ background-color:var(--cream); background-image:var(--grain); }
-/* In the Christmas edition the rail is the gift guide's cover: its title, the tree, and a line back to the field guide */
-html.xmas .rail h1 .xkick{ display:block; font:500 12px/1.3 "IBM Plex Mono", ui-monospace, monospace; letter-spacing:.06em; text-transform:uppercase; text-wrap:balance; margin:0 0 14px; }
-html.xmas .hero-art.tree svg{ aspect-ratio:auto; }
-#xlab{ font-size:13px; letter-spacing:.06em; text-transform:uppercase; }
-/* The tree gets a larger slot than the field guide's cover art */
-html.xmas .rail-head{ grid-template-columns:minmax(0,1fr) 160px; }
-@media (min-width:672px){ html.xmas .rail-head{ grid-template-columns:minmax(0,1fr) minmax(0,46%); } html.xmas .rail-head .hero-art{ max-width:300px; } }
-@media (min-width:1056px){ html.xmas .rail-head{ grid-template-columns:minmax(0,1fr) minmax(0,48%); } html.xmas .rail-head .hero-art{ max-width:min(340px, 40vh); align-self:end; } }
-@media (min-width:1600px){ html.xmas .rail-head{ grid-template-columns:minmax(0,1fr) minmax(0,52%); } html.xmas .rail-head .hero-art{ max-width:min(380px, 42vh); } }
-html.xmas .rail .dek{ max-width:none; }
-html.xmas .hero-art.tree [stroke="#1F201C"]{ stroke:var(--cod); }
+html.xmas:not(.xready) .rail-head > *{ visibility:hidden; }
+html.xmas .stage{ background:var(--stock); }
+/* One line weight and square corners on everything the regular edition rules or boxes */
+html.xmas :is(.btn, .chip, .tag, .search, .answer, .signup, .signup input, .hover, .hover .pl, .card, .famhead, .fields div, .term, .feed li, .tbl th, .tbl td, .share, .share img, .next, .live, .mosaic, .steps li, footer.foot){ border-width:var(--hair); border-radius:0; }
+html.xmas .seg{ border:0; border-radius:0; }
+html.xmas .seg button + button{ border-left:0; }
+html.xmas :focus-visible{ outline:var(--hair) solid var(--ink); outline-offset:3px; }
+html.xmas .rail :focus-visible{ outline-color:var(--xink); }
+html.xmas [tabindex="-1"]:focus{ outline:none; }
+html.xmas .d-head .pl, html.xmas .side .side-pl, html.xmas .res-id .av{ border:0; }
+/* The kit's art: hairlines keep their weight at any size */
+.xa{ overflow:visible; }
+.xa line, .xa path{ vector-effect:non-scaling-stroke; }
+.xa.xa-wide{ display:none; }
+@media (min-width:672px){ .xa.xa-wide{ display:block; } .xa.xa-phone{ display:none; } }
+
+/* ---------- The rail: a cream sheet, the gift guide's cover ---------- */
+/* The sheet is 13 modules wide on a phone and 18 beside the stage, so the module follows the rail's width.
+   The headline stands on a ground line; the tree stands on one too; a standard crosses them; the bauble
+   hangs from a plumb line on the standard's axis. */
+html.xmas .rail{ background:var(--stock-cream); color:var(--xink); padding:0 0 var(--m); container-type:inline-size; }
+html.xmas .rail > *{ --m:clamp(22px, 100cqw / 13, 40px); margin-left:var(--m); margin-right:var(--m); }
+html.xmas .rail-head{ display:block; flex:none; position:relative; height:calc(16 * var(--m)); margin-left:0; margin-right:0; overflow:hidden; }
+html.xmas .rail-head::before, html.xmas .rail-head::after{ content:""; position:absolute; left:var(--m); right:var(--m); border-top:var(--hair) solid var(--xink); }
+html.xmas .rail-head::before{ top:calc(6 * var(--m)); }
+html.xmas .rail-head::after{ top:calc(15 * var(--m)); }
+html.xmas .rail-head .rail-top{ position:absolute; left:var(--m); top:var(--m); }
+html.xmas .lockup svg{ width:calc(5 * var(--m)); }
+html.xmas .rail h1{ position:absolute; left:var(--m); bottom:var(--m); margin:0; }
+html.xmas .rail h1 .xkick{ display:block; max-width:calc(10 * var(--m)); margin:0 0 calc(.6 * var(--m) - 4px); font:500 clamp(10px, .385 * var(--m), 12px)/1.3 var(--mono); letter-spacing:.14em; text-transform:uppercase; text-wrap:balance; }
+html.xmas .rail h1 .display{ width:auto; max-width:none; height:calc(6.76 * var(--m)); overflow:visible; }
+html.xmas .rail-head .hero-art{ position:absolute; right:0; top:0; width:calc(10 * var(--m)); height:calc(16 * var(--m)); max-width:none; pointer-events:none; }
+html.xmas .rail-head .hero-art svg{ width:100%; height:100%; aspect-ratio:auto; }
+html.xmas .rail .dek{ margin-top:calc(.25 * var(--m)); max-width:none; }
 .rail .companion{ font-family:var(--sans); font-size:14px; margin:12px 0 0; }
 .rail .companion a{ font-weight:600; text-decoration:none; }
 .rail .companion a:hover{ text-decoration:underline; }
 .dek, .rail .companion{ text-wrap:pretty; }
 .rail .companion[hidden]{ display:none; }
-html.xmas .res-top{ background:var(--panel); color:var(--ink); border-color:var(--ink); }
-html.xmas .res-top .tag{ background:var(--ink); border-color:var(--ink); color:var(--bg); }
-html.xmas .res-id .av{ border-color:var(--ink); }
-html.xmas #map .dot.anc{ fill:var(--fir); stroke:var(--cod); }
-html.xmas .map-legend .anc::before{ background:var(--fir); border-color:var(--cod); }
+html.xmas .rail-ctas{ gap:calc(.5 * var(--m)); margin-top:calc(.8 * var(--m)); }
+html.xmas .rail .btn.solid{ height:calc(1.5 * var(--m)); min-width:calc(6 * var(--m)); justify-content:center; padding:0 18px; border:0; }
+html.xmas .heronum{ flex:1; font-size:13px; line-height:19px; }
+@media (min-width:672px){
+  html.xmas .rail > *{ --m:clamp(22px, min(100cqw / 18, 3.6vh), 44px); }
+  html.xmas .rail-head{ height:calc(10 * var(--m)); }
+  html.xmas .rail-head::before{ display:none; }
+  html.xmas .rail-head::after{ top:calc(9 * var(--m)); }
+  html.xmas .rail-head .rail-top{ top:calc(.9 * var(--m)); }
+  html.xmas .rail h1 .xkick{ max-width:calc(10.6 * var(--m)); font-size:clamp(9.5px, .4 * var(--m), 13px); }
+  html.xmas .rail h1 .display{ height:calc(5.41 * var(--m)); }
+  html.xmas .rail-head .hero-art{ width:calc(8 * var(--m)); height:calc(10 * var(--m)); }
+  html.xmas .rail .dek{ margin-top:calc(-.4 * var(--m)); margin-right:calc(4 * var(--m)); }
+}
+/* The habitat map is an Ink panel on the cream sheet. Its frame is three lines each way that cross and run on. */
+html.xmas .mapcard{ --bg:var(--xink); --ink:var(--cream); --rule:var(--cream); --panel:var(--xink); --muted:var(--cream); background:var(--stock-ink); color:var(--cream); border:0; }
+html.xmas .rail .mapcard{ margin-top:var(--m); }
+html.xmas .mapcard :focus-visible{ outline-color:var(--cream); }
+html.xmas .map-head{ border-bottom:0; padding:12px 15px 6px; }
+html.xmas .mapnote{ background:var(--cream); color:var(--xink); }
+html.xmas #map .xframe{ fill:none; stroke:var(--ink); stroke-width:1.5; vector-effect:non-scaling-stroke; }
+html.xmas #map .ax{ fill:var(--ink); }
+html.xmas #map .dot{ fill:var(--cranberry); stroke:none; }
+html.xmas #map .dot.anc{ fill:var(--fir); stroke:none; }
+html.xmas #map .pt:hover .dot, html.xmas #map .pt:focus-visible .dot, html.xmas #map .pt.sel .dot, html.xmas #map .pt.near .dot{ stroke:var(--ink); stroke-width:1.5; vector-effect:non-scaling-stroke; }
+html.xmas #map .link{ stroke-width:1.5; stroke-dasharray:none; opacity:1; vector-effect:non-scaling-stroke; }
+html.xmas #map .crowd{ fill:var(--fir); opacity:1; r:1.5px; }
+html.xmas #map .you-star{ fill:none; stroke:var(--ink); stroke-width:1.5; vector-effect:non-scaling-stroke; }
+html.xmas .map-legend span::before{ border:0; background:var(--cranberry); }
+html.xmas .map-legend .anc::before{ background:var(--fir); }
+html.xmas .map-legend .me::before{ background:var(--glit) center / 192px; border:0; }
+html.xmas .map-legend .cr::before{ width:5px; height:5px; margin:0 8px 2px 3px; background:var(--fir); opacity:1; }
 
-/* An ornament on a hairline: the brand's one repeated mark */
-.orn{ position:relative; display:inline-block; width:12px; height:12px; border-radius:50%; background:#B02B22; flex:none; margin-top:5px; }
-.orn::before{ content:""; position:absolute; left:50%; top:-5px; width:1px; height:4px; margin-left:-.5px; background:currentColor; }
+/* ---------- The Christmas mode switch, at the end of the tab bar on both editions ---------- */
+/* A rail, and a ball on a plumb line that slides along it: flat cranberry when off, gold glitter when on. */
+#xlab{ font-size:13px; letter-spacing:.06em; text-transform:uppercase; }
 .rail-top{ flex-wrap:wrap; row-gap:12px; }
-/* The Christmas mode switch at the end of the tab bar: off on the regular site, on in Christmas mode */
 .xswitch[hidden]{ display:none; }
 .xswitch{ flex:none; order:2; position:sticky; right:0; margin-left:auto; display:flex; align-items:center; gap:10px; padding:0 0 0 20px; border:0; color:var(--ink); cursor:pointer;
   background:linear-gradient(to right, transparent, var(--bg) 14px); font:500 15px/1 var(--sans); white-space:nowrap; }
@@ -467,110 +518,156 @@ html.xmas .map-legend .anc::before{ background:var(--fir); border-color:var(--co
 @media (min-width:672px){ .xswitch{ right:-16px; margin-right:-16px; padding-right:16px; } }
 @media (min-width:1056px){ .xswitch{ right:-24px; margin-right:-24px; padding-right:24px; } }
 @media (max-width:519px){ #xlab{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; } .xswitch{ padding-left:16px; } }
-.xtrack{ position:relative; width:50px; height:30px; border-radius:999px; background:color-mix(in srgb, var(--ink) 22%, transparent); transition:background .35s; flex:none; }
-.xknob{ position:absolute; top:8px; left:5px; width:18px; height:18px; border-radius:50%; background:#B02B22; transition:transform .45s cubic-bezier(.34,1.8,.5,1); }
-.xknob::before{ content:""; position:absolute; left:6px; top:-3px; width:6px; height:4px; border-radius:1px; background:#C9A04A; }
-.xknob::after{ content:""; position:absolute; left:4px; top:4px; width:5px; height:3px; border-radius:50%; background:rgb(255 255 255 / .7); transform:rotate(-30deg); }
-.xswitch[aria-checked="true"] .xtrack{ background:#3C503A; }
-.xswitch[aria-checked="true"] .xknob{ transform:translateX(22px) rotate(360deg); }
+.xsw{ display:block; flex:none; align-self:flex-start; width:var(--tabs-h); height:var(--tabs-h); }
+.xsw .xball{ transition:transform .45s cubic-bezier(.34,1.5,.5,1); }
+.xsw .xglit{ opacity:0; transition:opacity .35s; }
+.xswitch[aria-checked="true"] .xball{ transform:translateX(15px); }
+.xswitch[aria-checked="true"] .xglit{ opacity:1; }
 @media (prefers-reduced-motion: no-preference){
-  .xswitch[aria-checked="false"] .xknob{ animation:jingle 6s ease-in-out 2.5s infinite; }
-  @keyframes jingle{ 0%, 90%, 100%{ transform:none; } 92%{ transform:translateX(5px) rotate(20deg); } 94%{ transform:translateX(-1px) rotate(-14deg); } 96%{ transform:translateX(2px) rotate(9deg); } 98%{ transform:rotate(-4deg); } }
-  .xswitch[aria-checked="true"] .xtrack{ animation:boing .5s cubic-bezier(.34,1.56,.64,1); }
-  @keyframes boing{ 30%{ transform:scale(1.15, .88); } 60%{ transform:scale(.95, 1.06); } }
+  .xswitch[aria-checked="false"] .xball{ transform-origin:22.5px 0; animation:jingle 6s ease-in-out 2.5s infinite; }
+  @keyframes jingle{ 0%, 88%, 100%{ transform:none; } 91%{ transform:rotate(8deg); } 94%{ transform:rotate(-6deg); } 97%{ transform:rotate(3deg); } }
+  html.xmas .xa-hang{ animation:sway 6s ease-in-out infinite alternate; }
+  @keyframes sway{ from{ transform:rotate(-1.2deg); } to{ transform:rotate(1.2deg); } }
 }
 .snow{ position:fixed; inset:0; width:100vw; height:100vh; z-index:70; pointer-events:none; display:none; }
 .snow.on{ display:block; }
 /* The white-out at the height of the blizzard, behind the flakes */
 .whiteout{ position:fixed; inset:0; z-index:65; pointer-events:none; opacity:0; background:radial-gradient(ellipse 120% 90% at 35% 40%, #fff 0, #f5f2ec 60%, #e9e4da 100%); transition:opacity 1.6s cubic-bezier(.2,.7,.2,1); }
 .whiteout.on{ opacity:1; transition:opacity 1.2s cubic-bezier(.5,0,.75,.5); }
-.tab.gifttab .n{ background:var(--fir, #3C503A); color:var(--on-orange); padding:0 6px; border-radius:2px; }
 
-/* ---------- Gift guide ---------- */
-.gifts{ max-width:880px; }
-.g-head{ display:grid; gap:24px 32px; padding-bottom:32px; border-bottom:1px solid var(--ink); }
-/* The tree stands as tall as the title block, bottom-aligned with its last line. */
-@media (min-width:672px){ .g-head{ grid-template-columns:minmax(0,520px) minmax(180px,1fr); } }
-.g-art{ position:relative; min-height:160px; }
-.g-art svg{ position:absolute; inset:0; width:100%; height:100%; display:block; }
-.g-art [stroke="#1F201C"]{ stroke:var(--ink); }
-.g-art [fill="#1F201C"]{ fill:var(--ink); }
-html.xmas:not([data-theme="light"]) .g-art [fill="#15191A"]{ fill:#55704F; }
-@media (max-width:671px){ .g-art{ display:none; } }
-.g-head h2{ margin:0; }
-.g-head .display{ display:block; width:100%; max-width:520px; height:auto; color:var(--ink); }
-.g-head .kick{ font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:13px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin:0 0 20px; }
-.g-intro{ font-size:19px; line-height:1.5; max-width:62ch; margin:0; }
-.g-intro p{ margin:0 0 12px; }
-.g-prev{ font-family:var(--sans); font-size:14px; color:var(--muted); margin:0; }
-.g-tools{ display:flex; flex-wrap:wrap; gap:12px 16px; align-items:center; margin:32px 0 0; padding:16px 0; border-top:1px solid var(--rule); border-bottom:1px solid var(--rule); font-family:var(--sans); font-size:14px; }
+/* ---------- The Christmas edition's stage ---------- */
+/* The tab bar's rule is a ground line, inset like the content. The selected tab's marker is a triangle standing on it. */
+html.xmas .tabs{ border-bottom:0; padding:0 calc(.5 * var(--m) - 12px); background:linear-gradient(var(--ink), var(--ink)) no-repeat calc(.5 * var(--m)) 100% / calc(100% - var(--m)) var(--hair), var(--stock); }
+html.xmas .tab .n, html.xmas .tab.quiztab .n, html.xmas .tab.gifttab .n{ background:none; padding:0; color:inherit; }
+html.xmas .tab[aria-selected="true"]::after{ left:50%; right:auto; bottom:var(--hair); width:0; height:0; margin-left:calc(-.25 * var(--m)); background:none; border:solid transparent; border-width:0 calc(.25 * var(--m)) calc(.5 * var(--m)); border-bottom-color:var(--ink); }
+html.xmas .xswitch{ align-self:flex-start; height:calc(100% - var(--hair)); background:var(--stock); -webkit-mask-image:linear-gradient(to right, transparent, #000 14px); mask-image:linear-gradient(to right, transparent, #000 14px); right:-3px; margin-right:-3px; padding-right:calc(.25 * var(--m)); }
+html.xmas .xswitch:focus-visible{ outline:var(--hair) solid var(--ink); }
+@media (max-width:899px), (min-width:1056px) and (max-width:1299px){ html.xmas #xlab{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; } }
+html.xmas .view{ padding:var(--m) calc(.5 * var(--m)) calc(1.5 * var(--m)); }
+html.xmas footer.foot{ --in:calc(.5 * var(--m)); border-top:0; padding-left:var(--in); padding-right:var(--in); background:linear-gradient(var(--ink), var(--ink)) no-repeat var(--in) 0 / calc(100% - 2 * var(--in)) var(--hair); }
+@media (min-width:672px){
+  html.xmas .tabs{ padding:0 calc(var(--m) - 16px); background-position:var(--m) 100%, 0 0; background-size:calc(100% - 2 * var(--m)) var(--hair), auto; }
+  html.xmas .xswitch{ right:calc(16px - var(--m)); margin-right:calc(16px - var(--m)); padding-right:calc(.75 * var(--m)); }
+  html.xmas .view{ padding:calc(1.3 * var(--m)) var(--m) calc(2 * var(--m)); }
+  html.xmas footer.foot{ --in:var(--m); }
+}
+@media (min-width:1056px){
+  html.xmas .view{ padding-left:calc(2 * var(--m)); padding-right:calc(2 * var(--m)); }
+  html.xmas footer.foot{ --in:calc(2 * var(--m)); }
+}
+/* The quiz result's banner is a cream panel, like its share card */
+html.xmas .res-top{ background:var(--stock-cream); color:var(--xink); border:0; }
+html.xmas .res-top .tag{ background:var(--xink); border-color:var(--xink); color:var(--cream); }
+
+/* ---------- Gift guide (it exists only in the Christmas edition) ---------- */
+.gifts{ max-width:calc(26 * var(--m)); }
+.g-intro{ font-size:19px; line-height:30px; max-width:calc(21 * var(--m)); margin:0; }
+.g-intro p{ margin:0 0 15px; }
+.g-prev{ font-family:var(--sans); font-size:14px; line-height:21px; margin:calc(1.5 * var(--m)) 0 0; }
+/* The filter sits between two info rules; its controls are cream panels */
+.g-tools{ display:flex; flex-wrap:wrap; gap:9px 15px; align-items:center; margin:calc(.5 * var(--m)) 0 0; padding:calc(.5 * var(--m)) 0; border-top:var(--hair) solid var(--ink); border-bottom:var(--hair) solid var(--ink); font-family:var(--sans); font-size:14px; }
 .g-tools label{ font-weight:600; }
-.g-tools .sel{ position:relative; display:inline-block; max-width:100%; color:var(--ink); }
-.g-tools select{ appearance:none; -webkit-appearance:none; font-family:var(--sans); font-size:15px; padding:8px 42px 8px 10px; border:1px solid var(--ink); border-radius:2px; background:var(--panel); color:var(--ink); max-width:100%; cursor:pointer; }
-.g-tools .sel::after{ content:""; position:absolute; right:16px; top:50%; width:7px; height:7px; margin-top:-6px; border:solid currentColor; border-width:0 1.5px 1.5px 0; transform:rotate(45deg); pointer-events:none; }
-.g-tools .btn{ margin-left:auto; }
-.g-none{ font-family:var(--sans); font-size:15px; margin:24px 0 0; }
-.g-tier{ margin-top:48px; }
-.g-tier > header{ display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:4px 16px; border-bottom:2px solid var(--ink); padding-bottom:8px; }
-.g-tier h3{ font-size:26px; line-height:1.15; margin:0; }
-.price, .g-tier .range{ font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:13px; font-weight:500; letter-spacing:.04em; white-space:nowrap; }
+.g-tools .sel{ position:relative; display:inline-block; max-width:100%; }
+.g-tools select{ appearance:none; -webkit-appearance:none; height:45px; min-width:calc(8.5 * var(--m)); max-width:100%; padding:0 45px 0 15px; border:0; border-radius:0; background:var(--ink); color:var(--bg); font-family:var(--sans); font-size:15px; cursor:pointer; }
+.g-tools .sel::after{ content:""; position:absolute; right:15px; top:50%; margin-top:-5px; border:solid transparent; border-width:10px 5px 0; border-top-color:var(--bg); pointer-events:none; }
+.g-tools .btn{ margin-left:auto; height:45px; padding:0 21px; border:0; background:var(--ink); color:var(--bg); font-size:14px; }
+.g-none{ font-family:var(--sans); font-size:15px; margin:var(--m) 0 0; }
+/* A price tier: its title and its art stand on one ground line, and a standard crosses it */
+.g-tier{ margin-top:calc(1.5 * var(--m)); }
+.xt-g{ position:relative; height:calc(4 * var(--m)); border-bottom:var(--hair) solid var(--ink); }
+.xt-h{ position:absolute; left:0; right:calc((var(--aw, 0) + 4.5) * var(--m)); bottom:0; margin:0; font-size:26px; line-height:1.15; }
+.xt-h .display, .xf-head .display{ display:block; width:100%; height:calc(3.41 * var(--m)); overflow:visible; }
+.xt-art{ position:absolute; right:calc(4.5 * var(--m)); bottom:0; width:auto; height:calc(5.25 * var(--m)); }
+.xt-std, .xf-std{ position:absolute; right:calc(4 * var(--m)); top:0; bottom:calc(-1 * var(--m)); border-left:var(--hair) solid var(--ink); }
+.price, .xt .range, .g-finale .kick{ font-family:var(--mono); font-size:12px; font-weight:500; line-height:18px; letter-spacing:.14em; text-transform:uppercase; }
+.xt .range{ margin:calc(.5 * var(--m)) 0 0; padding-right:calc(4.5 * var(--m)); }
 .g-list{ list-style:none; margin:0; padding:0; }
-.g-item{ display:grid; grid-template-columns:96px minmax(0,1fr); gap:16px; align-items:start; padding:24px 0; border-bottom:1px solid var(--rule); }
-@media (min-width:672px){ .g-item{ grid-template-columns:184px minmax(0,1fr); gap:28px; } }
-.g-pic{ display:block; width:100%; height:auto; aspect-ratio:1; }
-.g-item .nm{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:4px 16px; margin:0; font-size:20px; line-height:1.25; font-weight:600; }
-.g-item .who{ display:flex; align-items:center; gap:8px; font-family:var(--sans); font-size:13px; font-weight:500; margin:6px 0 0; }
-.g-item .who .av{ width:28px; height:28px; }
+.g-item{ position:relative; display:grid; grid-template-columns:calc(6 * var(--m)) minmax(0,1fr); column-gap:var(--m); align-items:start; padding:var(--m) 0 calc(1.5 * var(--m)); border-bottom:var(--hair) solid var(--ink); }
+/* The pictures are drawn on the light cream, so they sit on a card of it */
+.g-pic, .gift-pic{ display:block; width:100%; height:auto; aspect-ratio:1; background:var(--light); }
+.g-body{ container-type:inline-size; }
+.g-item .nm{ margin:-2px 0 0; font-size:20px; line-height:30px; font-weight:600; text-wrap:balance; }
+.g-item .nm .price{ display:block; margin-top:1px; text-wrap:wrap; }
+/* In a wide column the price keeps its place at the right and a long name wraps beside it; in a narrow one every entry stacks them */
+@container (min-width:480px){
+  .g-item .nm{ display:grid; grid-template-columns:minmax(0,1fr) auto; column-gap:var(--m); align-items:baseline; }
+  .g-item .nm .price{ margin:0; text-align:right; white-space:nowrap; }
+}
+.g-item .who{ display:flex; align-items:center; gap:9px; font-family:var(--sans); font-size:13px; font-weight:500; line-height:20px; margin:4px 0 0; }
+.g-item .who .av{ width:30px; height:30px; }
 .g-item .who a{ font-weight:600; }
-.g-item .tx{ margin:10px 0 0; font-size:16px; line-height:1.5; max-width:62ch; }
-@media (max-width:671px){ .g-item{ display:grid; grid-template-columns:96px minmax(0,1fr); grid-template-rows:auto 1fr auto; gap:0 14px; align-items:start; } .g-body{ display:contents; } .g-pic{ grid-row:1 / span 2; width:96px; margin:0; } .g-item .nm, .g-item .who{ grid-column:2; } .g-item .tx{ grid-column:1 / -1; margin-top:14px; } }
-.g-item.mine{ box-shadow:inset 4px 0 0 #B02B22; padding-left:16px; }
-/* The finale: one item set apart on fir, with a real button */
-.g-finale{ display:grid; gap:20px 32px; align-items:center; margin-top:56px; padding:32px 24px; background-color:#3C503A; background-image:var(--grain); color:#F6EDDB; border-top:6px solid #B02B22; }
-@media (min-width:672px){ .g-finale{ grid-template-columns:240px minmax(0,1fr); padding:40px; } }
-.g-fin-pic{ display:block; width:100%; max-width:240px; height:auto; aspect-ratio:1; justify-self:center; }
-.g-finale .kick{ font-family:"IBM Plex Mono", ui-monospace, monospace; font-size:13px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; margin:0 0 12px; }
-.g-finale h3{ font-size:clamp(30px, 4vw, 40px); line-height:1.1; margin:0; color:#F6EDDB; }
-.g-finale .price{ display:block; margin-top:8px; color:#C9A04A; font-size:15px; }
-.g-finale .tx{ font-size:17px; line-height:1.5; margin:16px 0 0; max-width:58ch; }
-.g-finale .tx a{ color:inherit; }
-.g-fin-btn{ display:inline-flex; gap:10px; align-items:center; margin-top:24px; padding:14px 20px; background:#F6EDDB; color:#1F201C; font-family:var(--sans); font-size:16px; font-weight:600; text-decoration:none; border-radius:2px; }
-.g-fin-btn:hover{ background:#C9A04A; }
-.g-foot{ font-family:var(--sans); font-size:13px; color:var(--muted); margin:24px 0 0; max-width:72ch; }
-/* A gift in a tribe's entry or the quiz result */
-.gift-mini{ display:grid; grid-template-columns:72px minmax(0,1fr); gap:12px; align-items:start; }
-.gift-pic{ display:block; width:72px; height:72px; }
-.gift-mini + .gift-mini{ margin-top:16px; padding-top:16px; border-top:1px solid var(--rule); }
-.gift-mini .nm{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:2px 12px; font-weight:600; font-size:16px; line-height:1.3; margin:0; }
-.gift-mini .price{ white-space:normal; }
+.g-item .tx{ margin:9px 0 0; font-size:16px; line-height:24px; max-width:calc(16.5 * var(--m)); }
+/* Your tribe's gift is marked with a glitter dot */
+.g-item.mine::before{ content:""; position:absolute; left:calc(6.3 * var(--m)); top:calc(1.3 * var(--m)); width:calc(.4 * var(--m)); height:calc(.4 * var(--m)); border-radius:50%; background:var(--glit) center / 192px; }
+/* The finale: a fir panel with its own ground line and standard */
+.g-finale{ --ink:var(--cream); --bg:var(--fir); margin-top:calc(1.5 * var(--m)); padding:0 var(--m) calc(1.5 * var(--m)); background:var(--stock-fir); color:var(--cream); }
+.xf-top{ position:relative; height:calc(6.5 * var(--m)); border-bottom:var(--hair) solid var(--cream); }
+.xf-art{ position:absolute; left:0; bottom:0; width:auto; height:calc(4.5 * var(--m)); }
+.xf-std{ right:auto; left:calc(8.5 * var(--m)); top:calc(2 * var(--m)); }
+.xf-head{ position:absolute; left:calc(9.25 * var(--m)); right:0; bottom:0; }
+.xf-head .kick{ margin:0 0 calc(1.45 * var(--m)); }
+.xf-head h3{ margin:0; font-size:36px; line-height:1.1; }
+.xf-top .price{ position:absolute; right:0; bottom:calc(.3 * var(--m)); margin:0; }
+.xf-bot{ display:grid; grid-template-columns:calc(9.25 * var(--m)) minmax(0,1fr); padding-top:calc(.7 * var(--m)); }
+.xf-bot .tx{ grid-area:1 / 2; margin:0; font-size:16px; line-height:24px; }
+.xf-bot .tx a{ color:inherit; }
+.g-fin-btn{ grid-area:1 / 1; justify-self:start; align-self:start; display:inline-flex; align-items:center; gap:8px; height:45px; margin-top:calc(.8 * var(--m)); padding:0 21px; background:var(--cream); color:var(--xink); font-family:var(--sans); font-size:16px; font-weight:500; text-decoration:none; }
+.g-fin-btn:hover{ background:var(--light); }
+.g-foot{ font-family:var(--sans); font-size:13px; line-height:20px; margin:calc(.8 * var(--m)) 0 0; max-width:calc(22 * var(--m)); }
+@media (max-width:671px){
+  .g-tools .sel{ flex:1; }
+  .g-tools select{ width:100%; min-width:0; }
+  .g-tools .btn{ flex-basis:100%; margin-left:0; justify-content:center; }
+  .xt-h{ right:calc((var(--awp, 0) * .75 + 2.25) * var(--m)); }
+  .xt-art{ right:calc(1.875 * var(--m)); height:calc(3.94 * var(--m)); }
+  .xt-art .xa-far{ display:none; }
+  .xt-std{ right:calc(1.5 * var(--m)); }
+  .xt .range{ padding-right:calc(2 * var(--m)); }
+  .g-item{ grid-template-columns:calc(3 * var(--m)) minmax(0,1fr); grid-template-rows:auto 1fr auto; column-gap:calc(.5 * var(--m)); }
+  .g-body{ display:contents; container-type:normal; }
+  .g-pic{ grid-row:1 / span 2; }
+  .g-item .nm, .g-item .who{ grid-column:2; }
+  .g-item .who > span{ min-width:0; }
+  .g-item .nm{ line-height:26px; }
+  .g-item .tx{ grid-column:1 / -1; margin-top:calc(.6 * var(--m)); }
+  .g-item.mine::before{ left:calc(3.05 * var(--m)); }
+  .g-finale{ padding:0 calc(.5 * var(--m)) var(--m); }
+  .xf-top{ height:calc(6 * var(--m)); }
+  .xf-art{ left:auto; right:calc(1.5 * var(--m)); height:calc(3.25 * var(--m)); }
+  .xf-std{ left:auto; right:var(--m); }
+  .xf-head{ left:0; right:calc(5 * var(--m)); }
+  .xf-top .price{ right:auto; left:0; bottom:auto; top:calc(100% + .5 * var(--m)); }
+  .xf-bot{ display:block; padding-top:calc(1.6 * var(--m)); }
+  .g-fin-btn{ margin-top:var(--m); }
+}
+/* A Christmas list, in a tribe's entry or the quiz result: one flat ball hangs from its top rule */
+.xl{ position:relative; border-top:var(--hair) solid var(--ink); padding-top:calc(.5 * var(--m)); }
+.xl-ball{ position:absolute; right:calc(.25 * var(--m)); top:calc(-1 * var(--m) - var(--hair)); width:calc(1.5 * var(--m)); height:calc(2.5 * var(--m)); pointer-events:none; }
+.side .xl h3, .xl h3{ font-family:var(--sans); font-size:13px; font-weight:600; line-height:18px; margin:0 0 15px; padding-right:calc(2 * var(--m)); }
+.res-gift{ margin-top:calc(1.5 * var(--m)); }
+.gift-mini{ display:grid; grid-template-columns:calc(2.5 * var(--m)) minmax(0,1fr); gap:calc(.5 * var(--m)); align-items:start; padding-bottom:15px; margin-bottom:15px; border-bottom:var(--hair) solid var(--ink); }
+.gift-mini .nm{ font-weight:600; font-size:17px; line-height:24px; margin:-2px 0 0; }
+.gift-mini .price{ display:block; margin-top:2px; }
+.gift-mini .from{ font-family:var(--sans); font-size:12px; line-height:18px; margin:2px 0 0; }
+.gift-mini .tx{ font-size:14px; line-height:21px; margin:4px 0 0; }
 /* Gift names link out without an underline; a small arrow marks the link */
 .g-item .nm a, .gift-mini .nm a{ text-decoration:none; }
 .g-item .nm a:hover, .gift-mini .nm a:hover{ text-decoration:underline; }
-.g-item .nm a::after, .gift-mini .nm a::after{ content:""; display:inline-block; width:.5em; height:.5em; margin-left:.32em; vertical-align:.1em; background:var(--muted); -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6'%3E%3Cpath d='M2 8 8 2M3.5 2H8v4.5'/%3E%3C/svg%3E") center/contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6'%3E%3Cpath d='M2 8 8 2M3.5 2H8v4.5'/%3E%3C/svg%3E") center/contain no-repeat; }
-.gift-mini .tx{ font-size:14px; line-height:1.45; margin:4px 0 0; }
+.g-item .nm a::after, .gift-mini .nm a::after{ content:""; display:inline-block; width:.5em; height:.5em; margin-left:.32em; vertical-align:.1em; background:currentColor; -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6'%3E%3Cpath d='M2 8 8 2M3.5 2H8v4.5'/%3E%3C/svg%3E") center/contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6'%3E%3Cpath d='M2 8 8 2M3.5 2H8v4.5'/%3E%3C/svg%3E") center/contain no-repeat; }
 /* The other tribes a gift suits, inline after the main one: "For the Vitalist and [avatar] NRx" */
 .g-item .who a.and{ white-space:nowrap; }
+@media (max-width:359px){ .g-item .who a.and{ white-space:normal; } }
 .g-item .who a.and .av{ display:inline-block; width:22px; height:22px; vertical-align:-6px; margin-right:5px; }
-.gift-also-h{ margin-top:20px; }
-.gift-mini .from{ font-family:var(--sans); font-size:12px; color:var(--muted); margin:2px 0 0; }
-.gift-none{ font-size:14px; margin:0; }
-.gift-more{ display:inline-block; font-family:var(--sans); font-size:13px; margin-top:12px; }
-.res-gift{ border:1px solid var(--ink); padding:16px; margin-top:24px; }
-.res-gift h3{ font-family:var(--sans); font-size:12px; font-weight:600; margin:0 0 8px; }
-.res-gift .gift-mini + h3{ margin-top:20px; }
-@media (prefers-reduced-motion: no-preference){
-  .g-art .bauble{ transform-origin:768px 400px; animation:sway 6s ease-in-out infinite alternate; }
-  @keyframes sway{ from{ transform:rotate(-1.5deg); } to{ transform:rotate(1.5deg); } }
-}
+.gift-none{ font-size:14px; line-height:21px; margin:0 0 15px; }
+.gift-more{ display:inline-block; font-family:var(--sans); font-size:13px; line-height:18px; }
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs id="avdefs"></defs></svg>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs>
-  <!-- Christmas glitter: speckled highlights and shadows over a flat ink, after the gold and cranberry glitter in the FAI Christmas brand -->
-  <filter id="xg-red" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".42" numOctaves="2" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 .95 0 0 0 0 .45 0 0 0 0 .38 0 0 0 3.4 -2" result="hi"/><feTurbulence type="fractalNoise" baseFrequency=".5" numOctaves="2" seed="9" result="m"/><feColorMatrix in="m" type="matrix" values="0 0 0 0 .32 0 0 0 0 .06 0 0 0 0 .05 0 0 0 3 -1.6" result="lo"/><feMerge result="all"><feMergeNode in="SourceGraphic"/><feMergeNode in="lo"/><feMergeNode in="hi"/></feMerge><feComposite in="all" in2="SourceGraphic" operator="in"/></filter>
-  <filter id="xg-gold" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="2" seed="7" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 1 0 0 0 0 .92 0 0 0 0 .62 0 0 0 3.2 -1.8" result="hi"/><feTurbulence type="fractalNoise" baseFrequency=".7" numOctaves="2" seed="2" result="m"/><feColorMatrix in="m" type="matrix" values="0 0 0 0 .45 0 0 0 0 .31 0 0 0 0 .1 0 0 0 3 -1.5" result="lo"/><feMerge result="all"><feMergeNode in="SourceGraphic"/><feMergeNode in="lo"/><feMergeNode in="hi"/></feMerge><feComposite in="all" in2="SourceGraphic" operator="in"/></filter>
+  <!-- Gold exists only as glitter: a tile of the brand's glitter photograph. Its address is set when the Christmas edition starts, so the regular edition never loads it. -->
+  <pattern id="xg-gold" patternUnits="userSpaceOnUse" width="192" height="192"><image width="192" height="192"/></pattern>
 </defs></svg>
 
 <div class="shell">
@@ -581,7 +678,6 @@ html.xmas:not([data-theme="light"]) .g-art [fill="#15191A"]{ fill:#55704F; }
     </div>
     <h1><span class="vh" id="title"></span><!-- display:start --><svg class="display" viewBox="0 0 454.2 250.4" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 70.4L10.3 70.4L12.3 51.2L19.7 51.2L21.6 70.4L33.4 70.4L25.1 0L8.3 0M13.2 42.4L15.8 16.9L16.2 16.9L18.8 42.4M48.3 70.4L60 70.4L60 36.4L70.3 36.4L70.3 28.4L60 28.4L60 8.8L71.1 8.8L71.1 0L48.3 0M75.1 70.4L87.2 70.4L87.2 0L75.1 0M91.4 70.4L114.6 70.4L114.6 61.4L103.1 61.4L103.1 36.4L113.4 36.4L113.4 28.4L103.1 28.4L103.1 8.8L114.2 8.8L114.2 0L91.4 0M118.6 70.4L141.1 70.4L141.1 61.4L130.7 61.4L130.7 0L118.6 0M145.1 70.4L159.1 70.4C167.7 70.4 173.1 65.2 173.1 56.9L173.1 13.5C173.1 5.2 167.7 0 159.1 0L145.1 0M156.8 61.4L156.8 8.5L158.4 8.5C160.5 8.5 161.6 9.6 161.6 11.7L161.6 58.2C161.6 60.2 160.5 61.4 158.4 61.4M206.1 58C206.1 60.1 205.1 61.4 203.5 61.4C201.9 61.4 200.9 60.1 200.9 58L200.9 11.6C200.9 9.7 201.8 8.5 203.3 8.5C204.8 8.5 205.7 9.7 205.7 11.6L205.7 25.4L216.2 25.4L216.2 11.5C216.2 3.9 211.2 -1 203 -1C194.7 -1 189.2 4.1 189.2 11.5L189.2 59.9C189.2 67.2 193.2 71.4 199.8 71.4C204.3 71.4 207.4 69.4 209.3 65.1L209.5 65.1L211.6 70.4L216.7 70.4L216.7 36L203.4 36L203.4 46.2L206.1 46.2M234.8 71.4C243.8 71.4 248.7 66.4 248.7 57.2L248.7 0L237.2 0L237.2 58.6C237.2 60.3 236.2 61.4 234.8 61.4C233.4 61.4 232.4 60.3 232.4 58.6L232.4 0L220.9 0L220.9 57.2C220.9 66.4 225.8 71.4 234.8 71.4M252.9 70.4L265 70.4L265 0L252.9 0M269.2 70.4L283.2 70.4C291.8 70.4 297.2 65.2 297.2 56.9L297.2 13.5C297.2 5.2 291.8 0 283.2 0L269.2 0M280.9 61.4L280.9 8.5L282.5 8.5C284.6 8.5 285.7 9.6 285.7 11.7L285.7 58.2C285.7 60.2 284.6 61.4 282.5 61.4M301.4 70.4L324.6 70.4L324.6 61.4L313.1 61.4L313.1 36.4L323.4 36.4L323.4 28.4L313.1 28.4L313.1 8.8L324.2 8.8L324.2 0L301.4 0M8.3 160.4L20.4 160.4L20.4 98.8L28.2 98.8L28.2 90L0.5 90L0.5 98.8L8.3 98.8M31.7 102.7L31.7 147.7C31.7 156.6 36.5 161.4 45.6 161.4C54.7 161.4 59.5 156.6 59.5 147.7L59.5 102.7C59.5 93.8 54.7 89 45.6 89C36.5 89 31.7 93.8 31.7 102.7M43.2 148.3L43.2 101.6C43.2 99.7 44.1 98.5 45.6 98.5C47.1 98.5 48 99.7 48 101.6L48 148.3C48 150.2 47.1 151.4 45.6 151.4C44.1 151.4 43.2 150.2 43.2 148.3M82.7 160.4L94.8 160.4L94.8 98.8L102.6 98.8L102.6 90L74.9 90L74.9 98.8L82.7 98.8M106.1 160.4L117.6 160.4L117.6 126.2L122.6 126.2L122.6 160.4L134.1 160.4L134.1 90L122.6 90L122.6 118.2L117.6 118.2L117.6 90L106.1 90M138.3 160.4L161.5 160.4L161.5 151.4L150 151.4L150 126.4L160.3 126.4L160.3 118.4L150 118.4L150 98.8L161.1 98.8L161.1 90L138.3 90M184.5 160.4L196.6 160.4L196.6 98.8L204.4 98.8L204.4 90L176.7 90L176.7 98.8L184.5 98.8M207.9 160.4L219.6 160.4L219.6 126.4L221.4 126.4C223.3 126.4 224.6 127.8 224.6 130L224.6 149.9C224.6 155.7 225 158.4 226.2 160.4L237.9 160.4L237.9 160.3C236.6 157.8 236.1 155.4 236.1 149.4L236.1 131.4C236.1 125.9 233.1 122.5 227.3 122.2L227.3 121.9C233.2 120.8 236 117.6 236 111.5L236 102.5C236 94.7 230.7 90 222.1 90L207.9 90M219.6 118.4L219.6 98.5L221.5 98.5C223.3 98.5 224.6 99.8 224.6 101.7L224.6 115.2C224.6 117.1 223.3 118.4 221.5 118.4M240.4 160.4L252.5 160.4L252.5 90L240.4 90M256.7 160.4L271.7 160.4C279.9 160.4 284.2 155.8 284.2 147.1L284.2 132.7C284.2 127.2 280.9 123.4 275.4 122.8L275.4 122.5C281.1 121.3 283.6 117.9 283.6 111.2L283.6 102.5C283.6 94.8 278.7 90 270.6 90L256.7 90M268.2 151.4L268.2 126.6L269.8 126.6C271.9 126.6 273 127.7 273 129.8L273 148.2C273 150.2 271.9 151.4 269.8 151.4M268.2 118.6L268.2 98.5L269.8 98.5C271.9 98.5 273 99.6 273 101.7L273 115.4C273 117.4 271.9 118.6 269.8 118.6M288.4 160.4L311.6 160.4L311.6 151.4L300.1 151.4L300.1 126.4L310.4 126.4L310.4 118.4L300.1 118.4L300.1 98.8L311.2 98.8L311.2 90L288.4 90M331.5 140.6L331.5 147.9C331.5 150 330.4 151.4 328.8 151.4C327.2 151.4 326.1 150 326.1 147.9L326.1 131.9L315.4 131.9L315.4 148.6C315.4 156.2 320.8 161.4 328.9 161.4C337.5 161.4 343.3 155.5 343.3 146.8L343.3 139.3C343.3 132.7 341.8 129.2 336.8 123.1L332.1 117.4C327.8 112.1 327.1 110.5 327.1 106.2L327.1 101.7C327.1 99.7 328.1 98.5 329.6 98.5C331.1 98.5 332.1 99.7 332.1 101.7L332.1 113.9L342.8 113.9L342.8 102.7C342.8 93.8 338 89 329.1 89C320.2 89 315.4 93.8 315.4 102.7L315.4 107.9C315.4 113.3 316.7 117.2 320.2 121.4L327.5 130.1C330.9 134.2 331.5 135.8 331.5 140.6M1.2 192.7L1.2 237.7C1.2 246.6 6 251.4 15.1 251.4C24.2 251.4 29 246.6 29 237.7L29 192.7C29 183.8 24.2 179 15.1 179C6 179 1.2 183.8 1.2 192.7M12.7 238.3L12.7 191.6C12.7 189.7 13.6 188.5 15.1 188.5C16.6 188.5 17.5 189.7 17.5 191.6L17.5 238.3C17.5 240.2 16.6 241.4 15.1 241.4C13.6 241.4 12.7 240.2 12.7 238.3M33.2 250.4L44.9 250.4L44.9 216.4L55.2 216.4L55.2 208.4L44.9 208.4L44.9 188.8L56 188.8L56 180L33.2 180M87.8 230.6L87.8 237.9C87.8 240 86.7 241.4 85.1 241.4C83.5 241.4 82.4 240 82.4 237.9L82.4 221.9L71.7 221.9L71.7 238.6C71.7 246.2 77.1 251.4 85.2 251.4C93.8 251.4 99.6 245.5 99.6 236.8L99.6 229.3C99.6 222.7 98.1 219.2 93.1 213.1L88.4 207.4C84.1 202.1 83.4 200.5 83.4 196.2L83.4 191.7C83.4 189.7 84.4 188.5 85.9 188.5C87.4 188.5 88.4 189.7 88.4 191.7L88.4 203.9L99.1 203.9L99.1 192.7C99.1 183.8 94.3 179 85.4 179C76.5 179 71.7 183.8 71.7 192.7L71.7 197.9C71.7 203.3 73 207.2 76.5 211.4L83.8 220.1C87.2 224.2 87.8 225.8 87.8 230.6M103.6 250.4L115.7 250.4L115.7 180L103.6 180M119.9 250.4L142.4 250.4L142.4 241.4L132 241.4L132 180L119.9 180M146.4 250.4L158.5 250.4L158.5 180L146.4 180M174.4 238.3L174.4 191.6C174.4 189.7 175.3 188.5 176.8 188.5C178.3 188.5 179.2 189.7 179.2 191.6L179.2 205.4L189.7 205.4L189.7 191.1C189.7 183.5 184.7 179 176.5 179C168.1 179 162.7 183.7 162.7 191.1L162.7 239.6C162.7 246.7 168.2 251.4 176.5 251.4C184.7 251.4 189.7 246.9 189.7 239.3L189.7 221.9L179.2 221.9L179.2 238.3C179.2 240.2 178.3 241.4 176.8 241.4C175.3 241.4 174.4 240.2 174.4 238.3M193.9 192.7L193.9 237.7C193.9 246.6 198.7 251.4 207.8 251.4C216.9 251.4 221.7 246.6 221.7 237.7L221.7 192.7C221.7 183.8 216.9 179 207.8 179C198.7 179 193.9 183.8 193.9 192.7M205.4 238.3L205.4 191.6C205.4 189.7 206.3 188.5 207.8 188.5C209.3 188.5 210.2 189.7 210.2 191.6L210.2 238.3C210.2 240.2 209.3 241.4 207.8 241.4C206.3 241.4 205.4 240.2 205.4 238.3M225.9 250.4L235.3 250.4L235.3 208.8L235.6 208.8L244.9 250.4L256.5 250.4L256.5 180L247.1 180L247.1 214.5L246.8 214.5L239.4 180L225.9 180M279.8 250.4L296 250.4L304.1 180L293.6 180L288.5 225.2L288.2 225.2L283 180L271.4 180M305.9 250.4L316.2 250.4L318.2 231.2L325.6 231.2L327.5 250.4L339.3 250.4L331 180L314.2 180M319.1 222.4L321.7 196.9L322.1 196.9L324.7 222.4M342.3 250.4L364.8 250.4L364.8 241.4L354.4 241.4L354.4 180L342.3 180M368.8 250.4L391.3 250.4L391.3 241.4L380.9 241.4L380.9 180L368.8 180M395.3 250.4L418.5 250.4L418.5 241.4L407 241.4L407 216.4L417.3 216.4L417.3 208.4L407 208.4L407 188.8L418.1 188.8L418.1 180L395.3 180M432.1 250.4L444.2 250.4L444.2 223.6L454.5 180L443.4 180L438.3 206L438 206L433.1 180L421 180L432.1 223.6"/></svg><!-- display:end --></h1>
     <div class="hero-art base" aria-hidden="true"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 80 80"><g transform="matrix(1.008 0 0 1.008 -0.32 -0.32)"><path fill="#f3f3f3" d="M0 .1h80v79.8H0z"/><path fill="#121212" d="M65.3.1h-7a38 38 0 0 1 19.2 29.2l-1 3.3c.4-11.2-4.7-17.8-12-20.2 1.8 3.8 10 13.8 11 23.6l-1.1 6.3C75.6 31.5 70 25 62.4 23c2 3 7.6 9.8 9.5 14.5l1.7 5.4-1.7 8a11 11 0 0 0-8.5-11.6l6.2 9.7q1.3 2.8 1.5 5.2l-1.2 4.5h1.5C73 51 78 46.5 80 41.4V23.5h-.4A32 32 0 0 0 65.4.1M14 .1h7.1A38 38 0 0 0 1.8 29.2L3 33c-.5-10.8 4.6-17.9 12-20.5-2 3.8-10.2 14-11.3 23.7L5 42.4c-1.6-11.2 5-17.7 12.2-19.3C14.5 26.8 6.7 36 5.6 41.7l2.1 9.9c-1.7-8.4 3.8-11 8.2-12.2L9.4 49.8q-1 2.5-1 4.5l1 4.5H8.2A44 44 0 0 0 0 43.9V21.6C1 13 6.6 4.6 14 0"/><path fill="#ff4f00" d="M0 .1h9.1A35 35 0 0 0 0 10.4zm80 0h-9.4q6 4.7 9.4 11.8z"/><circle cx="39.6" cy="28.9" r="28.3" fill="#ff4f00"/><path fill="#f3f3f3" d="m55.6 29.9-1-3.3.3 2.6-3.8.8H28.3l-4-.8.4-2.6-1 3.3-5.8 5q-.7.7-.7 1.3h8.4l.2 6.6a10 10 0 0 0-1.6 4.7c0 4.3 4 6.7 7.3 6.7 3.4 0 6.8-2.4 6.8-6.4v-1q.7.3 1.4.3.8 0 1.4-.4v1c0 4 3.3 6.5 6.8 6.5 4.2 0 7.3-3 7.3-6.7q-.1-2.4-1.7-4.7l.1-6.6h8.6q0-.8-.8-1.4z"/><path fill="#121212" d="M53.6 39.1c4.4-.3 8.7-1.1 8.6-2.8h-8.5zm-27.9.1c-4.5-.4-8.6-1.1-8.5-3h8.4zm24.5-1.7c-.6-2.2-2.4-4-4.6-4s-3.7 1.5-3.7 2.7v1.4h-4.4v-1.4c0-1.3-1.6-2.6-3.7-2.6-2.2 0-3.7 1.9-4 3.9L26.4 44a5 5 0 0 0-1.4 3.7c0 3.5 3.2 5.7 6.4 5.7s6.1-2.3 6.1-5.3v-4.6c.8 0 1.5-.6 2-.6l1.6.4h.7V48c0 3 2.8 5.3 6.2 5.3s6.2-2.3 6.2-5.7q0-2-1.2-3.9z"/><path fill="#ff4f00" d="M48 53.4c3.5 0 6-2.4 6-5.4s-2.6-5.3-5.8-5.3c-3.3 0-5.8 2.5-5.8 5.4s2.6 5.3 5.7 5.3"/><ellipse cx="48.3" cy="47.8" fill="#f3f3f3" rx="4.8" ry="4.1"/><ellipse cx="48.2" cy="48.8" fill="#121212" rx="4.4" ry="3.2"/><path fill="#ff4f00" d="M31.4 53.3c3.4 0 5.7-2.1 5.7-5.2 0-3.2-2.7-5.4-6-5.4s-5.6 2.4-5.6 5.3c0 3.1 2.7 5.3 5.9 5.3"/><ellipse cx="31.1" cy="47.8" fill="#f3f3f3" rx="4.8" ry="4.1"/><ellipse cx="31.1" cy="48.6" fill="#121212" rx="4.4" ry="3.3"/><path fill="#ff4f00" d="M48.2 41c-3.2 0-5.5 2.2-5.9 3.8a7 7 0 0 1 6-2.6 7 7 0 0 1 5.1 2.2C53 42.5 51 41 48.2 41m-17 0c-2.5 0-4.3 1.5-4.8 3q1.6-1.5 4.8-1.5c2.6 0 4.6 1.2 5.6 2.4-.3-2-2.5-3.8-5.6-3.8"/><path fill="#d9d9d6" d="M32.8 35.3q-1.7.1-2.2.7 1-.5 2.7-.6zm8.5 3.5h.6v-2.6h-4.4v2.5h.8q0-1.7 1.5-1.6t1.5 1.7"/><path fill="#ff4f00" d="M39.8 37.7q-1.6 0-1.5 1.2c.5-.8 2.5-.7 2.9 0q0-1.2-1.5-1.2"/><path fill="#f3f3f3" d="M42.9 13.5c0-1.6-1.4-2.7-3.2-2.7-1.7 0-3 1.2-3 2.7a14 14 0 0 0-11.8 12h29.6c-1-6.2-5.4-11.1-11.6-12"/><path fill="#121212" d="M37.7 13.4q.3-1.5 2-1.5 1.8.1 2 1.5z"/><path fill="#ff4f00" d="m24.6 25.6-.2 3.6 3.8.8h22.9l3.8-.8-.3-3.6z"/><path fill="#121212" d="M37 14q-2.2 1-4.5 6.3l-2.1 5h1.8c1.4-5 3-9.7 4.8-11.3m-6.7 11.6-3.8 10.2.2 5.5 2.2-4V36l3.2-10.3zm12-11.6q2.3 1 4.6 6.3l2 5h-1.8c-1.2-5-2.8-9.6-4.8-11.3M49 25.6l4 10.2-.3 5.5-2.2-4v-1.4l-3.2-10.3z"/><path fill="#f3f3f3" d="M63.3 43.6a29 29 0 0 1-23.6 13 29 29 0 0 1-23.5-12.3l-.7 6.2a21 21 0 0 1 4.6 13l.4-8.1a36 36 0 0 1 2.6 15q1.6-2.1 2.8-3.3c.3-.5 1-1.5 1.7-2 1-3 .9-6.7 0-9.5a21 21 0 0 1 1.6 10.5q-1.2 5.4-2.7 9.5l2.6-4.3c1 2.7 1.5 5.9 1.7 8.6h10.6c0-2.3.7-5 3-7.2l1.2-.3 2-9.8-.3-.2c.7-2.6 2.5-5.3 4.3-6.9-.4 3-.5 6.9 0 9.4l1.8 2.2q1.7 1.5 3 3.4c-.2-5.6.8-11.8 2.7-15.7l.4 7.8c.2-4.4 2-9.4 4.5-12.3z"/><path fill="#ff4f00" d="M15.5 50.5c.8 2.4 1.2 5.6 1.2 8.4q.7 0 .6 1.6v7.4q.5 0 .9-.2A45 45 0 0 0 15 79.9h3a18 18 0 0 1 5-8.9c-.8 2.8-1.7 6-1.8 9h.4c.8-2.8 2.7-6.1 5.2-7.7q-.2 2.2-.6 4c.8-2.8 2.5-5.5 2.9-8.7q-.4 6.8 0 12.3h1.6q-.1-3.8-1.4-7.6l.4-.2h14.8a12 12 0 0 0-3 7.8h22.8c-.2-4.5-1.7-9.3-3-12.3l.9 1V60q0-1.2.6-1.2c0-2.9.3-6 1-8.5a19 19 0 0 0-4.3 13.8l1.8 10.5q-2-3.8-3.1-5.4c.5-3.6.8-10.9.8-14.5-2 4.4-2.7 10.2-2.6 15.7a12 12 0 0 0-3.2-3.5c.3-4.8 2.7-12.1 7-16.8a21 21 0 0 0-8.4 15.1l.3.7-1.2-1.5c.3-3.1.5-6.4 1-9A35 35 0 0 0 48.5 74q-2.2 3-2.6 6h12q-1.9-5.4-5.5-7.8c.4 2.5 1.4 5.3 1.7 7.7-.5-3.3-2.4-7-4-8.9a26 26 0 0 1 2 9h-3.6l1.4-7.4a13 13 0 0 0-4 7.3q.2-3.4 1.2-5.8a8 8 0 0 0-3.9 5.8c.3-2.4 2-4.8 4-5.7a8 8 0 0 0-5 2.2 11 11 0 0 1 2.3-3.9h-15v.1a14 14 0 0 0 3.7 4.2q0-1.9-1.2-3a8 8 0 0 1 3.8 6.1h2.3c.6-3.4 3.1-6 6.3-7.4h-13l1.2-5.7c-.3-4.9-2.3-9.4-5.2-11.3a29 29 0 0 1 1 9.7l-1 .3-1.6 2-2.8 3.1a40 40 0 0 0-2.6-15.4l-.3 8.5c-.2-5-1.8-10-4.7-13.2"/><path fill="#121212" d="M19.2 50.1c4 5.3 6.6 11 6.7 17.3q1-1.6 1.7-2.3c-.5-6-4-12.3-8.4-15m8.3 5.4A36 36 0 0 1 30.8 72h.8l1-5.1c-.2-5.1-2-9.3-5.1-11.3m24.5-.3a13 13 0 0 0-4.5 7.1l.3.3-2 9.7-1.2.2q-1.7 1.7-2.3 3.8 2-2 5-2.2l1.3-.3A37 37 0 0 1 52 55.3m8.3-5.3c-5 3.5-8 9.7-8.5 15.2q1.2 1.2 1.8 2.2c0-6.2 2.7-12.5 6.6-17.3m-39.7 8.3c0 5-1.6 12.6-2.1 15.7q1.1-2.6 2.5-4.3c0-3.8 0-8.3-.4-11.4m38.3 0c-.5 3.3-.5 7.6-.5 11.2a22 22 0 0 1 3 5l-2.4-16zM16.2 43.6c-3 3-4.7 10-4.7 15.2h3.4c0-5.2.5-10.7 1.3-15.1zm47 0c1 4.7 1.4 10.3 1.3 15.2H68c-.2-6.3-2-12.4-4.7-15.2M80 34.7c-2.8 5.7-5.7 12.1-7.5 16.6 1.1-6.5 4.6-13.5 7.5-20z"/><path fill="#121212" d="M80 41.5c-2.7 4.9-7.4 9.8-8.6 17.3h-1.5l1.1-4.4q0-3-1.6-6l-6-9c4.4 1.4 8.8 5.3 8.4 11.5l1.3-6.2 2.5-1.7z"/><path fill="#ff4f00" d="M80 47c-2.8 3.6-5.3 8-6.1 11.8H75V64c1.3-4 2.8-9.6 4.9-12.1z"/><path fill="#ff4f00" d="M80 52a34 34 0 0 0-4.5 17.4l.7-.8c-1 3-2.7 8-3 11.3h5q.5-5.7 1.8-10.4z"/><path fill="#d9d9d6" d="M80 65.6c-2 4-3.7 9.2-4.2 14.3H80z"/><path fill="#121212" d="M80 73.2q-.8 3.3-.9 6.7h.9z"/><path fill="#ff4f00" d="m76.3 72.2-.3.6-.2-3.2c-2.8 2.7-5 6.9-5.4 10.3h4.3a21 21 0 0 0 2-7.6z"/><path fill="#121212" d="M74.8 59.6h-12v10c2 3.1 3.3 7 3.6 10.3h.7a15 15 0 0 1 4.7-8.5c-.7 2-1 4.7-1.1 7 .5-3 2-6 3.4-7.9V60.1q0-.5.7-.5"/><path fill="#f3f3f3" d="M74.8 58.8H62.7q-.6 0-.5 1.3v8.2l.7 1.4V59.6h11.2v11q.4-.6 1-1v-9.5q.1-1.3-.3-1.3"/><path fill="#121212" d="M75.2 59.7v10l.4-.4v-8.2q.1-1.4-.4-1.4M80 65q-1.1 3.2-1.3 6 .7-1.7 1.3-2.5z"/><circle cx="72" cy="61.6" r=".7" fill="#ff4f00"/><circle cx="72" cy="66" r=".6" fill="#ff4f00"/><circle cx="65" cy="70.4" r=".6" fill="#ff4f00"/><circle cx="67" cy="70.4" r=".6" fill="#d9d9d6"/><path stroke="#d9d9d6" stroke-width=".4" d="M64 61.3h6.6M64 63.5h9m-9 2.3h6.7m-6.6 2.4h8.8"/><path fill="#d9d9d6" d="M0 48.4c2.6 3.7 4.9 7.8 5.7 10.5H4v.8h-.2v9c-.7-4.3-2.3-8.6-3.8-11z"/><path fill="#ff4f00" d="M0 48.5v3.7A32 32 0 0 1 3.9 66v4.3q.1 2.4.6 4-.4 3-.1 5.6h2a44 44 0 0 0-2.7-11.1l.5 1A70 70 0 0 0 0 48.4"/><path fill="#ff4f00" d="M0 57.7v7.9c1.1 3.4 2 7.7 2.5 14.3h1.8A72 72 0 0 0 0 57.7m0 11.6V80h.9Q.7 74.5 0 69.3m0-16.9v1.9c1.5 2.6 2.7 6 3.3 8.9v-3.5Q2 55.2 0 52.4"/><path fill="#121212" d="M0 65.6V69q.9 1.5 1.3 3.1Q1 68.8 0 65.6"/><path fill="#ff4f00" d="M2.9 68.3c1.4 3.7 3 7.6 3.4 11.6H9a17 17 0 0 0-6.1-11.6m4.9 3.4a47 47 0 0 1 1 8.2h3.6c-.5-3.1-2.3-6.4-4.6-8.2"/><path fill="#121212" d="M2.3 72q.8 3.5 1.3 8h1c0-3.4-.7-6.4-2.3-8m14.3-12.4H5.3v11c1.8 2.2 3 5.2 3.6 8 0-2.3-.2-5.2-1-7 2.4 2.2 4 5.4 4.5 8.3h.8a22 22 0 0 1 3.5-10.3z"/><path fill="#f3f3f3" d="M16.7 58.8H4.5q-.6 0-.6 1h.5v10.7l.8.4V59.6h11.3v10.2l.7-.6v-8.8q.2-1.7-.7-1.6"/><path fill="#121212" d="M4 59.7v9.2l.7 1V59.6z"/><circle cx="14.6" cy="61.6" r=".7" fill="#ff4f00"/><circle cx="14.6" cy="66.1" r=".6" fill="#ff4f00"/><circle cx="7.3" cy="70.4" r=".6" fill="#d9d9d6"/><circle cx="9.4" cy="70.4" r=".6" fill="#d9d9d6"/><path stroke="#d9d9d6" stroke-width=".4" d="M6.3 61.3H13m-6.7 2.2h9.2"/><path stroke="#d9d9d6" stroke-width=".3" d="M6.3 65.8H13"/><path stroke="#d9d9d6" stroke-width=".4" d="M6.3 68.1h9.1"/><path fill="#121212" d="M16.2 43.5a26 26 0 0 0-4.7 15.3h3.4c0-5.2.5-10.6 1.3-15.1zm-.1-4c-4.7 1.7-9 5.1-8.4 12l-.8-4q0-1-.4-2a15 15 0 0 1 9.7-14 61 61 0 0 1-7.8 11.8A9 9 0 0 0 7 47.6l.8 4C7.2 44.5 12.1 41 16 39.4z"/><path fill="#121212" d="M0 35.3v8.2c3.1 4.1 6.7 9 8 15.2h1.4l-1-4.4q0-2.7 1.1-5.4l5-8.1-4 3.3-2 2.9-.8 4.5A46 46 0 0 0 0 35.3"/><path fill="#f3f3f3" d="M18.2 67.6c-3 3.5-4.7 8-5 12.3H15a42 42 0 0 1 3.1-12.3"/><path fill="#d9d9d6" d="M23 71a15 15 0 0 0-5 9h3.2q.3-4.8 1.8-9"/><path fill="#f3f3f3" d="M29.1 71.3a15 15 0 0 0-4 8.6h2.3q.1-4.6 1.7-8.7"/><path fill="#d9d9d6" d="M29.4 72.5q1.4 3.6 1.4 7.4h2.7c-.3-2.8-2.1-5.5-4.1-7.4m15.2 0a9 9 0 0 0-6.4 7.4h3.3q.4-4.2 3-7.4m5.5.1a12 12 0 0 0-4 7.3h2.6z"/><path fill="#f3f3f3" d="M50.3 71q1.7 4.3 2 9h2c0-3.5-1.9-6.8-4-9"/><path fill="#d9d9d6" d="M56.6 71q1.5 4.6 1.6 9h3.2a16 16 0 0 0-4.9-9m4.7-3.4a32 32 0 0 1 3.1 12.3h2.1c-.3-4.5-2.3-9-5.2-12.3m15.4.8A17 17 0 0 0 70.4 80h2.8c.4-4 1.9-8 3.4-11.5"/><path fill="#121212" d="m76.7 72.1-.4.7-.2-1.1q-.7 1-.8 2.3l.3 1.2-.8 4.7h1q1-3.9.9-7.8"/><path fill="#ff4f00" d="M71.3 71.5a14 14 0 0 0-4.3 8.4h3.7c0-2.5.1-5.6.7-8.4"/><path fill="#121212" d="M32 73.8q1.3 1.3 1.3 3a8 8 0 0 1 2.4 3.1h1.8c-.2-3-2.6-5-5.4-6m-5.3-1.5a13 13 0 0 0-5.2 7.5H25a52 52 0 0 1 1.8-7.5m1.5 1.8q-1 3-1 5.7H29q0-3-.7-5.7m6.1-11-1.7 8.2h12.1l1.8-8.2z"/><path fill="#f3f3f3" d="M47.4 62.5H34.2L31.8 72h-2.6v.4h16.5l2-9.7zM45 71.4H32.7l1.7-8.2h12.2z"/><path fill="#d9d9d6" d="m31.4 57.6 1.3 1.7a26 26 0 0 0 14 0l.9-2q-3.9 1.1-8 1-4.4 0-8.2-.7"/><path fill="#ff4f00" d="M32.7 59.2q.8 1.5 1.2 3h11.7q.4-1.6 1-3a24 24 0 0 1-14 0"/><path fill="#d9d9d6" d="M16.2 47q3.6 4.1 4.6 8.2h-.2v.1l-.2-.3v-.6q-1.3-4.2-4-7.5zm47.1 0a12 12 0 0 0-3.6 7.6l1.1-.1a13 13 0 0 1 2.8-5.2zm2.6-2.3a45 45 0 0 1 1.6 14h2l1-4.3q-.8-6-4.6-9.7m13.3.6c-3.4 4.1-6 9-7.3 13.5h1.7c1.1-4.3 3.3-8.9 5.6-13.4zm.7 6.7a12 12 0 0 0-2.5 5h.8l1.8-4.8zm-66.2-7.4a17 17 0 0 0-5 12.5l.4 1.7h.9c0-4.9 1.2-10 3.8-14.1zM11.2 20q-4.3 5-3.7 11.7L10 30q.2-5.4 1.4-9.8zm56.7-.3q1.5 4 1.5 8.7l2.2 2.3q.5-6.5-3.6-11z"/><path fill="#d9d9d6" d="M71.4 22.7q.6 4.2.4 8.2l1.5 4 .8 3.3c.4-5-.3-11-2.6-15.5z"/><path fill="#d9d9d6" d="M72.4 33.8q1.4 4.2 1 8.6l.4 1.8c.5-3.6.1-7.5-1.3-10.5zm-2.6 1.1-.2 1.8 1.4 1.9q0-2.6-1-3.7zm-2.6 4.6-.2 1.3 1.6 1.4q-.2-1.7-1.3-2.7m-55.6.8-.4.5.7.9.1-.7zm-2.3-5.6-.3.8.4 1 .2-1.2z"/><path fill="#121212" d="M8.8 18.8A13 13 0 0 0 6 28.5l.5-1.5q.2-4.6 2.4-8.2M9.7 30c-3 3.4-4.2 8.1-4 12.5l.1-1q.4-6.4 4-11.5zM8.6 40.6a9 9 0 0 0-.8 3.7l.3-1zM69 37.5q2.3 3.5 2.7 7.5l.1.2q0-4.4-2.7-7.7"/><path fill="#d9d9d6" d="M54.5.1h-7.1a33 33 0 0 1 20.2 16q2 1.3 3.4 2.7c-3-8-9.2-15-16.5-18.7m-29 0A31 31 0 0 0 7.6 18.9q1.5-1.6 3.5-2.8A33 33 0 0 1 32 0z"/><path fill="#121212" d="m64.5 12.4 1.6 2.5q2 1 3.8 2.4-2.1-3.1-5.5-5m-2.1 10.8 1.2 1.7q4 2.5 6.9 5.7a14 14 0 0 0-8-7.4m.9 8.4 1 2.3c3.1 3 6 7 7.8 11.4 1.3-6.7-3.3-11.5-8.7-13.7m.1 7.9q.4 1 1.2 2.2 4 2.8 6.2 7.2c.2-4.5-3.3-8-7.3-9.4"/></g></svg></div>
-    <template id="tree-art"><svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 396 1050 1048" preserveAspectRatio="xMaxYMax meet"><g fill="#3C503A"><path d="M480 672L720 1152H240zM528 960L768 1440H288zM624 1056L816 1440H432z"/></g><g fill="#253828"><path d="M528 960L624 1152H432zM624 1056L672 1152H576zM600 1104L768 1440H432z"/></g><path fill="#15191A" d="M600 1104L624 1152H576z"/><g class="bauble"><path d="M768 400V458.4" stroke="#1F201C" stroke-width="4"/><rect x="753.6" y="458.4" width="28.8" height="21.6" fill="#1F201C"/><circle cx="768" cy="672" r="192" fill="#B02B22" filter="url(#xg-red)"/></g><g fill="#C9A04A" filter="url(#xg-gold)"><circle cx="19" cy="646" r="6.5"/><circle cx="73" cy="705" r="7.5"/><circle cx="127" cy="758" r="9.5"/><circle cx="180" cy="808" r="11.5"/><circle cx="233" cy="852" r="13.5"/><circle cx="285" cy="892" r="16.0"/><circle cx="337" cy="927" r="18.5"/><circle cx="389" cy="958" r="21.0"/><circle cx="441" cy="983" r="23.5"/><circle cx="492" cy="1004" r="25.0"/><circle cx="543" cy="1021" r="26.0"/><circle cx="593" cy="1032" r="26.5"/><circle cx="643" cy="1039" r="26.0"/><circle cx="693" cy="1042" r="24.5"/><circle cx="743" cy="1039" r="22.5"/><circle cx="792" cy="1032" r="20.0"/><circle cx="840" cy="1021" r="17.0"/><circle cx="889" cy="1004" r="13.5"/><circle cx="937" cy="983" r="11.0"/><circle cx="985" cy="957" r="8.5"/><circle cx="1032" cy="927" r="6.5"/></g></svg></template>
   </div>
   <p class="dek" id="dek"></p>
   <p class="companion" id="companion" hidden></p>
@@ -608,7 +704,7 @@ html.xmas:not([data-theme="light"]) .g-art [fill="#15191A"]{ fill:#55704F; }
     <a class="tab" role="tab" href="#map" data-v="map" aria-selected="false">Map</a>
     <a class="tab" role="tab" href="#phrasebook" data-v="phrasebook" aria-selected="false">Phrasebook <span class="n" id="nterms"></span></a>
     <a class="tab" role="tab" href="#wall" data-v="wall" aria-selected="false" id="walltab" hidden>Wall <span class="n" id="nwall"></span></a>
-    <button type="button" class="xswitch" id="xswitch" role="switch" aria-checked="false" hidden><span id="xlab"></span><span class="xtrack" aria-hidden="true"><span class="xknob"></span></span></button>
+    <button type="button" class="xswitch" id="xswitch" role="switch" aria-checked="false" hidden><span id="xlab"></span><!-- xmas-switch:start --><svg class="xa xsw" viewBox="0 0 60 60" aria-hidden="true" focusable="false"><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="7.5" y1="15" x2="52.5" y2="15"/></g><g class="xball"><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="22.5" y1="0" x2="22.5" y2="19"/><path d="M 22.5 19 a 3 3 0 1 1 3 3"/></g><g fill="#913129" stroke="#913129" stroke-width="0"><circle cx="22.5" cy="45" r="13.2"/></g><g fill="currentColor"><polygon points="18.4,25.7 26.6,25.7 26.6,33 18.4,33"/></g><circle class="xglit" cx="22.5" cy="45" r="13.2" fill="url(#xg-gold)"/></g></svg><!-- xmas-switch:end --></button>
   </nav>
 
   <section class="view" id="v-tribes" role="tabpanel" aria-label="Tribes">
@@ -634,7 +730,13 @@ html.xmas:not([data-theme="light"]) .g-art [fill="#15191A"]{ fill:#55704F; }
   </section>
 
   <section class="view" id="v-gifts" role="tabpanel" aria-label="Gift Guide" hidden></section>
-  <div id="gifts-title" hidden><!-- gifts-display:start --><svg class="display" viewBox="0 0 384.5 250.4" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 70.4L10.3 70.4L12.3 51.2L19.7 51.2L21.6 70.4L33.4 70.4L25.1 0L8.3 0M13.2 42.4L15.8 16.9L16.2 16.9L18.8 42.4M48.3 70.4L60 70.4L60 36.4L70.3 36.4L70.3 28.4L60 28.4L60 8.8L71.1 8.8L71.1 0L48.3 0M75.1 70.4L87.2 70.4L87.2 0L75.1 0M91.4 70.4L114.6 70.4L114.6 61.4L103.1 61.4L103.1 36.4L113.4 36.4L113.4 28.4L103.1 28.4L103.1 8.8L114.2 8.8L114.2 0L91.4 0M118.6 70.4L141.1 70.4L141.1 61.4L130.7 61.4L130.7 0L118.6 0M145.1 70.4L159.1 70.4C167.7 70.4 173.1 65.2 173.1 56.9L173.1 13.5C173.1 5.2 167.7 0 159.1 0L145.1 0M156.8 61.4L156.8 8.5L158.4 8.5C160.5 8.5 161.6 9.6 161.6 11.7L161.6 58.2C161.6 60.2 160.5 61.4 158.4 61.4M206.1 58C206.1 60.1 205.1 61.4 203.5 61.4C201.9 61.4 200.9 60.1 200.9 58L200.9 11.6C200.9 9.7 201.8 8.5 203.3 8.5C204.8 8.5 205.7 9.7 205.7 11.6L205.7 25.4L216.2 25.4L216.2 11.5C216.2 3.9 211.2 -1 203 -1C194.7 -1 189.2 4.1 189.2 11.5L189.2 59.9C189.2 67.2 193.2 71.4 199.8 71.4C204.3 71.4 207.4 69.4 209.3 65.1L209.5 65.1L211.6 70.4L216.7 70.4L216.7 36L203.4 36L203.4 46.2L206.1 46.2M234.8 71.4C243.8 71.4 248.7 66.4 248.7 57.2L248.7 0L237.2 0L237.2 58.6C237.2 60.3 236.2 61.4 234.8 61.4C233.4 61.4 232.4 60.3 232.4 58.6L232.4 0L220.9 0L220.9 57.2C220.9 66.4 225.8 71.4 234.8 71.4M252.9 70.4L265 70.4L265 0L252.9 0M269.2 70.4L283.2 70.4C291.8 70.4 297.2 65.2 297.2 56.9L297.2 13.5C297.2 5.2 291.8 0 283.2 0L269.2 0M280.9 61.4L280.9 8.5L282.5 8.5C284.6 8.5 285.7 9.6 285.7 11.7L285.7 58.2C285.7 60.2 284.6 61.4 282.5 61.4M301.4 70.4L324.6 70.4L324.6 61.4L313.1 61.4L313.1 36.4L323.4 36.4L323.4 28.4L313.1 28.4L313.1 8.8L324.2 8.8L324.2 0L301.4 0M8.3 160.4L20.4 160.4L20.4 98.8L28.2 98.8L28.2 90L0.5 90L0.5 98.8L8.3 98.8M31.7 102.7L31.7 147.7C31.7 156.6 36.5 161.4 45.6 161.4C54.7 161.4 59.5 156.6 59.5 147.7L59.5 102.7C59.5 93.8 54.7 89 45.6 89C36.5 89 31.7 93.8 31.7 102.7M43.2 148.3L43.2 101.6C43.2 99.7 44.1 98.5 45.6 98.5C47.1 98.5 48 99.7 48 101.6L48 148.3C48 150.2 47.1 151.4 45.6 151.4C44.1 151.4 43.2 150.2 43.2 148.3M75.6 160.4L87.3 160.4L87.3 134.4L90.7 134.4C98.2 134.4 103 129.5 103 122L103 102.5C103 94.8 98.3 90 90.7 90L75.6 90M87.3 125.1L87.3 98.5L88.7 98.5C90.5 98.5 91.8 99.8 91.8 101.7L91.8 121.9C91.8 123.8 90.5 125.1 88.7 125.1M107 102.7L107 147.7C107 156.6 111.8 161.4 120.9 161.4C130 161.4 134.8 156.6 134.8 147.7L134.8 102.7C134.8 93.8 130 89 120.9 89C111.8 89 107 93.8 107 102.7M118.5 148.3L118.5 101.6C118.5 99.7 119.4 98.5 120.9 98.5C122.4 98.5 123.3 99.7 123.3 101.6L123.3 148.3C123.3 150.2 122.4 151.4 120.9 151.4C119.4 151.4 118.5 150.2 118.5 148.3M154.9 140.6L154.9 147.9C154.9 150 153.8 151.4 152.2 151.4C150.6 151.4 149.5 150 149.5 147.9L149.5 131.9L138.8 131.9L138.8 148.6C138.8 156.2 144.2 161.4 152.3 161.4C160.9 161.4 166.7 155.5 166.7 146.8L166.7 139.3C166.7 132.7 165.2 129.2 160.2 123.1L155.5 117.4C151.2 112.1 150.5 110.5 150.5 106.2L150.5 101.7C150.5 99.7 151.5 98.5 153 98.5C154.5 98.5 155.5 99.7 155.5 101.7L155.5 113.9L166.2 113.9L166.2 102.7C166.2 93.8 161.4 89 152.5 89C143.6 89 138.8 93.8 138.8 102.7L138.8 107.9C138.8 113.3 140.1 117.2 143.6 121.4L150.9 130.1C154.3 134.2 154.9 135.8 154.9 140.6M177.8 160.4L189.9 160.4L189.9 98.8L197.7 98.8L197.7 90L170 90L170 98.8L177.8 98.8M201.2 135.4L216.2 135.4L216.2 127.4L201.2 127.4M220.4 160.4L232.5 160.4L232.5 90L220.4 90M236.7 160.4L248.4 160.4L248.4 134.4L251.8 134.4C259.3 134.4 264.1 129.5 264.1 122L264.1 102.5C264.1 94.8 259.4 90 251.8 90L236.7 90M248.4 125.1L248.4 98.5L249.8 98.5C251.6 98.5 252.9 99.8 252.9 101.7L252.9 121.9C252.9 123.8 251.6 125.1 249.8 125.1M268.1 102.7L268.1 147.7C268.1 156.6 272.9 161.4 282 161.4C291.1 161.4 295.9 156.6 295.9 147.7L295.9 102.7C295.9 93.8 291.1 89 282 89C272.9 89 268.1 93.8 268.1 102.7M279.6 148.3L279.6 101.6C279.6 99.7 280.5 98.5 282 98.5C283.5 98.5 284.4 99.7 284.4 101.6L284.4 148.3C284.4 150.2 283.5 151.4 282 151.4C280.5 151.4 279.6 150.2 279.6 148.3M1.2 250.4L12.7 250.4L12.7 216.2L17.7 216.2L17.7 250.4L29.2 250.4L29.2 180L17.7 180L17.7 208.2L12.7 208.2L12.7 180L1.2 180M33.4 192.7L33.4 237.7C33.4 246.6 38.2 251.4 47.3 251.4C56.4 251.4 61.2 246.6 61.2 237.7L61.2 192.7C61.2 183.8 56.4 179 47.3 179C38.2 179 33.4 183.8 33.4 192.7M44.9 238.3L44.9 191.6C44.9 189.7 45.8 188.5 47.3 188.5C48.8 188.5 49.7 189.7 49.7 191.6L49.7 238.3C49.7 240.2 48.8 241.4 47.3 241.4C45.8 241.4 44.9 240.2 44.9 238.3M65.4 250.4L87.9 250.4L87.9 241.4L77.5 241.4L77.5 180L65.4 180M91.9 250.4L104 250.4L104 180L91.9 180M108.2 250.4L122.2 250.4C130.8 250.4 136.2 245.2 136.2 236.9L136.2 193.5C136.2 185.2 130.8 180 122.2 180L108.2 180M119.9 241.4L119.9 188.5L121.5 188.5C123.6 188.5 124.7 189.6 124.7 191.7L124.7 238.2C124.7 240.2 123.6 241.4 121.5 241.4M139.2 250.4L149.5 250.4L151.5 231.2L158.9 231.2L160.8 250.4L172.6 250.4L164.3 180L147.5 180M152.4 222.4L155 196.9L155.4 196.9L158 222.4M185.2 250.4L197.3 250.4L197.3 223.6L207.6 180L196.5 180L191.4 206L191.1 206L186.2 180L174.1 180L185.2 223.6M239.1 238C239.1 240.1 238.1 241.4 236.5 241.4C234.9 241.4 233.9 240.1 233.9 238L233.9 191.6C233.9 189.7 234.8 188.5 236.3 188.5C237.8 188.5 238.7 189.7 238.7 191.6L238.7 205.4L249.2 205.4L249.2 191.5C249.2 183.9 244.2 179 236 179C227.7 179 222.2 184.1 222.2 191.5L222.2 239.9C222.2 247.2 226.2 251.4 232.8 251.4C237.3 251.4 240.4 249.4 242.3 245.1L242.5 245.1L244.6 250.4L249.7 250.4L249.7 216L236.4 216L236.4 226.2L239.1 226.2M253.9 250.4L266 250.4L266 180L253.9 180M277.4 250.4L293.6 250.4L301.7 180L291.2 180L286.1 225.2L285.8 225.2L280.6 180L269 180M304.7 250.4L316.8 250.4L316.8 180L304.7 180M321 250.4L330.4 250.4L330.4 208.8L330.7 208.8L340 250.4L351.6 250.4L351.6 180L342.2 180L342.2 214.5L341.9 214.5L334.5 180L321 180M372.7 238C372.7 240.1 371.7 241.4 370.1 241.4C368.5 241.4 367.5 240.1 367.5 238L367.5 191.6C367.5 189.7 368.4 188.5 369.9 188.5C371.4 188.5 372.3 189.7 372.3 191.6L372.3 205.4L382.8 205.4L382.8 191.5C382.8 183.9 377.8 179 369.6 179C361.3 179 355.8 184.1 355.8 191.5L355.8 239.9C355.8 247.2 359.8 251.4 366.4 251.4C370.9 251.4 374 249.4 375.9 245.1L376.1 245.1L378.2 250.4L383.3 250.4L383.3 216L370 216L370 226.2L372.7 226.2"/></svg><!-- gifts-display:end --></div>
+  <div id="gifts-title" hidden><!-- gifts-display:start --><svg class="display" viewBox="0 0 384.5 270.4" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 70.4L10.3 70.4L12.3 51.2L19.7 51.2L21.6 70.4L33.4 70.4L25.1 0L8.3 0M13.2 42.4L15.8 16.9L16.2 16.9L18.8 42.4M48.3 70.4L60 70.4L60 36.4L70.3 36.4L70.3 28.4L60 28.4L60 8.8L71.1 8.8L71.1 0L48.3 0M75.1 70.4L87.2 70.4L87.2 0L75.1 0M91.4 70.4L114.6 70.4L114.6 61.4L103.1 61.4L103.1 36.4L113.4 36.4L113.4 28.4L103.1 28.4L103.1 8.8L114.2 8.8L114.2 0L91.4 0M118.6 70.4L141.1 70.4L141.1 61.4L130.7 61.4L130.7 0L118.6 0M145.1 70.4L159.1 70.4C167.7 70.4 173.1 65.2 173.1 56.9L173.1 13.5C173.1 5.2 167.7 0 159.1 0L145.1 0M156.8 61.4L156.8 8.5L158.4 8.5C160.5 8.5 161.6 9.6 161.6 11.7L161.6 58.2C161.6 60.2 160.5 61.4 158.4 61.4M206.1 58C206.1 60.1 205.1 61.4 203.5 61.4C201.9 61.4 200.9 60.1 200.9 58L200.9 11.6C200.9 9.7 201.8 8.5 203.3 8.5C204.8 8.5 205.7 9.7 205.7 11.6L205.7 25.4L216.2 25.4L216.2 11.5C216.2 3.9 211.2 -1 203 -1C194.7 -1 189.2 4.1 189.2 11.5L189.2 59.9C189.2 67.2 193.2 71.4 199.8 71.4C204.3 71.4 207.4 69.4 209.3 65.1L209.5 65.1L211.6 70.4L216.7 70.4L216.7 36L203.4 36L203.4 46.2L206.1 46.2M234.8 71.4C243.8 71.4 248.7 66.4 248.7 57.2L248.7 0L237.2 0L237.2 58.6C237.2 60.3 236.2 61.4 234.8 61.4C233.4 61.4 232.4 60.3 232.4 58.6L232.4 0L220.9 0L220.9 57.2C220.9 66.4 225.8 71.4 234.8 71.4M252.9 70.4L265 70.4L265 0L252.9 0M269.2 70.4L283.2 70.4C291.8 70.4 297.2 65.2 297.2 56.9L297.2 13.5C297.2 5.2 291.8 0 283.2 0L269.2 0M280.9 61.4L280.9 8.5L282.5 8.5C284.6 8.5 285.7 9.6 285.7 11.7L285.7 58.2C285.7 60.2 284.6 61.4 282.5 61.4M301.4 70.4L324.6 70.4L324.6 61.4L313.1 61.4L313.1 36.4L323.4 36.4L323.4 28.4L313.1 28.4L313.1 8.8L324.2 8.8L324.2 0L301.4 0M8.3 170.4L20.4 170.4L20.4 108.8L28.2 108.8L28.2 100L0.5 100L0.5 108.8L8.3 108.8M31.7 112.7L31.7 157.7C31.7 166.6 36.5 171.4 45.6 171.4C54.7 171.4 59.5 166.6 59.5 157.7L59.5 112.7C59.5 103.8 54.7 99 45.6 99C36.5 99 31.7 103.8 31.7 112.7M43.2 158.3L43.2 111.6C43.2 109.7 44.1 108.5 45.6 108.5C47.1 108.5 48 109.7 48 111.6L48 158.3C48 160.2 47.1 161.4 45.6 161.4C44.1 161.4 43.2 160.2 43.2 158.3M75.6 170.4L87.3 170.4L87.3 144.4L90.7 144.4C98.2 144.4 103 139.5 103 132L103 112.5C103 104.8 98.3 100 90.7 100L75.6 100M87.3 135.1L87.3 108.5L88.7 108.5C90.5 108.5 91.8 109.8 91.8 111.7L91.8 131.9C91.8 133.8 90.5 135.1 88.7 135.1M107 112.7L107 157.7C107 166.6 111.8 171.4 120.9 171.4C130 171.4 134.8 166.6 134.8 157.7L134.8 112.7C134.8 103.8 130 99 120.9 99C111.8 99 107 103.8 107 112.7M118.5 158.3L118.5 111.6C118.5 109.7 119.4 108.5 120.9 108.5C122.4 108.5 123.3 109.7 123.3 111.6L123.3 158.3C123.3 160.2 122.4 161.4 120.9 161.4C119.4 161.4 118.5 160.2 118.5 158.3M154.9 150.6L154.9 157.9C154.9 160 153.8 161.4 152.2 161.4C150.6 161.4 149.5 160 149.5 157.9L149.5 141.9L138.8 141.9L138.8 158.6C138.8 166.2 144.2 171.4 152.3 171.4C160.9 171.4 166.7 165.5 166.7 156.8L166.7 149.3C166.7 142.7 165.2 139.2 160.2 133.1L155.5 127.4C151.2 122.1 150.5 120.5 150.5 116.2L150.5 111.7C150.5 109.7 151.5 108.5 153 108.5C154.5 108.5 155.5 109.7 155.5 111.7L155.5 123.9L166.2 123.9L166.2 112.7C166.2 103.8 161.4 99 152.5 99C143.6 99 138.8 103.8 138.8 112.7L138.8 117.9C138.8 123.3 140.1 127.2 143.6 131.4L150.9 140.1C154.3 144.2 154.9 145.8 154.9 150.6M177.8 170.4L189.9 170.4L189.9 108.8L197.7 108.8L197.7 100L170 100L170 108.8L177.8 108.8M201.2 145.4L216.2 145.4L216.2 137.4L201.2 137.4M220.4 170.4L232.5 170.4L232.5 100L220.4 100M236.7 170.4L248.4 170.4L248.4 144.4L251.8 144.4C259.3 144.4 264.1 139.5 264.1 132L264.1 112.5C264.1 104.8 259.4 100 251.8 100L236.7 100M248.4 135.1L248.4 108.5L249.8 108.5C251.6 108.5 252.9 109.8 252.9 111.7L252.9 131.9C252.9 133.8 251.6 135.1 249.8 135.1M268.1 112.7L268.1 157.7C268.1 166.6 272.9 171.4 282 171.4C291.1 171.4 295.9 166.6 295.9 157.7L295.9 112.7C295.9 103.8 291.1 99 282 99C272.9 99 268.1 103.8 268.1 112.7M279.6 158.3L279.6 111.6C279.6 109.7 280.5 108.5 282 108.5C283.5 108.5 284.4 109.7 284.4 111.6L284.4 158.3C284.4 160.2 283.5 161.4 282 161.4C280.5 161.4 279.6 160.2 279.6 158.3M1.2 270.4L12.7 270.4L12.7 236.2L17.7 236.2L17.7 270.4L29.2 270.4L29.2 200L17.7 200L17.7 228.2L12.7 228.2L12.7 200L1.2 200M33.4 212.7L33.4 257.7C33.4 266.6 38.2 271.4 47.3 271.4C56.4 271.4 61.2 266.6 61.2 257.7L61.2 212.7C61.2 203.8 56.4 199 47.3 199C38.2 199 33.4 203.8 33.4 212.7M44.9 258.3L44.9 211.6C44.9 209.7 45.8 208.5 47.3 208.5C48.8 208.5 49.7 209.7 49.7 211.6L49.7 258.3C49.7 260.2 48.8 261.4 47.3 261.4C45.8 261.4 44.9 260.2 44.9 258.3M65.4 270.4L87.9 270.4L87.9 261.4L77.5 261.4L77.5 200L65.4 200M91.9 270.4L104 270.4L104 200L91.9 200M108.2 270.4L122.2 270.4C130.8 270.4 136.2 265.2 136.2 256.9L136.2 213.5C136.2 205.2 130.8 200 122.2 200L108.2 200M119.9 261.4L119.9 208.5L121.5 208.5C123.6 208.5 124.7 209.6 124.7 211.7L124.7 258.2C124.7 260.2 123.6 261.4 121.5 261.4M139.2 270.4L149.5 270.4L151.5 251.2L158.9 251.2L160.8 270.4L172.6 270.4L164.3 200L147.5 200M152.4 242.4L155 216.9L155.4 216.9L158 242.4M185.2 270.4L197.3 270.4L197.3 243.6L207.6 200L196.5 200L191.4 226L191.1 226L186.2 200L174.1 200L185.2 243.6M239.1 258C239.1 260.1 238.1 261.4 236.5 261.4C234.9 261.4 233.9 260.1 233.9 258L233.9 211.6C233.9 209.7 234.8 208.5 236.3 208.5C237.8 208.5 238.7 209.7 238.7 211.6L238.7 225.4L249.2 225.4L249.2 211.5C249.2 203.9 244.2 199 236 199C227.7 199 222.2 204.1 222.2 211.5L222.2 259.9C222.2 267.2 226.2 271.4 232.8 271.4C237.3 271.4 240.4 269.4 242.3 265.1L242.5 265.1L244.6 270.4L249.7 270.4L249.7 236L236.4 236L236.4 246.2L239.1 246.2M253.9 270.4L266 270.4L266 200L253.9 200M277.4 270.4L293.6 270.4L301.7 200L291.2 200L286.1 245.2L285.8 245.2L280.6 200L269 200M304.7 270.4L316.8 270.4L316.8 200L304.7 200M321 270.4L330.4 270.4L330.4 228.8L330.7 228.8L340 270.4L351.6 270.4L351.6 200L342.2 200L342.2 234.5L341.9 234.5L334.5 200L321 200M372.7 258C372.7 260.1 371.7 261.4 370.1 261.4C368.5 261.4 367.5 260.1 367.5 258L367.5 211.6C367.5 209.7 368.4 208.5 369.9 208.5C371.4 208.5 372.3 209.7 372.3 211.6L372.3 225.4L382.8 225.4L382.8 211.5C382.8 203.9 377.8 199 369.6 199C361.3 199 355.8 204.1 355.8 211.5L355.8 259.9C355.8 267.2 359.8 271.4 366.4 271.4C370.9 271.4 374 269.4 375.9 265.1L376.1 265.1L378.2 270.4L383.3 270.4L383.3 236L370 236L370 246.2L372.7 246.2"/></svg><!-- gifts-display:end --></div>
+  <!-- Christmas art, drawn with the brand's kit (tools/christmas-art.py), and the gift guide's section titles, outlined like the main title (tools/outline-display.mjs). data-for is the text a title was outlined from; if the copy changes, the page sets it in type until the outline is redone. -->
+  <!-- xmas-art:start --><template id="xa-cover"><svg class="xa xa-wide" viewBox="300 0 240 300" aria-hidden="true" focusable="false"><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="465" y1="180" x2="465" y2="300"/></g><g fill="#3C503A" stroke="#3C503A" stroke-width="0"><polygon points="375,105 404.5,163.9 345.5,163.9"/><polygon points="375,137.4 411.8,211.1 338.2,211.1"/><polygon points="375,177.9 421,270 329,270"/></g><g fill="#253828"><polygon points="375,137.4 388.3,163.9 361.7,163.9"/><polygon points="375,177.9 391.6,211.1 358.4,211.1"/></g><g class="xa-hang" style="transform-origin:465px 0"><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="465" y1="0" x2="465" y2="47.2"/><path d="M 465 47.2 a 3 3 0 1 1 3 3"/></g><g fill="#B02B22"><circle cx="465" cy="105" r="45"/></g><g fill="currentColor"><polygon points="460.9,53.9 469.1,53.9 469.1,61.2 460.9,61.2"/></g><image href="xmas/bauble.webp" x="420" y="60" width="90" height="90"/></g><circle cx="331.8" cy="9.3" r="1.9" fill="url(#xg-gold)"/><circle cx="335.5" cy="27.6" r="2.2" fill="url(#xg-gold)"/><circle cx="339.6" cy="45.8" r="2.7" fill="url(#xg-gold)"/><circle cx="344.2" cy="64.1" r="3.2" fill="url(#xg-gold)"/><circle cx="349.3" cy="82" r="3.9" fill="url(#xg-gold)"/><circle cx="355.1" cy="99.9" r="4.7" fill="url(#xg-gold)"/><circle cx="361.5" cy="117.3" r="5.5" fill="url(#xg-gold)"/><circle cx="368.8" cy="134.6" r="6.3" fill="url(#xg-gold)"/><circle cx="377.2" cy="151.4" r="7.1" fill="url(#xg-gold)"/><circle cx="386.8" cy="167.4" r="7.8" fill="url(#xg-gold)"/><circle cx="398" cy="182.3" r="8.2" fill="url(#xg-gold)"/><circle cx="411.1" cy="195.6" r="8.4" fill="url(#xg-gold)"/><circle cx="426.3" cy="206.4" r="8.1" fill="url(#xg-gold)"/><circle cx="443.5" cy="213.7" r="7.3" fill="url(#xg-gold)"/><circle cx="461.9" cy="216.6" r="6.2" fill="url(#xg-gold)"/><circle cx="480.6" cy="215.2" r="4.9" fill="url(#xg-gold)"/><circle cx="498.6" cy="210.5" r="3.6" fill="url(#xg-gold)"/><circle cx="515.8" cy="203.2" r="2.6" fill="url(#xg-gold)"/><circle cx="532.3" cy="194" r="1.9" fill="url(#xg-gold)"/></svg><svg class="xa xa-phone" viewBox="90 0 300 480" aria-hidden="true" focusable="false"><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="330" y1="150" x2="330" y2="480"/></g><g fill="#3C503A" stroke="#3C503A" stroke-width="0"><polygon points="225,45 249.1,93.2 200.9,93.2"/><polygon points="225,71.5 255.1,131.8 194.9,131.8"/><polygon points="225,104.7 262.7,180 187.3,180"/></g><g fill="#253828"><polygon points="225,71.5 235.8,93.2 214.2,93.2"/><polygon points="225,104.7 238.6,131.8 211.4,131.8"/></g><g class="xa-hang" style="transform-origin:330px 0"><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="330" y1="0" x2="330" y2="47.2"/><path d="M 330 47.2 a 3 3 0 1 1 3 3"/></g><g fill="#B02B22"><circle cx="330" cy="90" r="30"/></g><g fill="currentColor"><polygon points="325.9,53.9 334.1,53.9 334.1,61.2 325.9,61.2"/></g><image href="xmas/bauble.webp" x="300" y="60" width="60" height="60"/></g><circle cx="114.3" cy="84.8" r="1.9" fill="url(#xg-gold)"/><circle cx="127.5" cy="98" r="2.5" fill="url(#xg-gold)"/><circle cx="141.1" cy="110.5" r="3.2" fill="url(#xg-gold)"/><circle cx="155.6" cy="122.3" r="4.1" fill="url(#xg-gold)"/><circle cx="170.5" cy="133.2" r="5.1" fill="url(#xg-gold)"/><circle cx="186.2" cy="143.2" r="6" fill="url(#xg-gold)"/><circle cx="202.6" cy="152" r="6.8" fill="url(#xg-gold)"/><circle cx="219.5" cy="159.4" r="7.5" fill="url(#xg-gold)"/><circle cx="237.2" cy="165.3" r="7.8" fill="url(#xg-gold)"/><circle cx="255.2" cy="169.6" r="7.7" fill="url(#xg-gold)"/><circle cx="273.6" cy="172" r="7.3" fill="url(#xg-gold)"/><circle cx="292.1" cy="172.7" r="6.6" fill="url(#xg-gold)"/><circle cx="310.6" cy="171.5" r="5.7" fill="url(#xg-gold)"/><circle cx="329" cy="168.6" r="4.6" fill="url(#xg-gold)"/><circle cx="347" cy="164.1" r="3.5" fill="url(#xg-gold)"/><circle cx="364.6" cy="158.2" r="2.6" fill="url(#xg-gold)"/><circle cx="381.8" cy="151" r="2" fill="url(#xg-gold)"/></svg></template><template id="xa-tier0"><svg class="xa xt-art" viewBox="60 0 120 157.5" aria-hidden="true" focusable="false"><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="75" y1="127.5" x2="90" y2="127.5"/><line x1="150" y1="127.5" x2="165" y2="127.5"/></g><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="120" y1="82.5" x2="120" y2="97.5"/></g><g fill="#913129" stroke="#913129" stroke-width="0"><polygon points="90,97.5 150,97.5 150,157.5 90,157.5"/></g><g stroke="#F6E5C2" stroke-width="1.5" fill="none" stroke-linecap="butt"><line x1="90" y1="127.5" x2="150" y2="127.5"/></g><g stroke="#F6E5C2" stroke-width="1.5" fill="none" stroke-linecap="butt"><line x1="120" y1="97.5" x2="120" y2="157.5"/></g><circle cx="111.7" cy="76.7" r="6.9" fill="url(#xg-gold)"/><circle cx="128.3" cy="76.7" r="6.9" fill="url(#xg-gold)"/></svg></template><template id="xa-tier1"><svg class="xa xt-art" viewBox="60 0 120 157.5" aria-hidden="true" focusable="false"><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="120" y1="105" x2="120" y2="157.5"/></g><g fill="#913129" stroke="#913129" stroke-width="0"><polygon points="120,105 93.8,52.5 146.2,52.5"/></g><g fill="currentColor"><polygon points="103.2,153.9 136.8,153.9 136.8,157.5 103.2,157.5"/></g><circle cx="107.4" cy="43.1" r="2.7" fill="url(#xg-gold)"/><circle cx="141" cy="30" r="3.8" fill="url(#xg-gold)"/><circle cx="114.8" cy="17" r="5.2" fill="url(#xg-gold)"/></svg></template><template id="xa-tier2"><svg class="xa xt-art" viewBox="15 0 165 157.5" aria-hidden="true" focusable="false"><g class="xa-far"><g fill="#3C503A" stroke="#3C503A" stroke-width="0"><polygon points="45,97.5 75,157.5 15,157.5"/></g></g><g fill="#3C503A" stroke="#3C503A" stroke-width="0"><polygon points="120,7.5 166.9,101.2 73.1,101.2"/></g><g fill="#913129" stroke="#913129" stroke-width="0"><polygon points="82.5,82.5 157.5,82.5 157.5,157.5 82.5,157.5"/></g><g fill="#1F201C"><polygon points="82.5,101.2 82.5,82.5 157.5,82.5 157.5,101.2"/></g><circle cx="120" cy="126" r="9.8" fill="url(#xg-gold)"/></svg></template><template id="xa-finale"><svg class="xa xf-art xa-wide" viewBox="0 15 210 135" aria-hidden="true" focusable="false"><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="15" y1="105" x2="30" y2="105"/><line x1="120" y1="105" x2="135" y2="105"/></g><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="75" y1="45" x2="75" y2="60"/><line x1="165" y1="75" x2="165" y2="66"/><line x1="195" y1="105" x2="195" y2="96"/></g><g fill="#913129" stroke="#913129" stroke-width="0"><polygon points="30,60 120,60 120,150 30,150"/></g><g fill="#F6E5C2"><polygon points="156,75 174,75 174,150 156,150"/><polygon points="186,105 204,105 204,150 186,150"/></g><g stroke="#F6E5C2" stroke-width="1.5" fill="none" stroke-linecap="butt"><line x1="30" y1="105" x2="120" y2="105"/></g><g stroke="#F6E5C2" stroke-width="1.5" fill="none" stroke-linecap="butt"><line x1="75" y1="60" x2="75" y2="150"/></g><circle cx="64.2" cy="37.5" r="9" fill="url(#xg-gold)"/><circle cx="85.8" cy="37.5" r="9" fill="url(#xg-gold)"/><circle cx="165" cy="58.4" r="7.6" fill="url(#xg-gold)"/><circle cx="195" cy="88.4" r="7.6" fill="url(#xg-gold)"/></svg><svg class="xa xf-art xa-phone" viewBox="0 22.5 90 97.5" aria-hidden="true" focusable="false"><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="0" y1="90" x2="15" y2="90"/><line x1="75" y1="90" x2="90" y2="90"/></g><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="45" y1="45" x2="45" y2="60"/></g><g fill="#913129" stroke="#913129" stroke-width="0"><polygon points="15,60 75,60 75,120 15,120"/></g><g stroke="#F6E5C2" stroke-width="1.5" fill="none" stroke-linecap="butt"><line x1="15" y1="90" x2="75" y2="90"/></g><g stroke="#F6E5C2" stroke-width="1.5" fill="none" stroke-linecap="butt"><line x1="45" y1="60" x2="45" y2="120"/></g><circle cx="36.7" cy="39.2" r="6.9" fill="url(#xg-gold)"/><circle cx="53.3" cy="39.2" r="6.9" fill="url(#xg-gold)"/></svg></template><template id="xa-hung"><svg class="xa xl-ball" viewBox="0 0 45 75" aria-hidden="true" focusable="false"><g stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round"><line x1="22.5" y1="0" x2="22.5" y2="32.2"/><path d="M 22.5 32.2 a 3 3 0 1 1 3 3"/></g><g fill="#913129" stroke="#913129" stroke-width="0"><circle cx="22.5" cy="60" r="15"/></g><g fill="currentColor"><polygon points="18.4,38.9 26.6,38.9 26.6,46.2 18.4,46.2"/></g></svg></template><!-- xmas-art:end -->
+  <template id="xt-0" data-for="While You’re Locked Up"><!-- xt-0:start --><svg class="display" viewBox="0 0 336.9 170.4" aria-hidden="true" focusable="false"><path fill="currentColor" d="M27.9 70.4L41.4 70.4L48.7 0L39.1 0L35.6 35L35.3 35L31.1 0L18.7 0L14.2 35L13.9 35L11.2 0L0 0L6.8 70.4L19.3 70.4L23.5 27.8L23.8 27.8M51.7 70.4L63.2 70.4L63.2 36.2L68.2 36.2L68.2 70.4L79.7 70.4L79.7 0L68.2 0L68.2 28.2L63.2 28.2L63.2 0L51.7 0M83.9 70.4L96 70.4L96 0L83.9 0M100.2 70.4L122.7 70.4L122.7 61.4L112.3 61.4L112.3 0L100.2 0M126.7 70.4L149.9 70.4L149.9 61.4L138.4 61.4L138.4 36.4L148.7 36.4L148.7 28.4L138.4 28.4L138.4 8.8L149.5 8.8L149.5 0L126.7 0M175.4 70.4L187.5 70.4L187.5 43.6L197.8 0L186.7 0L181.6 26L181.3 26L176.4 0L164.3 0L175.4 43.6M200.5 12.7L200.5 57.7C200.5 66.6 205.3 71.4 214.4 71.4C223.5 71.4 228.3 66.6 228.3 57.7L228.3 12.7C228.3 3.8 223.5 -1 214.4 -1C205.3 -1 200.5 3.8 200.5 12.7M212 58.3L212 11.6C212 9.7 212.9 8.5 214.4 8.5C215.9 8.5 216.8 9.7 216.8 11.6L216.8 58.3C216.8 60.2 215.9 61.4 214.4 61.4C212.9 61.4 212 60.2 212 58.3M246.4 71.4C255.4 71.4 260.3 66.4 260.3 57.2L260.3 0L248.8 0L248.8 58.6C248.8 60.3 247.8 61.4 246.4 61.4C245 61.4 244 60.3 244 58.6L244 0L232.5 0L232.5 57.2C232.5 66.4 237.4 71.4 246.4 71.4M270.5 21L276 10L276 0L264.5 0L264.5 10.5L268.6 10.5L265.1 21M280.2 70.4L291.9 70.4L291.9 36.4L293.7 36.4C295.6 36.4 296.9 37.8 296.9 40L296.9 59.9C296.9 65.7 297.3 68.4 298.5 70.4L310.2 70.4L310.2 70.3C308.9 67.8 308.4 65.4 308.4 59.4L308.4 41.4C308.4 35.9 305.4 32.5 299.6 32.2L299.6 31.9C305.5 30.8 308.3 27.6 308.3 21.5L308.3 12.5C308.3 4.7 303 0 294.4 0L280.2 0M291.9 28.4L291.9 8.5L293.8 8.5C295.6 8.5 296.9 9.8 296.9 11.7L296.9 25.2C296.9 27.1 295.6 28.4 293.8 28.4M312.7 70.4L335.9 70.4L335.9 61.4L324.4 61.4L324.4 36.4L334.7 36.4L334.7 28.4L324.4 28.4L324.4 8.8L335.5 8.8L335.5 0L312.7 0M1.2 170.4L23.7 170.4L23.7 161.4L13.3 161.4L13.3 100L1.2 100M27.7 112.7L27.7 157.7C27.7 166.6 32.5 171.4 41.6 171.4C50.7 171.4 55.5 166.6 55.5 157.7L55.5 112.7C55.5 103.8 50.7 99 41.6 99C32.5 99 27.7 103.8 27.7 112.7M39.2 158.3L39.2 111.6C39.2 109.7 40.1 108.5 41.6 108.5C43.1 108.5 44 109.7 44 111.6L44 158.3C44 160.2 43.1 161.4 41.6 161.4C40.1 161.4 39.2 160.2 39.2 158.3M71.4 158.3L71.4 111.6C71.4 109.7 72.3 108.5 73.8 108.5C75.3 108.5 76.2 109.7 76.2 111.6L76.2 125.4L86.7 125.4L86.7 111.1C86.7 103.5 81.7 99 73.5 99C65.1 99 59.7 103.7 59.7 111.1L59.7 159.6C59.7 166.7 65.2 171.4 73.5 171.4C81.7 171.4 86.7 166.9 86.7 159.3L86.7 141.9L76.2 141.9L76.2 158.3C76.2 160.2 75.3 161.4 73.8 161.4C72.3 161.4 71.4 160.2 71.4 158.3M90.9 170.4L102.4 170.4L102.4 141.3L102.7 141.3L109.5 170.4L120.8 170.4L111.7 130.1L119 100L108.7 100L102.7 124.3L102.4 124.3L102.4 100L90.9 100M123.8 170.4L147 170.4L147 161.4L135.5 161.4L135.5 136.4L145.8 136.4L145.8 128.4L135.5 128.4L135.5 108.8L146.6 108.8L146.6 100L123.8 100M151 170.4L165 170.4C173.6 170.4 179 165.2 179 156.9L179 113.5C179 105.2 173.6 100 165 100L151 100M162.7 161.4L162.7 108.5L164.3 108.5C166.4 108.5 167.5 109.6 167.5 111.7L167.5 158.2C167.5 160.2 166.4 161.4 164.3 161.4M209 171.4C218 171.4 222.9 166.4 222.9 157.2L222.9 100L211.4 100L211.4 158.6C211.4 160.3 210.4 161.4 209 161.4C207.6 161.4 206.6 160.3 206.6 158.6L206.6 100L195.1 100L195.1 157.2C195.1 166.4 200 171.4 209 171.4M227.1 170.4L238.8 170.4L238.8 144.4L242.2 144.4C249.7 144.4 254.5 139.5 254.5 132L254.5 112.5C254.5 104.8 249.8 100 242.2 100L227.1 100M238.8 135.1L238.8 108.5L240.2 108.5C242 108.5 243.3 109.8 243.3 111.7L243.3 131.9C243.3 133.8 242 135.1 240.2 135.1"/></svg><!-- xt-0:end --></template>
+  <template id="xt-1" data-for="Tender-Offer Money"><!-- xt-1:start --><svg class="display" viewBox="0 0 347.1 170.4" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8.3 70.4L20.4 70.4L20.4 8.8L28.2 8.8L28.2 0L0.5 0L0.5 8.8L8.3 8.8M31.7 70.4L54.9 70.4L54.9 61.4L43.4 61.4L43.4 36.4L53.7 36.4L53.7 28.4L43.4 28.4L43.4 8.8L54.5 8.8L54.5 0L31.7 0M58.9 70.4L68.3 70.4L68.3 28.8L68.6 28.8L77.9 70.4L89.5 70.4L89.5 0L80.1 0L80.1 34.5L79.8 34.5L72.4 0L58.9 0M93.7 70.4L107.7 70.4C116.3 70.4 121.7 65.2 121.7 56.9L121.7 13.5C121.7 5.2 116.3 0 107.7 0L93.7 0M105.4 61.4L105.4 8.5L107 8.5C109.1 8.5 110.2 9.6 110.2 11.7L110.2 58.2C110.2 60.2 109.1 61.4 107 61.4M125.9 70.4L149.1 70.4L149.1 61.4L137.6 61.4L137.6 36.4L147.9 36.4L147.9 28.4L137.6 28.4L137.6 8.8L148.7 8.8L148.7 0L125.9 0M153.1 70.4L164.8 70.4L164.8 36.4L166.6 36.4C168.5 36.4 169.8 37.8 169.8 40L169.8 59.9C169.8 65.7 170.2 68.4 171.4 70.4L183.1 70.4L183.1 70.3C181.8 67.8 181.3 65.4 181.3 59.4L181.3 41.4C181.3 35.9 178.3 32.5 172.5 32.2L172.5 31.9C178.4 30.8 181.2 27.6 181.2 21.5L181.2 12.5C181.2 4.7 175.9 0 167.3 0L153.1 0M164.8 28.4L164.8 8.5L166.7 8.5C168.5 8.5 169.8 9.8 169.8 11.7L169.8 25.2C169.8 27.1 168.5 28.4 166.7 28.4M185.6 45.4L200.6 45.4L200.6 37.4L185.6 37.4M204.8 12.7L204.8 57.7C204.8 66.6 209.6 71.4 218.7 71.4C227.8 71.4 232.6 66.6 232.6 57.7L232.6 12.7C232.6 3.8 227.8 -1 218.7 -1C209.6 -1 204.8 3.8 204.8 12.7M216.3 58.3L216.3 11.6C216.3 9.7 217.2 8.5 218.7 8.5C220.2 8.5 221.1 9.7 221.1 11.6L221.1 58.3C221.1 60.2 220.2 61.4 218.7 61.4C217.2 61.4 216.3 60.2 216.3 58.3M236.8 70.4L248.5 70.4L248.5 36.4L258.8 36.4L258.8 28.4L248.5 28.4L248.5 8.8L259.6 8.8L259.6 0L236.8 0M263.6 70.4L275.3 70.4L275.3 36.4L285.6 36.4L285.6 28.4L275.3 28.4L275.3 8.8L286.4 8.8L286.4 0L263.6 0M290.4 70.4L313.6 70.4L313.6 61.4L302.1 61.4L302.1 36.4L312.4 36.4L312.4 28.4L302.1 28.4L302.1 8.8L313.2 8.8L313.2 0L290.4 0M317.6 70.4L329.3 70.4L329.3 36.4L331.1 36.4C333 36.4 334.3 37.8 334.3 40L334.3 59.9C334.3 65.7 334.7 68.4 335.9 70.4L347.6 70.4L347.6 70.3C346.3 67.8 345.8 65.4 345.8 59.4L345.8 41.4C345.8 35.9 342.8 32.5 337 32.2L337 31.9C342.9 30.8 345.7 27.6 345.7 21.5L345.7 12.5C345.7 4.7 340.4 0 331.8 0L317.6 0M329.3 28.4L329.3 8.5L331.2 8.5C333 8.5 334.3 9.8 334.3 11.7L334.3 25.2C334.3 27.1 333 28.4 331.2 28.4M1.2 170.4L10.6 170.4L10.6 127.4L10.9 127.4L18.4 170.4L26.8 170.4L33.9 127.4L34.2 127.4L34.2 170.4L44.7 170.4L44.7 100L29.2 100L23.6 136.2L23.3 136.2L17.6 100L1.2 100M48.9 112.7L48.9 157.7C48.9 166.6 53.7 171.4 62.8 171.4C71.9 171.4 76.7 166.6 76.7 157.7L76.7 112.7C76.7 103.8 71.9 99 62.8 99C53.7 99 48.9 103.8 48.9 112.7M60.4 158.3L60.4 111.6C60.4 109.7 61.3 108.5 62.8 108.5C64.3 108.5 65.2 109.7 65.2 111.6L65.2 158.3C65.2 160.2 64.3 161.4 62.8 161.4C61.3 161.4 60.4 160.2 60.4 158.3M80.9 170.4L90.3 170.4L90.3 128.8L90.6 128.8L99.9 170.4L111.5 170.4L111.5 100L102.1 100L102.1 134.5L101.8 134.5L94.4 100L80.9 100M115.7 170.4L138.9 170.4L138.9 161.4L127.4 161.4L127.4 136.4L137.7 136.4L137.7 128.4L127.4 128.4L127.4 108.8L138.5 108.8L138.5 100L115.7 100M152.5 170.4L164.6 170.4L164.6 143.6L174.9 100L163.8 100L158.7 126L158.4 126L153.5 100L141.4 100L152.5 143.6"/></svg><!-- xt-1:end --></template>
+  <template id="xt-2" data-for="After the Lockup (or the Acquisition)"><!-- xt-2:start --><svg class="display" viewBox="0 0 524.9 170.4" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 70.4L10.3 70.4L12.3 51.2L19.7 51.2L21.6 70.4L33.4 70.4L25.1 0L8.3 0M13.2 42.4L15.8 16.9L16.2 16.9L18.8 42.4M36.4 70.4L48.1 70.4L48.1 36.4L58.4 36.4L58.4 28.4L48.1 28.4L48.1 8.8L59.2 8.8L59.2 0L36.4 0M70.3 70.4L82.4 70.4L82.4 8.8L90.2 8.8L90.2 0L62.5 0L62.5 8.8L70.3 8.8M93.7 70.4L116.9 70.4L116.9 61.4L105.4 61.4L105.4 36.4L115.7 36.4L115.7 28.4L105.4 28.4L105.4 8.8L116.5 8.8L116.5 0L93.7 0M120.9 70.4L132.6 70.4L132.6 36.4L134.4 36.4C136.3 36.4 137.6 37.8 137.6 40L137.6 59.9C137.6 65.7 138 68.4 139.2 70.4L150.9 70.4L150.9 70.3C149.6 67.8 149.1 65.4 149.1 59.4L149.1 41.4C149.1 35.9 146.1 32.5 140.3 32.2L140.3 31.9C146.2 30.8 149 27.6 149 21.5L149 12.5C149 4.7 143.7 0 135.1 0L120.9 0M132.6 28.4L132.6 8.5L134.5 8.5C136.3 8.5 137.6 9.8 137.6 11.7L137.6 25.2C137.6 27.1 136.3 28.4 134.5 28.4M172.4 70.4L184.5 70.4L184.5 8.8L192.3 8.8L192.3 0L164.6 0L164.6 8.8L172.4 8.8M195.8 70.4L207.3 70.4L207.3 36.2L212.3 36.2L212.3 70.4L223.8 70.4L223.8 0L212.3 0L212.3 28.2L207.3 28.2L207.3 0L195.8 0M228 70.4L251.2 70.4L251.2 61.4L239.7 61.4L239.7 36.4L250 36.4L250 28.4L239.7 28.4L239.7 8.8L250.8 8.8L250.8 0L228 0M267.1 70.4L289.6 70.4L289.6 61.4L279.2 61.4L279.2 0L267.1 0M293.6 12.7L293.6 57.7C293.6 66.6 298.4 71.4 307.5 71.4C316.6 71.4 321.4 66.6 321.4 57.7L321.4 12.7C321.4 3.8 316.6 -1 307.5 -1C298.4 -1 293.6 3.8 293.6 12.7M305.1 58.3L305.1 11.6C305.1 9.7 306 8.5 307.5 8.5C309 8.5 309.9 9.7 309.9 11.6L309.9 58.3C309.9 60.2 309 61.4 307.5 61.4C306 61.4 305.1 60.2 305.1 58.3M337.3 58.3L337.3 11.6C337.3 9.7 338.2 8.5 339.7 8.5C341.2 8.5 342.1 9.7 342.1 11.6L342.1 25.4L352.6 25.4L352.6 11.1C352.6 3.5 347.6 -1 339.4 -1C331 -1 325.6 3.7 325.6 11.1L325.6 59.6C325.6 66.7 331.1 71.4 339.4 71.4C347.6 71.4 352.6 66.9 352.6 59.3L352.6 41.9L342.1 41.9L342.1 58.3C342.1 60.2 341.2 61.4 339.7 61.4C338.2 61.4 337.3 60.2 337.3 58.3M356.8 70.4L368.3 70.4L368.3 41.3L368.6 41.3L375.4 70.4L386.7 70.4L377.6 30.1L384.9 0L374.6 0L368.6 24.3L368.3 24.3L368.3 0L356.8 0M403.6 71.4C412.6 71.4 417.5 66.4 417.5 57.2L417.5 0L406 0L406 58.6C406 60.3 405 61.4 403.6 61.4C402.2 61.4 401.2 60.3 401.2 58.6L401.2 0L389.7 0L389.7 57.2C389.7 66.4 394.6 71.4 403.6 71.4M421.7 70.4L433.4 70.4L433.4 44.4L436.8 44.4C444.3 44.4 449.1 39.5 449.1 32L449.1 12.5C449.1 4.8 444.4 0 436.8 0L421.7 0M433.4 35.1L433.4 8.5L434.8 8.5C436.6 8.5 437.9 9.8 437.9 11.7L437.9 31.9C437.9 33.8 436.6 35.1 434.8 35.1M2 140.8C2 154.2 3.9 167.7 9.7 181.6L18.1 181.6C14.6 167.7 12.4 154.4 12.4 140.8C12.4 127.2 14.3 113.8 18.1 100L9.7 100C3.9 113.8 2 127.4 2 140.8M21.3 112.7L21.3 157.7C21.3 166.6 26.1 171.4 35.2 171.4C44.3 171.4 49.1 166.6 49.1 157.7L49.1 112.7C49.1 103.8 44.3 99 35.2 99C26.1 99 21.3 103.8 21.3 112.7M32.8 158.3L32.8 111.6C32.8 109.7 33.7 108.5 35.2 108.5C36.7 108.5 37.6 109.7 37.6 111.6L37.6 158.3C37.6 160.2 36.7 161.4 35.2 161.4C33.7 161.4 32.8 160.2 32.8 158.3M53.3 170.4L65 170.4L65 136.4L66.8 136.4C68.7 136.4 70 137.8 70 140L70 159.9C70 165.7 70.4 168.4 71.6 170.4L83.3 170.4L83.3 170.3C82 167.8 81.5 165.4 81.5 159.4L81.5 141.4C81.5 135.9 78.5 132.5 72.7 132.2L72.7 131.9C78.6 130.8 81.4 127.6 81.4 121.5L81.4 112.5C81.4 104.7 76.1 100 67.5 100L53.3 100M65 128.4L65 108.5L66.9 108.5C68.7 108.5 70 109.8 70 111.7L70 125.2C70 127.1 68.7 128.4 66.9 128.4M104.8 170.4L116.9 170.4L116.9 108.8L124.7 108.8L124.7 100L97 100L97 108.8L104.8 108.8M128.2 170.4L139.7 170.4L139.7 136.2L144.7 136.2L144.7 170.4L156.2 170.4L156.2 100L144.7 100L144.7 128.2L139.7 128.2L139.7 100L128.2 100M160.4 170.4L183.6 170.4L183.6 161.4L172.1 161.4L172.1 136.4L182.4 136.4L182.4 128.4L172.1 128.4L172.1 108.8L183.2 108.8L183.2 100L160.4 100M198.3 170.4L208.6 170.4L210.6 151.2L218 151.2L219.9 170.4L231.7 170.4L223.4 100L206.6 100M211.5 142.4L214.1 116.9L214.5 116.9L217.1 142.4M246.4 158.3L246.4 111.6C246.4 109.7 247.3 108.5 248.8 108.5C250.3 108.5 251.2 109.7 251.2 111.6L251.2 125.4L261.7 125.4L261.7 111.1C261.7 103.5 256.7 99 248.5 99C240.1 99 234.7 103.7 234.7 111.1L234.7 159.6C234.7 166.7 240.2 171.4 248.5 171.4C256.7 171.4 261.7 166.9 261.7 159.3L261.7 141.9L251.2 141.9L251.2 158.3C251.2 160.2 250.3 161.4 248.8 161.4C247.3 161.4 246.4 160.2 246.4 158.3M288.3 181.6L292.3 181.6L292.3 172.9L289 172.9C287.2 172.9 286.5 172.2 286.4 170.3C291.2 168.4 293.7 164.1 293.7 157.7L293.7 112.7C293.7 103.8 288.9 99 279.8 99C270.7 99 265.9 103.8 265.9 112.7L265.9 157.7C265.9 166.6 270.7 171.4 279.8 171.4L280.8 171.4L280.8 174.8C280.8 179.4 283.2 181.6 288.3 181.6M277.4 158.3L277.4 111.6C277.4 109.7 278.3 108.5 279.8 108.5C281.3 108.5 282.2 109.7 282.2 111.6L282.2 158.3C282.2 160.2 281.3 161.4 279.8 161.4C278.3 161.4 277.4 160.2 277.4 158.3M311.8 171.4C320.8 171.4 325.7 166.4 325.7 157.2L325.7 100L314.2 100L314.2 158.6C314.2 160.3 313.2 161.4 311.8 161.4C310.4 161.4 309.4 160.3 309.4 158.6L309.4 100L297.9 100L297.9 157.2C297.9 166.4 302.8 171.4 311.8 171.4M329.9 170.4L342 170.4L342 100L329.9 100M362.1 150.6L362.1 157.9C362.1 160 361 161.4 359.4 161.4C357.8 161.4 356.7 160 356.7 157.9L356.7 141.9L346 141.9L346 158.6C346 166.2 351.4 171.4 359.5 171.4C368.1 171.4 373.9 165.5 373.9 156.8L373.9 149.3C373.9 142.7 372.4 139.2 367.4 133.1L362.7 127.4C358.4 122.1 357.7 120.5 357.7 116.2L357.7 111.7C357.7 109.7 358.7 108.5 360.2 108.5C361.7 108.5 362.7 109.7 362.7 111.7L362.7 123.9L373.4 123.9L373.4 112.7C373.4 103.8 368.6 99 359.7 99C350.8 99 346 103.8 346 112.7L346 117.9C346 123.3 347.3 127.2 350.8 131.4L358.1 140.1C361.5 144.2 362.1 145.8 362.1 150.6M377.9 170.4L390 170.4L390 100L377.9 100M401.3 170.4L413.4 170.4L413.4 108.8L421.2 108.8L421.2 100L393.5 100L393.5 108.8L401.3 108.8M424.7 170.4L436.8 170.4L436.8 100L424.7 100M441 112.7L441 157.7C441 166.6 445.8 171.4 454.9 171.4C464 171.4 468.8 166.6 468.8 157.7L468.8 112.7C468.8 103.8 464 99 454.9 99C445.8 99 441 103.8 441 112.7M452.5 158.3L452.5 111.6C452.5 109.7 453.4 108.5 454.9 108.5C456.4 108.5 457.3 109.7 457.3 111.6L457.3 158.3C457.3 160.2 456.4 161.4 454.9 161.4C453.4 161.4 452.5 160.2 452.5 158.3M473 170.4L482.4 170.4L482.4 128.8L482.7 128.8L492 170.4L503.6 170.4L503.6 100L494.2 100L494.2 134.5L493.9 134.5L486.5 100L473 100M522.9 140.8C522.9 127.4 521 113.8 515.2 100L506.8 100C510.6 113.8 512.5 127.2 512.5 140.8C512.5 154.4 510.3 167.7 506.8 181.6L515.2 181.6C521 167.7 522.9 154.2 522.9 140.8"/></svg><!-- xt-2:end --></template>
+  <template id="xt-fin" data-for="A Donation to FAI"><!-- xt-fin:start --><svg class="display" viewBox="0 0 293.1 170.4" aria-hidden="true" focusable="false"><path fill="currentColor" d="M0 70.4L10.3 70.4L12.3 51.2L19.7 51.2L21.6 70.4L33.4 70.4L25.1 0L8.3 0M13.2 42.4L15.8 16.9L16.2 16.9L18.8 42.4M48.3 70.4L62.3 70.4C70.9 70.4 76.3 65.2 76.3 56.9L76.3 13.5C76.3 5.2 70.9 0 62.3 0L48.3 0M60 61.4L60 8.5L61.6 8.5C63.7 8.5 64.8 9.6 64.8 11.7L64.8 58.2C64.8 60.2 63.7 61.4 61.6 61.4M80.5 12.7L80.5 57.7C80.5 66.6 85.3 71.4 94.4 71.4C103.5 71.4 108.3 66.6 108.3 57.7L108.3 12.7C108.3 3.8 103.5 -1 94.4 -1C85.3 -1 80.5 3.8 80.5 12.7M92 58.3L92 11.6C92 9.7 92.9 8.5 94.4 8.5C95.9 8.5 96.8 9.7 96.8 11.6L96.8 58.3C96.8 60.2 95.9 61.4 94.4 61.4C92.9 61.4 92 60.2 92 58.3M112.5 70.4L121.9 70.4L121.9 28.8L122.2 28.8L131.5 70.4L143.1 70.4L143.1 0L133.7 0L133.7 34.5L133.4 34.5L126 0L112.5 0M146.1 70.4L156.4 70.4L158.4 51.2L165.8 51.2L167.7 70.4L179.5 70.4L171.2 0L154.4 0M159.3 42.4L161.9 16.9L162.3 16.9L164.9 42.4M189.6 70.4L201.7 70.4L201.7 8.8L209.5 8.8L209.5 0L181.8 0L181.8 8.8L189.6 8.8M213 70.4L225.1 70.4L225.1 0L213 0M229.3 12.7L229.3 57.7C229.3 66.6 234.1 71.4 243.2 71.4C252.3 71.4 257.1 66.6 257.1 57.7L257.1 12.7C257.1 3.8 252.3 -1 243.2 -1C234.1 -1 229.3 3.8 229.3 12.7M240.8 58.3L240.8 11.6C240.8 9.7 241.7 8.5 243.2 8.5C244.7 8.5 245.6 9.7 245.6 11.6L245.6 58.3C245.6 60.2 244.7 61.4 243.2 61.4C241.7 61.4 240.8 60.2 240.8 58.3M261.3 70.4L270.7 70.4L270.7 28.8L271 28.8L280.3 70.4L291.9 70.4L291.9 0L282.5 0L282.5 34.5L282.2 34.5L274.8 0L261.3 0M8.3 170.4L20.4 170.4L20.4 108.8L28.2 108.8L28.2 100L0.5 100L0.5 108.8L8.3 108.8M31.7 112.7L31.7 157.7C31.7 166.6 36.5 171.4 45.6 171.4C54.7 171.4 59.5 166.6 59.5 157.7L59.5 112.7C59.5 103.8 54.7 99 45.6 99C36.5 99 31.7 103.8 31.7 112.7M43.2 158.3L43.2 111.6C43.2 109.7 44.1 108.5 45.6 108.5C47.1 108.5 48 109.7 48 111.6L48 158.3C48 160.2 47.1 161.4 45.6 161.4C44.1 161.4 43.2 160.2 43.2 158.3M75.6 170.4L87.3 170.4L87.3 136.4L97.6 136.4L97.6 128.4L87.3 128.4L87.3 108.8L98.4 108.8L98.4 100L75.6 100M101.2 170.4L111.5 170.4L113.5 151.2L120.9 151.2L122.8 170.4L134.6 170.4L126.3 100L109.5 100M114.4 142.4L117 116.9L117.4 116.9L120 142.4M137.6 170.4L149.7 170.4L149.7 100L137.6 100"/></svg><!-- xt-fin:end --></template>
 
   <section class="view" id="v-quiz" role="tabpanel" aria-label="Quiz" hidden>
     <div id="quizbox" aria-live="polite"></div>
@@ -1104,8 +1206,8 @@ const PHRASES = [
   { term:"Feel the AGI", who:"Digital Cryptids", ids:["cryptids"], def:"An exhortation to grasp how big this is about to get. Often followed by a single emoji." },
   { term:"Grey Tribe", who:"Everyone, eventually", ids:[], def:"Scott Alexander’s 2014 name for the tech-centered tribe that is neither red nor blue." }
 ];
-/* Christmas mode: the FAI Christmas palette (cream stock, cranberry, fir,
-   ink, gold glitter) and the gift guide, served at /christmas (or any address
+/* Christmas mode: the FAI Christmas brand (ruled lines, flat shapes in cream,
+   cranberry, fir and ink, gold glitter) and the gift guide, served at /christmas (or any address
    with ?christmas). The regular site at / is unchanged except for a switch at
    the end of the tab bar, shown until promoUntil, that turns it on. The same
    switch, on, sits there in Christmas mode and turns it off. */
@@ -1301,13 +1403,15 @@ $("#nterms").textContent = PHRASES.length;
 $("#axisdefs").innerHTML = AXES.map(a => `<div><dt>${esc(a.name)}</dt><dd>0: ${rich(a.low)}<br>100: ${rich(a.high)}</dd></div>`).join("");
 
 /* ---------- Avatars and plates: one <symbol> each, reused by <use> ---------- */
-/* In Christmas mode the four FAI fills print in the Christmas inks instead. */
-const XINKS = { "#ff4f00":"#B02B22", "#121212":"#1F201C", "#f3f3f3":"#F6EDDB", "#d9d9d6":"#E9D7B6" };
+/* In Christmas mode the four FAI fills print in the Christmas inks instead: orange in cranberry, Cod Gray in ink,
+   Smoke White in the light cream, and Timberwolf in cream (in fir on the plates, where it is a field of color). */
+const XINKS = { "#ff4f00":"#913129", "#121212":"#1F201C", "#f3f3f3":"#F6E5C2", "#d9d9d6":"#E9D7B6" };
+const xink = (svg, isPlate) => svg.replace(/#(ff4f00|121212|f3f3f3|d9d9d6)\b/gi, m => isPlate && m.toLowerCase() === "#d9d9d6" ? "#3C503A" : XINKS[m.toLowerCase()]);
 function buildDefs(xmas){
   let html = "";
   for (const [p, set] of [["av", AVATARS], ["pl", PLATES]])
-    for (const [id, v] of Object.entries(set)){ const i = v.indexOf("|"); html += `<symbol id="${p}-${id}" viewBox="${v.slice(0,i)}" preserveAspectRatio="xMidYMid slice">${v.slice(i+1)}</symbol>`; }
-  $("#avdefs").innerHTML = xmas ? html.replace(/#(ff4f00|121212|f3f3f3|d9d9d6)\b/gi, m => XINKS[m.toLowerCase()]) : html;
+    for (const [id, v] of Object.entries(set)){ const i = v.indexOf("|"), shapes = v.slice(i+1); html += `<symbol id="${p}-${id}" viewBox="${v.slice(0,i)}" preserveAspectRatio="xMidYMid slice">${xmas ? xink(shapes, p === "pl") : shapes}</symbol>`; }
+  $("#avdefs").innerHTML = html;
 }
 const av = (id, cls = "") => AVATARS[id]
   ? `<svg class="av ${cls}" aria-hidden="true" focusable="false"><use href="#av-${id}"/></svg>`
@@ -1422,11 +1526,16 @@ function enterXmas(){
   xmas = true;
   buildDefs(true);
   document.documentElement.classList.add("xmas");
-  for (const [sel, href] of [['link[rel="icon"][type="image/svg+xml"]', "favicon-christmas.svg?v=1"], ['link[rel="icon"][sizes]', "favicon-christmas-32.png?v=1"], ['link[rel="apple-touch-icon"]', "apple-touch-icon-christmas.png?v=1"]]){ const l = $(sel); if (l) l.href = href; }
+  for (const [sel, href] of [['link[rel="icon"][type="image/svg+xml"]', "favicon-christmas.svg?v=2"], ['link[rel="icon"][sizes]', "favicon-christmas-32.png?v=2"], ['link[rel="apple-touch-icon"]', "apple-touch-icon-christmas.png?v=2"]]){ const l = $(sel); if (l) l.href = href; }
   $("#gifttab").hidden = false;
+  $("#xg-gold image").setAttribute("href", "xmas/glitter-gold.webp");
   // The rail becomes the gift guide's cover. The field guide keeps one line, linking back to it.
   $(".rail h1").innerHTML = `<span class="xkick">${esc(GIFTS.kicker)}</span><span class="vh" id="title">${esc(GIFTS.title)}</span>${$("#gifts-title").innerHTML}`;
-  const art = $(".rail .hero-art"); art.classList.replace("base", "tree"); art.innerHTML = $("#tree-art").innerHTML;
+  const art = $(".rail .hero-art"); art.classList.replace("base", "cover"); art.innerHTML = xa("cover");
+  document.documentElement.classList.add("xready");
+  // The map's frame is ruled as crossing lines that run on past the corners, so the plot gives them room.
+  Object.assign(MP, { l:34, r:18, t:18, b:38 });
+  if (map.firstChild) buildMap();
   $("#dek").textContent = CHRISTMAS.dek;
   const co = $("#companion"); co.hidden = false;
   co.innerHTML = `${esc(CHRISTMAS.companion)} <a href="#tribes">${esc(CHRISTMAS.fieldGuide)}</a>.`;
@@ -1443,6 +1552,13 @@ function enterXmas(){
   };
 }
 
+/* Art from the kit, by name (the xa- templates), and a section title in the display face (the xt- templates).
+   A title whose copy has changed since it was outlined is set in type instead. */
+const xa = id => { const t = $("#xa-" + id); return t ? t.innerHTML : ""; };
+const xtitle = (key, name) => { const t = $("#xt-" + key);
+  return t && t.dataset.for === name && t.content.querySelector("svg") ? `<span class="vh">${esc(name)}</span>${t.innerHTML.replace("<svg ", '<svg preserveAspectRatio="xMinYMax meet" ')}` : rich(name); };
+/* How many modules each tier's art takes up left of the standard, beside the stage and on a phone: the title keeps clear of it. */
+const TIER_ART = [[4, 4], [3.4, 3.4], [6, 4.1]];
 const GIFT_ITEMS = GIFTS.tiers.flatMap(t => t.items);
 const forAll = g => g.ids === "all";
 const giftsFor = id => GIFT_ITEMS.concat(GIFTS.hidden || []).filter(g => !forAll(g) && g.ids.includes(id));
@@ -1460,19 +1576,19 @@ function giftWho(g){
   return `For the <a href="#tribe/${t.id}">${esc(g.who.replace(/^For the /, ""))}</a>${tail}`;
 }
 /* borrowed: the gift is on another tribe's list, so say whose */
-const giftMini = (g, borrowed) => `<div class="gift-mini">${giftPic(g, "gift-pic")}<div><p class="nm"><span>${giftName(g)}</span><span class="price">${esc(g.price)}</span></p>${
+const giftMini = (g, borrowed) => `<div class="gift-mini">${giftPic(g, "gift-pic")}<div><p class="nm">${giftName(g)}</p><span class="price">${esc(g.price)}</span>${
   borrowed && !forAll(g) ? `<p class="from">From the <a href="#tribe/${g.ids[0]}">${esc(possessive(tribeName(g.ids[0])))}</a> list</p>` : ""}<p class="tx">${rich(g.text)}</p></div></div>`;
 
 function tribeGifts(id){
   const mine = giftsFor(id), also = alsoFor(id);
-  return `<section class="xmas-only"><h3>Christmas list</h3>${
+  return `<section class="xmas-only xl">${xa("hung")}<h3>Christmas list</h3>${
     mine.length ? mine.map(g => giftMini(g)).join("") : `<p class="gift-none">${also.length ? "No gift of their own this year, but these suit them:" : "Not on this year’s list."}</p>`}${
-    also.length ? `${mine.length ? `<h3 class="gift-also-h">Also good for them</h3>` : ""}${also.map(g => giftMini(g, true)).join("")}` : ""}
+    also.length ? `${mine.length ? `<h3>Also good for them</h3>` : ""}${also.map(g => giftMini(g, true)).join("")}` : ""}
     <a class="gift-more" href="#gifts">${esc(GIFTS.kicker)} →</a></section>`;
 }
 function resultGifts(top, enemy){
   const mine = giftsFor(top.id), theirs = giftsFor(enemy.id);
-  return `<section class="xmas-only res-gift"><h3>Your Christmas list</h3>${
+  return `<section class="xmas-only xl res-gift">${xa("hung")}<h3>Your Christmas list</h3>${
     mine.length ? mine.map(g => giftMini(g)).join("") : `<p class="gift-none">Your tribe is not on this year’s list. Everyone gets ${giftName(GIFT_ITEMS.find(forAll))}.</p>`}${
     theirs.length ? `<h3>For your natural enemy, the ${esc(tribeName(enemy.id))}</h3>${theirs.map(g => giftMini(g)).join("")}` : ""}
     <a class="gift-more" href="#gifts">See the whole gift guide →</a></section>`;
@@ -1488,7 +1604,7 @@ function renderGifts(){
   const prev = GIFTS.previous.map(r => r.url ? `<a href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.label)}</a>` : esc(r.label)).join(", ");
   const opts = TRIBES.slice().sort((a, b) => a.name.localeCompare(b.name))
     .map(t => `<option value="${t.id}"${t.id === giftFor ? " selected" : ""}>${esc(t.name)}${giftsFor(t.id).length ? "" : " (nothing yet)"}</option>`).join("");
-  const tiers = GIFTS.tiers.map(t => ({ ...t, items: t.items.filter(g => !g.finale && show(g)) })).filter(t => t.items.length);
+  const tiers = GIFTS.tiers.map((t, i) => ({ ...t, i, items: t.items.filter(g => !g.finale && show(g)) })).filter(t => t.items.length);
   const fin = GIFT_ITEMS.find(g => g.finale);
   $("#v-gifts").innerHTML = `<div class="gifts">
     <h2 tabindex="-1" id="gifts-h" class="vh">${esc(GIFTS.title)}</h2>
@@ -1498,11 +1614,13 @@ function renderGifts(){
       <span class="sel"><select id="giftfor"><option value="">Every tribe</option>${opts}</select></span>
       <a class="btn sm" href="#quiz">${S.youTribe ? "Your quiz result" : "Not sure? Take the quiz"}</a></div>
     ${giftFor && !giftsFor(giftFor).length ? `<p class="g-none">The ${esc(tribeName(giftFor))} are not on this year’s list. These work for every tribe:</p>` : ""}
-    ${tiers.map(t => `<section class="g-tier"><header><h3>${esc(t.name)}</h3><span class="range">${esc(t.price)}</span></header>
-      <ul class="g-list">${t.items.map(item).join("")}</ul></section>`).join("")}
-    ${fin ? `<section class="g-finale" aria-labelledby="g-fin-h">${giftPic({ img: fin.img + "-finale" }, "g-fin-pic")}
-      <div><p class="kick">${esc(fin.who.replace(/\.$/, ""))}</p><h3 id="g-fin-h">${rich(fin.name)}</h3><p class="price">${esc(fin.price)}</p>
-      <p class="tx">${rich(fin.text)}</p>${fin.url ? `<a class="g-fin-btn" href="${esc(fin.url)}" target="_blank" rel="noopener">Donate to FAI <span aria-hidden="true">→</span></a>` : ""}</div></section>` : ""}
+    ${tiers.map(t => { const [aw, awp] = TIER_ART[t.i] || [0, 0];
+      return `<section class="g-tier"><header class="xt" style="--aw:${aw};--awp:${awp}"><div class="xt-g"><h3 class="xt-h">${xtitle(t.i, t.name)}</h3>${xa("tier" + t.i)}<i class="xt-std"></i></div>
+      <p class="range">${esc(t.price)}</p></header>
+      <ul class="g-list">${t.items.map(item).join("")}</ul></section>`; }).join("")}
+    ${fin ? `<section class="g-finale" aria-labelledby="g-fin-h">
+      <div class="xf-top">${xa("finale")}<i class="xf-std"></i><div class="xf-head"><p class="kick">${esc(fin.who.replace(/\.$/, ""))}</p><h3 id="g-fin-h">${xtitle("fin", fin.name)}</h3></div><p class="price">${esc(fin.price)}</p></div>
+      <div class="xf-bot"><p class="tx">${rich(fin.text)}</p>${fin.url ? `<a class="g-fin-btn" href="${esc(fin.url)}" target="_blank" rel="noopener">Donate to FAI <span aria-hidden="true">→</span></a>` : ""}</div></section>` : ""}
     <p class="g-foot">${esc(GIFTS.foot)}</p>
   </div>`;
   $("#giftfor").onchange = e => { giftFor = e.target.value; renderGifts(); $("#giftfor").focus(); };
@@ -1528,15 +1646,21 @@ function sizeMap(){
 }
 function mapFrame(){
   const k = S.yk, A = AXES.find(a => a.key === k), X = AXES[0];
-  return `<rect class="frame" x="${MP.l}" y="${MP.t}" width="${MW-MP.l-MP.r}" height="${MH-MP.t-MP.b}"/>
-    <line class="mid" x1="${px(50)}" x2="${px(50)}" y1="${MP.t}" y2="${MH-MP.b}"/><line class="mid" x1="${MP.l}" x2="${MW-MP.r}" y1="${py(50)}" y2="${py(50)}"/>
-    <text class="ax" x="${MP.l}" y="${MH-MP.b+18}">← ${esc(X.lo)}</text><text class="axt" x="${px(50)}" y="${MH-MP.b+18}" text-anchor="middle">${esc(X.name)}</text><text class="ax" x="${MW-MP.r}" y="${MH-MP.b+18}" text-anchor="end">${esc(X.hi)} →</text>
-    <text class="ax" transform="translate(${MP.l-12} ${MH-MP.b}) rotate(-90)">← ${esc(A.lo)}</text><text class="axt" transform="translate(${MP.l-12} ${py(50)}) rotate(-90)" text-anchor="middle">${esc(A.name)}</text><text class="ax" transform="translate(${MP.l-12} ${MP.t}) rotate(-90)" text-anchor="end">${esc(A.hi)} →</text>`;
+  const x0 = MP.l, x1 = MW - MP.r, y0 = MP.t, y1 = MH - MP.b, ay = xmas ? 25 : 18, ax = xmas ? 17 : 12, run = 10;
+  // Christmas: three lines each way that cross and run on past the corners, instead of a box and dashed midlines.
+  const frame = xmas ? `<path class="xframe" d="${[y0, py(50), y1].map(y => `M${x0-run} ${y}H${x1+run}`).join("")}${[x0, px(50), x1].map(x => `M${x} ${y0-run}V${y1+run}`).join("")}"/>`
+    : `<rect class="frame" x="${x0}" y="${y0}" width="${x1-x0}" height="${y1-y0}"/>
+    <line class="mid" x1="${px(50)}" x2="${px(50)}" y1="${y0}" y2="${y1}"/><line class="mid" x1="${x0}" x2="${x1}" y1="${py(50)}" y2="${py(50)}"/>`;
+  return `${frame}
+    <text class="ax" x="${x0}" y="${y1+ay}">← ${esc(X.lo)}</text><text class="axt" x="${px(50)}" y="${y1+ay}" text-anchor="middle">${esc(X.name)}</text><text class="ax" x="${x1}" y="${y1+ay}" text-anchor="end">${esc(X.hi)} →</text>
+    <text class="ax" transform="translate(${x0-ax} ${y1}) rotate(-90)">← ${esc(A.lo)}</text><text class="axt" transform="translate(${x0-ax} ${py(50)}) rotate(-90)" text-anchor="middle">${esc(A.name)}</text><text class="ax" transform="translate(${x0-ax} ${y0}) rotate(-90)" text-anchor="end">${esc(A.hi)} →</text>`;
 }
 function buildMap(){
-  map.innerHTML = `<g id="mframe">${mapFrame()}</g><g id="mcrowd"></g><g id="mlinks"></g><g id="mdots">${TRIBES.map(t =>
+  map.innerHTML = `${xmas ? `<g id="mcrowd"></g><g id="mframe">${mapFrame()}</g>` : `<g id="mframe">${mapFrame()}</g><g id="mcrowd"></g>`}<g id="mlinks"></g><g id="mdots">${TRIBES.map(t =>
     `<g class="pt" data-id="${t.id}" tabindex="0" role="link" aria-label="${esc(t.name)}: speed ${t.x}, steering ${t.y}, destination ${t.d}"><circle class="dot${t.fam==="ancestors"?" anc":""}" r="6"/><text class="lbl">${esc(t.short)}</text></g>`).join("")}</g>
-    <g class="you-g" id="myou" style="display:none"><circle class="you" r="7"/><text class="you-l" x="12" y="4">You</text></g>`;
+    <g class="you-g" id="myou" style="display:none">${xmas   // Christmas: you are a star, four hairlines through a glitter dot
+      ? `<path class="you-star" d="M0-16V16M-11 0H11M-4.5-4.5 4.5 4.5M-4.5 4.5 4.5-4.5"/><circle class="you" r="3" fill="url(#xg-gold)" style="fill:url(#xg-gold);stroke:none"/>`
+      : `<circle class="you" r="7"/>`}<text class="you-l" x="12" y="4">You</text></g>`;
   $$("#mdots .pt").forEach(g => {
     const id = g.dataset.id;
     g.addEventListener("click", () => { if (!$("#mapnote").hidden) dismissMapNote(); go(`tribe/${id}`); });
@@ -1547,12 +1671,15 @@ function buildMap(){
     g.addEventListener("blur", hideHover);
   });
   placeMap();
-  new ResizeObserver(() => requestAnimationFrame(() => { if (sizeMap()){ $("#mframe").innerHTML = mapFrame(); placeMap(); } })).observe(map.parentElement);
+  if (!buildMap.watching){ buildMap.watching = true; new ResizeObserver(() => requestAnimationFrame(() => { if (sizeMap()){ $("#mframe").innerHTML = mapFrame(); placeMap(); } })).observe(map.parentElement); }
 }
 function placeLabels(){
   const pts = TRIBES.map(t => ({ t, x: px(t.x), y: py(axisVal(t, S.yk)) }));
   const boxes = pts.map(p => ({ x1:p.x-7, x2:p.x+7, y1:p.y-7, y2:p.y+7 }));
-  const hit = (b) => b.x1 < MP.l + 2 || b.x2 > MW - MP.r - 2 || b.y1 < MP.t + 2 || b.y2 > MH - MP.b - 2 || boxes.some(o => b.x1 < o.x2 && b.x2 > o.x1 && b.y1 < o.y2 && b.y2 > o.y1);
+  // Christmas: the centre lines are solid, so a label keeps off them unless it has nowhere else to go.
+  const mids = xmas ? [{ x1:px(50)-2, x2:px(50)+2, y1:MP.t, y2:MH-MP.b }, { x1:MP.l, x2:MW-MP.r, y1:py(50)-2, y2:py(50)+2 }] : [];
+  const over = b => o => b.x1 < o.x2 && b.x2 > o.x1 && b.y1 < o.y2 && b.y2 > o.y1;
+  const hit = (b, onLine) => b.x1 < MP.l + 2 || b.x2 > MW - MP.r - 2 || b.y1 < MP.t + 2 || b.y2 > MH - MP.b - 2 || boxes.some(over(b)) || (!onLine && mids.some(over(b)));
   const near = S.near || S.youTribe;
   const prio = t => (t.id === S.sel || t.id === near ? 0 : S.sel && relatives(byId[S.sel]).kin.includes(t) ? 1 : 2);
   const out = {};
@@ -1563,7 +1690,7 @@ function placeLabels(){
       { dx:0, dy:-10, a:"middle", b:{ x1:x-w/2, x2:x+w/2, y1:y-8-h, y2:y-8 } },
       { dx:0, dy:18, a:"middle", b:{ x1:x-w/2, x2:x+w/2, y1:y+8, y2:y+8+h } }
     ];
-    const o = opts.find(o => !hit(o.b)) || (force ? opts[0] : null);
+    const o = opts.find(o => !hit(o.b)) || opts.find(o => !hit(o.b, true)) || (force ? opts[0] : null);
     if (o) boxes.push(o.b);
     out[key] = o;
   };
@@ -1833,9 +1960,10 @@ function dismissMapNote(){ $("#mapnote").hidden = true; save("fai-tribes-mapnote
 $("#mapnote-x").onclick = dismissMapNote;
 function pulseYou(){
   const c = $("#myou .you"); if (!c || reduced.matches) return;
-  c.animate([{ r: 7 }, { r: 14 }, { r: 7 }], { duration: 700, iterations: 2, easing: "ease-in-out" });
+  c.animate(xmas ? [{ r: 3 }, { r: 9 }, { r: 3 }] : [{ r: 7 }, { r: 14 }, { r: 7 }], { duration: 700, iterations: 2, easing: "ease-in-out" });
 }
-/* A 1200×630 PNG of your result: the orange banner with your avatar, and your tribe's plate on the right. */
+/* A 1200×630 PNG of your result: the orange banner with your avatar, and your tribe's plate on the right.
+   The Christmas edition draws its own (xmasCard). */
 const svgDoc = (v, w, h) => { const i = v.indexOf("|"); return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="${v.slice(0, i)}" preserveAspectRatio="xMidYMid slice">${v.slice(i + 1)}</svg>`; };
 const loadImg = src => new Promise((ok, no) => { const im = new Image(); im.onload = () => ok(im); im.onerror = no; im.src = src; });
 const svgImg = svg => loadImg(URL.createObjectURL(new Blob([svg], { type: "image/svg+xml" })));
@@ -1849,6 +1977,7 @@ async function resultCard(R){
   const serif = `"IBM Plex Serif", Georgia, serif`, sans = `"IBM Plex Sans", Arial, sans-serif`;
   if (document.fonts) await Promise.all([`600 60px ${serif}`, `italic 400 28px ${serif}`, `500 24px ${sans}`, `600 22px ${sans}`]
     .map(f => document.fonts.load(f, t.name + t.latin).catch(() => {})));
+  if (xmas) return xmasCard(R, serif, sans);
   const logoSvg = $(".lockup svg").outerHTML.replace(/currentColor/g, "#121212").replace('width="152" height="34"', 'width="1920" height="425"');
   const [plate, face, logo] = await Promise.all([
     PLATES[t.id] ? svgImg(svgDoc(PLATES[t.id], H, H)) : null,
@@ -1874,6 +2003,34 @@ async function resultCard(R){
   if (logo) ctx.drawImage(logo, P, H - P - 34, 34 * logo.width / logo.height, 34);
   const host = "tribes.thefai.org";
   ctx.font = `500 20px ${sans}`; ctx.textAlign = "right"; ctx.fillText(host, L - P, H - P - 8);
+  return new Promise((ok, no) => c.toBlob(b => b ? ok(b) : no(new Error("no image")), "image/png"));
+}
+/* The Christmas edition's card, on a 30px module. xmas/card.jpg is its ground, a cream sheet 19 modules wide with the
+   ground line, the standard, the bauble and the FAI mark. The tribe's name stands on the ground line, clear of the
+   standard, and the plate fills the rest in the Christmas inks. */
+async function xmasCard(R, serif, sans){
+  const W = 1200, H = 630, M = 30, L = 19 * M, P = 2 * M, t = R.top, maxW = 13 * M, INK = "#1F201C", CREAM = "#E9D7B6";
+  const [ground, plate, face] = await Promise.all([loadImg("xmas/card.jpg"),
+    PLATES[t.id] ? svgImg(xink(svgDoc(PLATES[t.id], H, H), true)) : null,
+    AVATARS[t.id] ? svgImg(xink(svgDoc(AVATARS[t.id], 150, 150))) : null]);
+  const c = document.createElement("canvas"); c.width = W; c.height = H;
+  const ctx = c.getContext("2d");
+  ctx.fillStyle = CREAM; ctx.fillRect(0, 0, W, H);
+  ctx.drawImage(ground, 0, 0, L, H);
+  if (plate) ctx.drawImage(plate, L, 0, H, H);
+  if (face) ctx.drawImage(face, P, P, 150, 150);
+  ctx.fillStyle = INK;
+  let size = 60, lines;
+  for (; size > 36; size -= 4){ ctx.font = `600 ${size}px ${serif}`; lines = wrapText(ctx, t.name, maxW); if (lines.length <= 2 && lines.every(l => ctx.measureText(l).width <= maxW)) break; }
+  ctx.font = `600 ${size}px ${serif}`; lines = wrapText(ctx, t.name, maxW).slice(0, 2);
+  const lead = Math.round(size * 1.1), base = 13.5 * M - 18;                      // the last line's baseline, just above the ground line
+  lines.forEach((l, i) => ctx.fillText(l, P, base - (lines.length - 1 - i) * lead));
+  ctx.font = `500 24px ${sans}`; ctx.fillText("The field guide says I’m", P, base - (lines.length - 1) * lead - Math.round(size * .72) - 16);
+  ctx.font = `italic 400 28px ${serif}`; ctx.fillText(t.latin, P, 15 * M);
+  ctx.font = `600 22px ${sans}`;
+  const tag = `${R.match}% match`, tw = ctx.measureText(tag).width, ty = 15.7 * M;
+  ctx.fillRect(P, ty, tw + 24, 40); ctx.fillStyle = CREAM; ctx.fillText(tag, P + 12, ty + 28);
+  ctx.fillStyle = INK; ctx.font = `500 20px ${sans}`; ctx.textAlign = "right"; ctx.fillText("tribes.thefai.org", 18 * M, 19.2 * M);
   return new Promise((ok, no) => c.toBlob(b => b ? ok(b) : no(new Error("no image")), "image/png"));
 }
 async function shareResult(R){
