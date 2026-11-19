@@ -653,7 +653,8 @@ html.xmas .res-top .tag{ background:var(--xink); border-color:var(--xink); color
 /* Gift names link out without an underline; a small arrow marks the link */
 .g-item .nm a, .gift-mini .nm a{ text-decoration:none; }
 .g-item .nm a:hover, .gift-mini .nm a:hover{ text-decoration:underline; }
-.g-item .nm a::after, .gift-mini .nm a::after{ content:""; display:inline-block; width:.5em; height:.5em; margin-left:.32em; vertical-align:.1em; background:currentColor; -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6'%3E%3Cpath d='M2 8 8 2M3.5 2H8v4.5'/%3E%3C/svg%3E") center/contain no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6'%3E%3Cpath d='M2 8 8 2M3.5 2H8v4.5'/%3E%3C/svg%3E") center/contain no-repeat; }
+/* The arrow rides on a no-break space, so it never wraps to a line of its own */
+.g-item .nm a::after, .gift-mini .nm a::after{ content:"\00a0"; padding-left:.42em; background:currentColor; -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6'%3E%3Cpath d='M2 8 8 2M3.5 2H8v4.5'/%3E%3C/svg%3E") right 58% / .5em .5em no-repeat; mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10' fill='none' stroke='%23000' stroke-width='1.6'%3E%3Cpath d='M2 8 8 2M3.5 2H8v4.5'/%3E%3C/svg%3E") right 58% / .5em .5em no-repeat; }
 /* The other tribes a gift suits, inline after the main one: "For the Vitalist and [avatar] NRx" */
 .g-item .who a.and{ white-space:nowrap; }
 @media (max-width:359px){ .g-item .who a.and{ white-space:normal; } }
