@@ -13,7 +13,7 @@ export default {
     try {
       if (url.pathname === "/api/wall") res = await wallApi(request, env, url);
       else if (url.pathname === "/admin" || url.pathname.startsWith("/admin/")) res = await admin(request, env, url);
-      else if (url.pathname === "/christmas/") res = Response.redirect(url.origin + "/christmas" + url.search, 301);
+      else if (url.pathname === "/christmas/") res = new Response(null, { status: 301, headers: { Location: "/christmas" + url.search } });   // relative, so it stays on the public host behind the proxy
       else if (url.pathname === "/christmas") res = await christmas(request, env, url);
       else res = await env.ASSETS.fetch(request);
     } catch (e) {
@@ -41,7 +41,7 @@ const XMAS_META = {
   title: "A Field Guide to Post-IPO Holiday Giving | FAI",
   "og:title": "A Field Guide to Post-IPO Holiday Giving",
   "og:description": "FAI’s Tech Right Gift Guide 2026, organized by tribe and sorted by liquidity.",
-  "og:url": "/christmas",                   // made absolute with the serving host, so staging previews work
+  "og:url": "/christmas",                   // made absolute with PUBLIC_ORIGIN, or the serving host (so staging previews work)
   "og:image": "/og-christmas.jpg?v=3",
   "og:image:alt": "FAI’s Tech Right Gift Guide 2026: A field guide to post-IPO holiday giving, with a Christmas tree, a red glitter bauble and a gold garland."
 };
@@ -49,7 +49,9 @@ const XMAS_ICONS = { 'link[rel="icon"][type="image/svg+xml"]': "favicon-christma
 async function christmas(request, env, url) {
   const page = await env.ASSETS.fetch(new Request(url.origin + "/", request));
   if (!page.ok) return page;
-  const set = key => ({ element(el) { const v = XMAS_META[key]; el.setAttribute("content", v.startsWith("/") ? url.origin + v : v); } });
+  // tribes.thefai.org reaches this Worker through a proxy, so the request's own origin is the workers.dev address.
+  const origin = env.PUBLIC_ORIGIN || url.origin;
+  const set = key => ({ element(el) { const v = XMAS_META[key]; el.setAttribute("content", v.startsWith("/") ? origin + v : v); } });
   const rw = new HTMLRewriter()
     .on("title", { element(el) { el.setInnerContent(XMAS_META.title); } })
     .on('meta[property="og:title"]', set("og:title"))
