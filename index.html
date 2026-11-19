@@ -419,9 +419,10 @@ html.xmas{
   --bg:var(--smoke); --ink:var(--cod); --rule:var(--timber); --panel:var(--smoke); --muted:rgb(31 32 28 / .74); --faint:rgb(31 32 28 / .07);
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='11'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .34 0 0 0 0 .18 0 0 0 .55 -.22'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23g)'/%3E%3C/svg%3E");
 }
-@media (prefers-color-scheme: dark){
-  html.xmas:not([data-theme="light"]){ --bg:var(--cod); --ink:var(--smoke); --rule:rgb(246 237 219 / .2); --panel:var(--cod); --muted:rgb(246 237 219 / .74); --faint:rgb(246 237 219 / .08); }
-}
+/* Dark by default, whatever the system setting; data-theme="light" opts out */
+html.xmas:not([data-theme="light"]){ --bg:var(--cod); --ink:var(--smoke); --rule:rgb(246 237 219 / .2); --panel:var(--cod); --muted:rgb(246 237 219 / .74); --faint:rgb(246 237 219 / .08); color-scheme:dark; }
+/* The gift pictures are drawn in ink on cream, so on the dark page they sit on a cream card */
+html.xmas:not([data-theme="light"]) .g-pic, html.xmas:not([data-theme="light"]) .gift-pic{ background:var(--smoke); border-radius:2px; }
 html.xmas .xmas-only{ display:block; }
 /* The safari cover, printed in the Christmas inks (the same swap as the avatars) */
 html.xmas .hero-art.base [fill="#ff4f00" i]{ fill:#B02B22; }
@@ -441,7 +442,7 @@ html.xmas .map-legend .anc::before{ background:var(--fir); border-color:var(--co
 .rail-top{ flex-wrap:wrap; row-gap:12px; }
 /* The Christmas mode switch at the end of the tab bar: off on the regular site, on in Christmas mode */
 .xswitch[hidden]{ display:none; }
-.xswitch{ flex:none; position:sticky; right:0; margin-left:auto; display:flex; align-items:center; gap:10px; padding:0 0 0 20px; border:0; color:var(--ink); cursor:pointer;
+.xswitch{ flex:none; order:2; position:sticky; right:0; margin-left:auto; display:flex; align-items:center; gap:10px; padding:0 0 0 20px; border:0; color:var(--ink); cursor:pointer;
   background:linear-gradient(to right, transparent, var(--bg) 14px); font:500 15px/1 var(--sans); white-space:nowrap; }
 .xswitch:focus-visible{ outline:2px solid #FF4F00; outline-offset:-4px; }
 /* Reach past the tab bar's side padding so no tab shows beyond the switch */
@@ -476,6 +477,8 @@ html.xmas .map-legend .anc::before{ background:var(--fir); border-color:var(--co
 .g-art{ position:relative; min-height:160px; }
 .g-art svg{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 .g-art [stroke="#1F201C"]{ stroke:var(--ink); }
+.g-art [fill="#1F201C"]{ fill:var(--ink); }
+html.xmas:not([data-theme="light"]) .g-art [fill="#15191A"]{ fill:#55704F; }
 @media (max-width:671px){ .g-art{ display:none; } }
 .g-head h2{ margin:0; }
 .g-head .display{ display:block; width:100%; max-width:520px; height:auto; color:var(--ink); }
@@ -1106,13 +1109,13 @@ const GIFTS = {
       { img:"foia", name:"A FOIA Request for Stewart Brand’s File", price:"Free (fees may apply)", who:"For the Whole Earther", ids:["wholeearth"], url:"https://www.foia.gov/",
         text:"Before the *Whole Earth Catalog*, Stewart Brand was an Army officer. In 1962 he took his first LSD in a research study in Menlo Park, during the years the CIA was quietly paying for LSD research around the country. The study’s founder had been introduced to the drug by Al Hubbard, a uranium millionaire widely reported to have worked for the OSS. File a [FOIA request](https://www.foia.gov/) with the CIA and FBI and see what comes back. Tell your Whole Earther it counts as access to tools." },
       { img:"chili", name:"Lao Gan Ma Spicy Chili Crisp", price:"~$8", who:"For the NatSec Deep Stater", ids:["natsec"], url:"https://www.amazon.com/s?k=lao+gan+ma+spicy+chili+crisp",
-        text:"The one Chinese export everyone in Washington agrees should flow freely. Keep a [jar](https://www.amazon.com/s?k=lao+gan+ma+spicy+chili+crisp) at your desk and a second one at home in case of escalation. Our general counsel, Tim Hwang, is reportedly preparing his application to join the Lao Gan Ma frontier lab as a Member of Technical Staff. Does not require a license from BIS." },
+        text:"Everyone in Washington agrees this Chinese export should flow freely. Keep a [jar](https://www.amazon.com/s?k=lao+gan+ma+spicy+chili+crisp) at your desk and a second one at home in case of escalation. Our general counsel, Tim Hwang, is reportedly preparing his application to join the Lao Gan Ma frontier lab as a Member of Technical Staff. No BIS license is required." },
       { img:"usbc", name:"USB-C Cable", price:"~$10", who:"For the Eurocrat", ids:["eurocrats"], url:"https://www.amazon.com/s?k=usb-c+cable",
         text:"The EU [required USB-C charging](https://commission.europa.eu/news-and-media/news/eu-common-charger-rules-power-all-your-devices-single-charger-2024-12-28_en) on phones sold in Europe starting in December 2024, and Apple moved the iPhone to USB-C the year before. Hand a Eurocrat the cable and they will explain the Brussels effect for forty minutes. The equivalent cable for the AI Act is still in draft." },
       { img:"calendar", name:"2027 Wall Calendar", price:"~$15", who:"For the LLM Skeptic", ids:["skeptics"], url:"https://www.amazon.com/s?k=2027+wall+calendar",
-        text:"They have been waiting for the wall since GPT-3. Now they can hang one. Twelve months, each a fresh chance to announce that scaling has stopped working. Get the [kind with big squares](https://www.amazon.com/s?k=2027+wall+calendar) so there’s room to write “Hitting a wall” under every model release." },
+        text:"They have been waiting for the wall since GPT-3, and now they can hang one. It has twelve months, each a fresh chance to announce that scaling has stopped working. Get the [kind with big squares](https://www.amazon.com/s?k=2027+wall+calendar) so there’s room to write “Hitting a wall” under every model release." },
       { img:"encyclical", name:"*Magnifica Humanitas* by Pope Leo XIV", price:"$17.95", who:"For the Right Humanist", ids:["righthumanists"], also:["reluctant", "lefthumanists"], url:"https://ignatius.com/magnifica-humanitas-magnificent-humanity-mhh/",
-        text:"The first American pope took his name from the pope who wrote about the last industrial revolution, then wrote [133 pages](https://ignatius.com/magnifica-humanitas-magnificent-humanity-mhh/) about this one. It asks the world to “disarm” AI. Also makes a fine gift for the Reluctant Accelerationist in your life, who will read it in the back of a Waymo and feel bad in a productive way." },
+        text:"The first American pope took his name from the pope who wrote about the last industrial revolution, then wrote [133 pages](https://ignatius.com/magnifica-humanitas-magnificent-humanity-mhh/) about this one. It asks the world to “disarm” AI. It also makes a fine gift for the Reluctant Accelerationist in your life, who will read it in the back of a Waymo and feel bad in a productive way." },
       { img:"simcity", name:"SimCity 4", price:"$19.99", who:"For the Abundance Bro", ids:["abundance"], also:["nrx"], url:"https://store.steampowered.com/app/24780/SimCity_4_Deluxe_Edition/",
         text:"The one place an Abundance Bro can rezone a neighborhood for density, run a train through it and break ground the same afternoon. There is no environmental review or public comment period, and disasters are optional." },
       { img:"tamagotchi", name:"Tamagotchi", price:"~$20", who:"For the AI Welfare Person", ids:["welfare"], also:["whisperers"], url:"https://tamagotchi-official.com/us/",
@@ -1124,43 +1127,43 @@ const GIFTS = {
       { img:"arduino", name:"Arduino UNO Q", price:"$59", who:"For the Post-War Engineer", ids:["engineers"], also:["hackers"], url:"https://store-usa.arduino.cc/products/uno-q",
         text:"He built the chip industry with flat offices and no reserved parking, and now watches 26-year-olds call themselves “builders” because they shipped a Chrome extension. The [UNO Q](https://store-usa.arduino.cc/products/uno-q) puts a microcontroller and a Linux computer on one board, for anyone who still wants to make something that blinks. Qualcomm bought Arduino last year, one of the few chip deals in recent memory that did not draw a letter from Elizabeth Warren." },
       { img:"fiesta", name:"Vintage Radioactive Fiesta Dinnerware", price:"~$75", who:"For the Effective Accelerationist", ids:["eacc"], also:["abundance"], url:"https://www.ebay.com/sch/i.html?_nkw=vintage+fiesta+red+radioactive",
-        text:"He wants to climb the Kardashev scale. Start him on the plates. Fiesta’s vintage red glaze was made with uranium oxide, and a [plate from that era](https://www.ebay.com/sch/i.html?_nkw=vintage+fiesta+red+radioactive) will still make a Geiger counter tick. Display only. Still easier to permit than a small modular reactor." }
+        text:"He wants to climb the Kardashev scale, so start him on the plates. Fiesta’s vintage red glaze was made with uranium oxide, and a [plate from that era](https://www.ebay.com/sch/i.html?_nkw=vintage+fiesta+red+radioactive) will still make a Geiger counter tick. Put it on display and eat off something else. It is still easier to permit than a small modular reactor." }
     ]},
     { name: "Tender-Offer Money", price: "Under $1,000", items: [
       { img:"opera", name:"Tickets to *Doctor Atomic* at Opera San José", price:"~$100", who:"For the Reluctant Accelerationist", ids:["reluctant"], also:["doomers", "natsec"], url:"https://www.operasj.org/productions/atomic",
         text:"A [new production](https://www.operasj.org/productions/atomic) of John Adams’s opera about brilliant people in the desert who build something they suspect could end the world, and build it anyway because the other side might build it first. Five performances in February 2027, a short drive from the office. Bring the alignment team. Do not bring the comms team. AI Doomers should hold out for San Francisco Opera’s new *Das Rheingold* [next June](https://www.sfopera.com/operas/das-rheingold/), in which a dwarf gives up love to forge a ring of absolute power and things go about how they predicted." },
       { img:"vest", name:"Patagonia Better Sweater Vest, No Logo", price:"~$140", who:"For the LinkedInfluencer at a neolab", ids:["linkedin"], also:["bigtech"], url:"https://www.rei.com/product/154145",
-        text:"Order the [vest](https://www.rei.com/product/154145) blank. By spring it will say Meta, Google, or Nvidia, and he will be humbled to announce which. Legally, it will not be an acquisition. It will be a non-exclusive licensing agreement followed by a large hiring event." },
+        text:"Order the [vest](https://www.rei.com/product/154145) blank. By spring it will say Meta, Google, or Nvidia, and he will post a photo of himself in it with the word “humbled.”" },
       { img:"flipper", name:"Flipper Zero", price:"$169", who:"For the Hacker", ids:["hackers"], also:["anarchists"], url:"https://flipper.net/",
         text:"A pocket gadget with a cartoon dolphin on its screen that reads, copies and replays the signals from key cards, garage remotes and TVs. Canada moved to ban it in 2024 over car thefts, then backed down a month later, and no hacker has received a stronger endorsement. Keep it away from the office badge reader; they’ve already tried it." },
       { img:"parrot", name:"Rescue Parrot", price:"~$300 adoption fee", who:"For the AI Ethicist", ids:["ethicists"], also:["transhumanists"], url:"https://www.petfinder.com/",
-        text:"Repeats what it has heard without understanding it. Unlike the models, it cannot do your taxes, which they will consider a point in its favor. Adopt from a [rescue](https://www.petfinder.com/) rather than a breeder. Parrots live 50 years or more, and many end up in rescues after outliving their owners, a problem the Transhumanists are working on." },
+        text:"It repeats what it has heard without understanding it. Unlike the models, it cannot do your taxes, which they will consider a point in its favor. Adopt from a [rescue](https://www.petfinder.com/) rather than a breeder. Parrots live 50 years or more, and many end up in rescues after outliving their owners, a problem the Transhumanists are working on." },
       { img:"muse", name:"Muse S Athena Headband", price:"$475", who:"For the Model Whisperer", ids:["whisperers"], url:"https://choosemuse.com/products/muse-s-athena",
-        text:"They spend more hours a day talking to Claude than to their roommates, and typing has become the slowest part of the conversation. Neuralink still requires brain surgery and a spot in a clinical trial. The [Muse S Athena](https://choosemuse.com/products/muse-s-athena) reads brain activity from a headband, so they can see what their brain is doing at 3 a.m. while the model writes back. It can’t send a prompt by thought yet. They will ask the model when it will." },
+        text:"They spend more hours a day talking to Claude than to their roommates, and typing has become the slowest part of the conversation. Neuralink still requires brain surgery and a spot in a clinical trial. The [Muse S Athena](https://choosemuse.com/products/muse-s-athena) reads brain activity from a headband, so they can see what their brain is doing at 3 a.m. while the model writes back, then ask the model how long until they can prompt it by thought." },
       { img:"uvclamp", name:"Far-UVC Lamp", price:"~$500", who:"For the Defensive Accelerationist", ids:["dacc"], also:["rationalists", "ea"], url:"https://aerolamp.net/",
-        text:"Everyone’s second choice. A desk lamp that kills airborne pathogens and, its fans insist, leaves the people in the room alone. It builds fast, favors defense over offense, and sits quietly in the corner while the doomers and the e/accs fight. The rationalists have already written the [buyer’s guide](https://www.greaterwrong.com/posts/fMbk6tFH7KPJEwcdi/you-can-just-buy-far-uvc)." },
+        text:"d/acc is everyone’s second choice, and so is this desk lamp, which kills airborne pathogens and, its fans insist, leaves the people in the room alone. It builds fast, favors defense over offense, and sits quietly in the corner while the doomers and the e/accs fight. The rationalists have already written the [buyer’s guide](https://www.greaterwrong.com/posts/fMbk6tFH7KPJEwcdi/you-can-just-buy-far-uvc)." },
       { img:"manifest", name:"Ticket to Manifest", price:"Market price", who:"For the Heterodox Rationalist", ids:["rationalists"], also:["ea", "tpot"], url:"https://manifest.is/",
         text:"Manifest is Manifold’s forecasting festival, held each June at Lighthaven in Berkeley. Expect a market on whether each session starts on time. They will steelman your gift until you no longer recognize it, then ask where your model of them went wrong." },
       { img:"palladium", name:"Palladium Membership and an Urbit Star", price:"$60/mo. + a star", who:"For the Neoreactionary", ids:["nrx"], url:"https://palladiummag.com/subscribe/",
-        text:"Palladium’s quarterly print edition goes only to [members](https://palladiummag.com/subscribe/) and is never sold, which is how he prefers his ideas distributed. Pair it with an [Urbit](https://urbit.org) star. Curtis Yarvin designed Urbit’s address space as a hierarchy, and each star can issue up to 65,536 planets, more than the population of Liechtenstein. He will govern it as a unitary executive." },
+        text:"Palladium’s quarterly print edition goes only to [members](https://palladiummag.com/subscribe/) and is never sold, which is how he prefers his ideas distributed. Pair it with an [Urbit](https://urbit.org) star. Curtis Yarvin designed Urbit’s address space as a hierarchy, and each star can issue up to 65,535 planets, more than the population of Liechtenstein. He will govern it as a unitary executive." },
       { img:"lightphone", name:"Light Phone III", price:"$799", who:"For the Left Humanist", ids:["lefthumanists"], also:["wholeearth"], url:"https://www.thelightphone.com/",
-        text:"A phone with no feed, no app store, no ads, and no AI assistant. They will point out that $799 is what it now costs to buy back the phone everyone had in 2007. The original Luddites would approve, since nobody gets paid less because of it." }
+        text:"A phone with no feed, no app store, no ads, and no AI assistant. They will point out that $799 is what it now costs to buy back the phone everyone had in 2007. The original Luddites broke machines that cut their wages, and this phone cuts nobody’s, so they would approve." }
     ]},
     { name: "After the Lockup (or the Acquisition)", price: "Real estate and up", items: [
       { img:"italyhouse", name:"A House in Southern Italy", price:"€1", who:"For the Effective Altruist", ids:["ea"], url:"https://www.idealista.it/en/news/node/441228",
-        text:"Dozens of Italian towns [still sell](https://www.idealista.it/en/news/node/441228) abandoned houses for one euro, provided you renovate within three years. On a cost-per-house basis, nothing beats it. On a cost-per-house-you-can-live-in basis, the EA will want to build a spreadsheet first. Also useful if the movement is rebranding again: Effective Mediterraneanism has a nice ring." },
+        text:"Dozens of Italian towns [still sell](https://www.idealista.it/en/news/node/441228) abandoned houses for one euro, provided you renovate within three years. On a cost-per-house basis, nothing beats it. On a cost-per-house-you-can-live-in basis, the EA will want to build a spreadsheet first. It is also useful if the movement rebrands again, since Effective Mediterraneanism has a nice ring." },
       { img:"lighthouse", name:"Decommissioned Lighthouse", price:"Set at auction", who:"For the AI Doomer", ids:["doomers"], url:"https://realestatesales.gov",
-        text:"Remote, on the coast, and built for one purpose: warning people about a danger they can’t see until it’s too late. The federal government regularly auctions surplus lighthouses on [realestatesales.gov](https://realestatesales.gov), and Rhode Island’s Warwick Neck Light went up for bid this year. Most passing ships ignore the light. The doomer will feel right at home." },
+        text:"A lighthouse is remote, sits on the coast, and exists to warn people about a danger they can’t see until it’s too late. The federal government regularly auctions surplus lighthouses on [realestatesales.gov](https://realestatesales.gov), and Rhode Island’s Warwick Neck Light went up for bid this year. The doomer can keep the light on every night, whether or not the ships pay attention." },
       { img:"hsr", name:"Hart-Scott-Rodino Filing", price:"$35,000 to $2.46 million", who:"For the Tech Right acquirer", ids:["techright"], also:["lefthumanists", "eurocrats"], url:"https://www.ftc.gov/enforcement/competition-matters/2026/01/new-hsr-thresholds-filing-fees-2026",
-        text:"The standard way to buy an AI startup is now to hire the founders, license the technology, and leave the empty company on the curb, which skips merger review. In February, Senators Warren, Wyden, and Blumenthal [asked the FTC and DOJ](https://www.warren.senate.gov/newsroom/press-releases/warren-wyden-blumenthal-call-on-federal-regulators-to-investigate-meta-google-nvidia-reverse-acqui-hire-deals) to look at these “reverse acqui-hires.” For the acquirer who wants to buy a company the old-fashioned way, by buying it, the FTC’s [premerger filing fee](https://www.ftc.gov/enforcement/competition-matters/2026/01/new-hsr-thresholds-filing-fees-2026) runs from $35,000 to $2.46 million. Gift-wrapping not available." },
+        text:"The standard way to buy an AI startup is now to hire the founders, license the technology, and leave the empty company on the curb, which skips merger review. In February, Senators Warren, Wyden, and Blumenthal [asked the FTC and DOJ](https://www.warren.senate.gov/newsroom/press-releases/warren-wyden-blumenthal-call-on-federal-regulators-to-investigate-meta-google-nvidia-reverse-acqui-hire-deals) to look at these “reverse acqui-hires.” For the acquirer who wants to buy a company the old-fashioned way, by buying it, the FTC’s [premerger filing fee](https://www.ftc.gov/enforcement/competition-matters/2026/01/new-hsr-thresholds-filing-fees-2026) runs from $35,000 to $2.46 million. The FTC does not offer gift-wrapping." },
       { img:"alcor", name:"Alcor Membership", price:"$220,000 (whole body)", who:"For the Transhumanist", ids:["transhumanists"], also:["rationalists"], url:"https://www.alcor.org/membership/",
         text:"Alcor in Scottsdale will hold them at −196°C until medicine catches up, usually paid for through life insurance. Neuro-only preservation costs less, for anyone confident about which part matters. Ask for a gift receipt; the return window has no end date." },
       { img:"jacket", name:"Jensen Huang’s Leather Jacket", price:"$960,000", who:"For the NatSec Deep Stater who has everything", ids:["natsec"], url:"https://www.tomshardware.com/peripherals/wearable-tech/nvidia-ceo-jensen-huangs-trademark-leather-jacket-raises-nearly-usd1-million-at-charity-auction-bidding-makes-usd60-000-valuation-look-like-pocket-change",
-        text:"Jensen Huang spent much of the past year lobbying Washington to let Nvidia sell advanced chips to China. Washington eventually [approved H200 sales](https://www.techrepublic.com/article/news-nvidia-h200-ai-chip-sales-china-stalled/) to about 10 Chinese companies. Beijing didn’t let the chips in, and Huang [said](https://www.tomshardware.com/tech-industry/artificial-intelligence/jensen-says-nvidia-now-has-zero-percent-market-share-in-china-says-us-export-policy-has-already-largely-backfired) Nvidia’s share of China’s AI chip market had fallen to zero. One Jensen product did find a buyer this year: a signed Tom Ford leather jacket that [sold at Sotheby’s](https://www.tomshardware.com/peripherals/wearable-tech/nvidia-ceo-jensen-huangs-trademark-leather-jacket-raises-nearly-usd1-million-at-charity-auction-bidding-makes-usd60-000-valuation-look-like-pocket-change) for $960,000, 16 times its high estimate. Huang [stepped down](https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000082/nvidiaannouncesceotransiti.htm) as CEO last week, so the rest of the closet may be coming to market. We’d bid, but only after an end-use check." },
+        text:"Jensen Huang spent much of the past year lobbying Washington to let Nvidia sell advanced chips to China. Washington eventually [approved H200 sales](https://www.techrepublic.com/article/news-nvidia-h200-ai-chip-sales-china-stalled/) to about 10 Chinese companies. Beijing didn’t let the chips in, and Huang [said](https://www.tomshardware.com/tech-industry/artificial-intelligence/jensen-says-nvidia-now-has-zero-percent-market-share-in-china-says-us-export-policy-has-already-largely-backfired) Nvidia’s share of China’s AI chip market had fallen to zero. One Jensen product did find a buyer this year: a signed Tom Ford leather jacket that [sold at Sotheby’s](https://www.tomshardware.com/peripherals/wearable-tech/nvidia-ceo-jensen-huangs-trademark-leather-jacket-raises-nearly-usd1-million-at-charity-auction-bidding-makes-usd60-000-valuation-look-like-pocket-change) for $960,000, 16 times its high estimate. Huang [stepped down](https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000082/nvidiaannouncesceotransiti.htm) as CEO in November, so the rest of the closet may be coming to market. We’d bid, but only after an end-use check." },
       { img:"rowhouse", name:"Capitol Hill Rowhouse", price:"~$1.5 million", who:"For the Big Tech Shill", ids:["bigtech"], also:["abundance"], url:"https://www.zillow.com/capitol-hill-washington-dc/",
         text:"You are in Washington three days a week anyway. Buy a [rowhouse](https://www.zillow.com/capitol-hill-washington-dc/) a few blocks from the Rayburn Building with a kitchen big enough for receptions and a dining room big enough for the staffers who write the preemption bill. You already know all of them by first name. Now they can know your dog’s." },
       { img:"island", name:"A Private Island", price:"$5 million and up", who:"For the Techno-Anarchist", ids:["anarchists"], also:["nrx"], url:"https://www.privateislandsonline.com/",
-        text:"Status: founding a country. [Private islands](https://www.privateislandsonline.com/) are for sale in Belize, the Bahamas, and Maine, most with fewer regulators than Próspera and better Wi-Fi than Galt’s Gulch. One note from the policy team: every island still belongs to a country. You will have to file taxes from it." },
+        text:"He is founding a country. [Private islands](https://www.privateislandsonline.com/) are for sale in Belize, the Bahamas, and Maine, most with fewer regulators than Próspera and better Wi-Fi than Galt’s Gulch. One note from the policy team: every island still belongs to a country. You will have to file taxes from it." },
       { img:"donation", finale:true, name:"A Donation to FAI", price:"Priceless*", who:"For every tribe.", ids:"all", url:"https://www.thefai.org/donate",
         text:"FAI’s staff belong to most of the 27, and deny belonging to any. If you’re working out how to give some of this away well, start with Nan Ransohoff on [the third wave of American philanthropy](https://nanransohoff.substack.com/p/the-third-wave-of-american-philanthropy), Joe Lonsdale’s [letter to new philanthropists](https://blog.joelonsdale.com/p/dear-new-philanthropists), and *Asterisk*’s conversation with Rob Reich and Alexander Berger on [what to do with all this AI money](https://asteriskmag.substack.com/p/what-should-we-do-about-all-this). Or skip the reading, make a [tax-deductible donation](https://www.thefai.org/donate) to FAI, and give [Grace Werner](https://www.thefai.org/profile/grace-werner) a call." }
     ]}
@@ -1365,13 +1368,18 @@ function initPromo(){
     // Christmas comes on in place, under the white-out, and the address changes to match.
     const arrive = () => { history.pushState(null, "", XMAS_HOME + "#gifts"); enterXmas(); window.scrollTo(0, 0); route(); };
     if (calm.matches){ setTimeout(arrive, 250); return; }
-    const storm = snowstorm(), wo = $("#whiteout");
+    const storm = snowstorm(), wo = $("#whiteout"), timers = [];
+    const at = (ms, f) => timers.push(setTimeout(f, ms));
+    // Going back or following a link before the page turns over calls the whole thing off.
+    const abort = () => { timers.forEach(clearTimeout); wo.classList.remove("on"); storm.stop(); sw.setAttribute("aria-checked", "false"); };
+    addEventListener("popstate", abort, { once: true }); addEventListener("hashchange", abort, { once: true });
+    const settle = () => { removeEventListener("popstate", abort); removeEventListener("hashchange", abort); };
     storm.target = { level: .35, wind: 90, speed: 1.4, size: 1.05 };                                   // it starts to snow
-    setTimeout(() => storm.target = { level: 1, wind: 560, speed: 3.4, size: 1.4 }, 700);               // then it blows
-    setTimeout(() => wo.classList.add("on"), 900);                                                      // until you can't see
-    setTimeout(arrive, 2300);
-    setTimeout(() => { wo.classList.remove("on"); storm.target = { level: .28, wind: 25, speed: .85, size: 1 }; }, 2800);   // and it clears on Christmas
-    setTimeout(() => storm.stop(), 11000);
+    at(700, () => storm.target = { level: 1, wind: 560, speed: 3.4, size: 1.4 });                       // then it blows
+    at(900, () => wo.classList.add("on"));                                                              // until you can't see
+    at(2300, () => { settle(); arrive(); });
+    at(2800, () => { wo.classList.remove("on"); storm.target = { level: .28, wind: 25, speed: .85, size: 1 }; });   // and it clears on Christmas
+    at(11000, () => storm.stop());
   };
   // Back from the gift guide to the regular address: reload so the regular site comes back as it was.
   addEventListener("popstate", () => { if (xmas && !/^\/christmas\/?$/.test(location.pathname) && !new URLSearchParams(location.search).has("christmas")) location.reload(); });
@@ -1397,6 +1405,8 @@ function enterXmas(){
   const sw = $("#xswitch");
   $("#xlab").textContent = CHRISTMAS.label;
   sw.hidden = false; sw.setAttribute("aria-checked", "true");
+  // Back from the regular edition out of the browser's page cache: the switch is on again.
+  addEventListener("pageshow", e => { if (e.persisted) sw.setAttribute("aria-checked", "true"); });
   sw.onclick = () => {
     sw.setAttribute("aria-checked", "false");
     setTimeout(() => location.href = "/" + (location.hash && location.hash !== "#gifts" ? location.hash : ""), calm.matches ? 0 : 350);
@@ -1410,16 +1420,18 @@ const alsoFor = id => GIFT_ITEMS.filter(g => (g.also || []).includes(id));
 const giftName = g => g.url ? `<a href="${esc(g.url)}" target="_blank" rel="noopener">${rich(g.name)}</a>` : rich(g.name);
 const giftPic = (g, cls) => g.img ? `<img class="${cls}" src="gifts/${g.img}.webp" alt="" width="480" height="480" loading="lazy" decoding="async">` : "";
 /* "For the NatSec Deep Stater" with the tribe's name linked to its entry */
+const tribeName = id => byId[id].name.replace(/^The /, "");
+const possessive = n => n + (/s$/.test(n) ? "’" : "’s");
 function giftWho(g){
   if (forAll(g)) return esc(g.who);
   const t = byId[g.ids[0]];
-  const also = (g.also || []).filter(id => byId[id]).map(id => `<a class="and" href="#tribe/${id}">${av(id)}${esc(/ and /.test(byId[id].name) ? byId[id].short : byId[id].name.replace(/^The /, ""))}</a>`);
+  const also = (g.also || []).filter(id => byId[id]).map(id => `the <a class="and" href="#tribe/${id}">${av(id)}${esc(/ and /.test(byId[id].name) ? byId[id].short : tribeName(id))}</a>`);
   const tail = also.length ? (also.length > 1 ? ", " + also.slice(0, -1).join(", ") : "") + " and " + also[also.length - 1] : "";
   return `For the <a href="#tribe/${t.id}">${esc(g.who.replace(/^For the /, ""))}</a>${tail}`;
 }
 /* borrowed: the gift is on another tribe's list, so say whose */
 const giftMini = (g, borrowed) => `<div class="gift-mini">${giftPic(g, "gift-pic")}<div><p class="nm"><span>${giftName(g)}</span><span class="price">${esc(g.price)}</span></p>${
-  borrowed && !forAll(g) ? `<p class="from">From the <a href="#tribe/${g.ids[0]}">${esc(byId[g.ids[0]].name)}</a>’ list</p>` : ""}<p class="tx">${rich(g.text)}</p></div></div>`;
+  borrowed && !forAll(g) ? `<p class="from">From the <a href="#tribe/${g.ids[0]}">${esc(possessive(tribeName(g.ids[0])))}</a> list</p>` : ""}<p class="tx">${rich(g.text)}</p></div></div>`;
 
 function tribeGifts(id){
   const mine = giftsFor(id), also = alsoFor(id);
@@ -1432,13 +1444,13 @@ function resultGifts(top, enemy){
   const mine = giftsFor(top.id), theirs = giftsFor(enemy.id);
   return `<section class="xmas-only res-gift"><h3>Your Christmas list</h3>${
     mine.length ? mine.map(g => giftMini(g)).join("") : `<p class="gift-none">Your tribe is not on this year’s list. Everyone gets ${giftName(GIFT_ITEMS.find(forAll))}.</p>`}${
-    theirs.length ? `<h3>For your natural enemy, the ${esc(enemy.name)}</h3>${theirs.map(g => giftMini(g)).join("")}` : ""}
+    theirs.length ? `<h3>For your natural enemy, the ${esc(tribeName(enemy.id))}</h3>${theirs.map(g => giftMini(g)).join("")}` : ""}
     <a class="gift-more" href="#gifts">See the whole gift guide →</a></section>`;
 }
 
-let giftFor = "";
+let giftFor = null;   // null until the visitor picks; "" is Every tribe
 function renderGifts(){
-  if (!giftFor && S.youTribe && TRIBES.some(t => t.id === S.youTribe)) giftFor = S.youTribe;
+  if (giftFor === null) giftFor = S.youTribe && TRIBES.some(t => t.id === S.youTribe) ? S.youTribe : "";
   const show = g => !giftFor || forAll(g) || g.ids.includes(giftFor) || (g.also || []).includes(giftFor);
   const item = g => `<li class="g-item${giftFor && !forAll(g) && g.ids.includes(giftFor) ? " mine" : ""}">${giftPic(g, "g-pic")}
       <div class="g-body"><p class="nm"><span>${giftName(g)}</span><span class="price">${esc(g.price)}</span></p>
@@ -1457,7 +1469,7 @@ function renderGifts(){
     <div class="g-tools"><label for="giftfor">Shopping for</label>
       <span class="sel"><select id="giftfor"><option value="">Every tribe</option>${opts}</select></span>
       <a class="btn sm" href="#quiz">${S.youTribe ? "Your quiz result" : "Not sure? Take the quiz"}</a></div>
-    ${giftFor && !giftsFor(giftFor).length ? `<p class="g-none">The ${esc(byId[giftFor].name)} are not on this year’s list. These work for every tribe:</p>` : ""}
+    ${giftFor && !giftsFor(giftFor).length ? `<p class="g-none">The ${esc(tribeName(giftFor))} are not on this year’s list. These work for every tribe:</p>` : ""}
     ${tiers.map(t => `<section class="g-tier"><header><h3>${esc(t.name)}</h3><span class="range">${esc(t.price)}</span></header>
       <ul class="g-list">${t.items.map(item).join("")}</ul></section>`).join("")}
     ${fin ? `<section class="g-finale" aria-labelledby="g-fin-h">${giftPic({ img: fin.img + "-finale" }, "g-fin-pic")}
