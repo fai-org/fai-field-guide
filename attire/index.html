@@ -218,14 +218,27 @@ footer.colophon img { height: 26px; width: auto; }
   }
   .spread.flip > .margin-note { right: auto; left: calc(100% + 111px); border-right: 0; padding-right: 0; border-left: 1.5px solid var(--orange); padding-left: 16px; text-align: left; }
 }
+/* Phones: one column. Each section opens with its heading, then the drawing, then the
+   intro, then its quote as an epigraph, so the quote sits inside the section it annotates. */
 @media (max-width: 760px) {
   body { font-size: 16px; }
-  .opening, .spread, .wardrobes .spread, .wardrobes .spread.flip { grid-template-columns: 1fr; }
-  .spread.flip > figure { order: 0; }
-  .spread figure { position: static; }
-  .spread figure img, .collars { max-width: 340px; }
-  .frame { outline-offset: 4px; }
-  .row { font-size: 15px; }
+  .sheet { padding-block: 16px 40px; padding-left: max(8px, env(safe-area-inset-left, 0px)); padding-right: max(8px, env(safe-area-inset-right, 0px)); }
+  .frame { margin: 4px; outline-offset: 3px; padding: 40px 20px 48px; gap: 88px; }
+  .opening { grid-template-columns: 1fr; gap: 40px; }
+  .spread, .wardrobes .spread, .wardrobes .spread.flip { display: flex; flex-direction: column; align-items: stretch; gap: 16px; }
+  .spread > .copy { display: contents; }
+  .spread > .copy > header { order: 0; margin-bottom: 12px; }
+  .spread > figure, .spread.flip > figure { order: 1; position: static; margin-bottom: 16px; }
+  .spread > .copy > .intro, .spread > .copy > .note, .spread > .copy > .rule { order: 2; }
+  .spread > .margin-note { order: 3; }
+  .spread > .copy > *, .spread > .list { order: 4; }
+  .spread figure img, .collars { max-width: 320px; }
+  .spread .collars figure { margin-bottom: 0; }
+  .margin-note { margin: 8px 0 12px; max-width: none; }
+  .intro { font-size: 17px; }
+  .wardrobes { gap: 88px; }
+  .wardrobes .spread > figure { margin-bottom: 8px; }
+  .row { font-size: 15px; column-gap: 6px; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .contents a .name, .row a { transition: color 120ms ease; }
