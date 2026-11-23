@@ -22,8 +22,8 @@
     // Audience tag of the "FAI Tribes Wall Admin" Access application (tribes.thefai.workers.dev/admin).
     "ACCESS_AUD": "5fd3ebaa715db5c89ef62b1965b5ea3d8236913fb2ffecbc47bb425334acfa2a",
     "ADMIN_EMAIL_DOMAIN": "thefai.org",
-    // Keep search engines out until launch; set to "0" to allow indexing.
-    "NOINDEX": "1",
+    // "1" keeps search engines out (X-Robots-Tag: noindex); "0" allows indexing.
+    "NOINDEX": "0",
     // The public address (Netlify proxies tribes.thefai.org to this Worker); /christmas's link preview uses it.
     "PUBLIC_ORIGIN": "https://tribes.thefai.org"
   },
