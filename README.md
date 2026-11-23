@@ -2,7 +2,7 @@
 
 A microsite from the Foundation for American Innovation: 27 tribes in seven families, a three-axis habitat map, a 25-question sorting quiz, a phrasebook, and a public wall of quiz takers.
 
-Live (pre-launch, not indexed): https://tribes.thefai.workers.dev
+Live: https://tribes.thefai.org (the Worker itself is at https://tribes.thefai.workers.dev)
 
 ## Editing
 
